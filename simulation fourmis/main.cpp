@@ -1,6 +1,8 @@
 #include <iostream>
+#include "Environnement.h"
 
 int main()
 {
-	std::cout << "Hello";
+	Environnement e;
+	e.afficherInfos();
 }

@@ -139,11 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Case.cpp" />
     <ClCompile Include="Environnement.cpp" />
+    <ClCompile Include="Fourmi.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Case.h" />
     <ClInclude Include="Environnement.h" />
+    <ClInclude Include="Fourmi.h" />
+    <ClInclude Include="Obstacle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
