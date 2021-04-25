@@ -1,36 +1,39 @@
-#pragma once
+#include <vector>
+#include "Case.h"
 
 class Environnement {
+public:
+	// Constructeurs
+	Environnement();
+
+	// Getters
+	int getLongueur();
+	int getlargeur();
+	int getnbrObstacles();
+	int getnbrSrcNourriture();
+	double gettauxEvapPheromone();
+
+	// Setters
+	void setLongueur(int longueur);
+	void setlargeur(int larg);
+	void setnbrObstacles(int nbObst);
+	void setnbrSrcNourriture(int nbSrcNour);
+	void settauxEvapPheromone(double evap);
+
+	//Affichage
+	void afficherInfos();
+	void afficherCarte();
+
 private:
+	// Attributs
 	int longueur = 100;
 	int largeur = 50;
 	int nbrObstacles = 1000;
 	int nbrSrcNourriture = 500;
-	float tauxEvapPheromone = 0.95;
-	Objet env[100][50] = null
-		new obstacle(x, y)
-		env[x][y] = obs
+	double tauxEvapPheromone = 0.95;
+	Case carte[100][50];
 
-	case tableau[100][50];
-	tableau[2][5] = obstacle
-
-
-public:
-	int getLongueur();
-	void setLongueur(int longueur);
-
-	int getlargeur();
-	void setlargeur(int larg);
-
-	int getnbrObstacles();
-	void setnbrObstacles(int nbObst);
-
-	int getnbrSrcNourriture();
-	void setnbrSrcNourriture(int nbSrcNour);
-
-	float gettauxEvapPheromone();
-	void settauxEvapPheromone(float evap);
-
-	void afficherInfos();
+	//Génération
+	void genererCarte();
 };
 
