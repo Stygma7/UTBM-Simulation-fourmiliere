@@ -32,25 +32,45 @@ void Environnement::afficherInfos() {
 }
 
 void Environnement::afficherCarte() {
-	std::cout << "Carte des fourmis : \n";
-	for (int i = 0; i < 50; i++) {
-		std::cout << "\n";
-		for (int j = 0; j < 100; j++) {
-			if (carte[j][i].getDeplacement() == false)
-				std::cout << "X";
-			else
-				std::cout << " ";
-		}
+	cout << "\nCarte des fourmis : \n";
+	for (int y = 0; y < 102; y++) {
+		cout << "_";
 	}
+	cout << "\n";
+
+	for (int y = 0; y < 50; y++) {
+		cout << "|";
+		for (int x = 0; x < 100; x++) {
+			if (carte[y][x].getDeplacement() == false) {
+				std::cout << "X";
+			} else {
+				std::cout << " ";
+			}
+		}
+		cout << "|\n";
+	}
+	
+	cout << "|";
+	for (int y = 0; y < 100; y++) {
+		cout << "_";
+	}
+	cout << "|";
 }
 
-//Génération
+//GÃ©nÃ©ration
 void Environnement::genererCarte() {
+	vector<Case> ligne;
 	srand(time(NULL));
-	for (int i = 0; i < 50; i++) {
-		for (int j = 0; j < 100; j++) {
-			if (rand() % 15 == 0)
-				carte[j][i].setDeplacement(false);
+	for (int y = 0; y < largeur; y++) {
+		for (int x = 0; x < longueur; x++) {
+			if ((rand() % 15) == 0) {
+				ligne.push_back(Case(false));
+				ligne[x].setDeplacement(false);
+			} else {
+				ligne.push_back(Case());
+				ligne[x].setDeplacement(true);
+			}
 		}
+		carte.push_back(ligne);
 	}
 }

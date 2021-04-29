@@ -1,29 +1,29 @@
 #pragma once
 
-class Case
-{
-//Constructeurs
-public:
-	Case();
-	Case(bool deplacement);
+class Case {
 
 //Attributs
 private:
-	//Position de la case (à voir si on garde)
+	//Position de la case (ï¿½ voir si on garde)
 	//int posX;
 	//int posY;
-	//Permet de savoir si le déplacement est possible ou non sur la case (oui par défaut)
+	//Permet de savoir si le dï¿½placement est possible ou non sur la case (oui par dï¿½faut)
 	bool deplacement;
-	
-//Méthodes
-public:
-	//int getPosX();
-	//int getPosY();
-	bool getDeplacement();
+	int test;
 
-	//void setPosX(int posX);
-	//void setPosY(int posY);
-	void setDeplacement(bool deplacement);
+public:
+//Constructeurs
+	Case();
+	Case(bool);
+
+//Mï¿½thodes
+	bool getDeplacement() {
+		return this->deplacement;
+	}
+
+	void setDeplacement(bool deplacement) {
+		this->deplacement = deplacement;
+	}
 	
 
 };

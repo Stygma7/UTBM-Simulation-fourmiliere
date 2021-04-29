@@ -1,16 +1,17 @@
 #include "Case.h"
 
 //Consrtucteurs
-Case::Case() : deplacement(true) {}
-Case::Case(bool deplacement) : deplacement(deplacement) {}
+Case::Case() {
+    deplacement = true;
+}
+
+Case::Case(bool dep) {
+    deplacement = dep;
+}
 
 //Getters
-//int Case::getPosX() { return this->posX; }
-//int Case::getPosY() { return this->posY; }
-bool Case::getDeplacement() { return this->deplacement; }
+// bool Case::getDeplacement() { return this->deplacement; }
 
 //Setters
-//void Case::setPosX(int posX) { this->posX = posX; }
-//void Case::setPosY(int posY) { this->posY = posY; }
-void Case::setDeplacement(bool deplacement) { this->deplacement = deplacement; }
+// void Case::setDeplacement(bool deplacement) { this->deplacement = deplacement; }
 ;

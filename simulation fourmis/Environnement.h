@@ -31,9 +31,9 @@ private:
 	int nbrObstacles = 1000;
 	int nbrSrcNourriture = 500;
 	double tauxEvapPheromone = 0.95;
-	Case carte[100][50];
+	vector<vector<Case>> carte;
 
-	//Génération
+	//GÃ©nÃ©ration
 	void genererCarte();
 };
 
