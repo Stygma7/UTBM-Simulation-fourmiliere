@@ -3,15 +3,11 @@
 //Consrtucteurs
 Case::Case() {
     deplacement = true;
+    nourriture = false;
 }
 
 Case::Case(bool dep) {
     deplacement = dep;
+    nourriture = false;
 }
-
-//Getters
-// bool Case::getDeplacement() { return this->deplacement; }
-
-//Setters
-// void Case::setDeplacement(bool deplacement) { this->deplacement = deplacement; }
 ;
