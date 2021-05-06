@@ -1,15 +1,27 @@
 #include <iostream>
 #include <vector>
-#include "Environnement.h"
-#include "Case.h"
+// #include "Environnement.h"
+#include "FourmiGuerriere.h"
+
+#include <conio.h>
+#include <windows.h>
 
 using namespace std;
+
+void gotoxy(int x, int y) {
+	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD dwPos;
+	dwPos.X = x;
+	dwPos.Y = y;
+	SetConsoleCursorPosition(hcon, dwPos);
+}
+
 
 int main()
 {
 	int ligne = 0, colonne = 0, nbObstacles = -1, nbNourr = -1;
 	char choix = false;
-	cout << "Utiliser les valeurs par defaut (100 colonnes, 50 lignes, 1000 obstacles et 500 nourritures) ? O/N ";
+	cout << "Utiliser les valeurs par defaut (100 colonnes, 50 lignes, 1000 obstacles et 500 nourritures) ? O/N : ";
 	cin >> choix;
 	if (toupper(choix) == 'N'){
 		while(ligne <= 0) {
@@ -41,4 +53,8 @@ int main()
 	
 	Environnement e(colonne, ligne, nbObstacles, nbNourr);
 	e.afficherCarte();
+	
+	FourmiGuerriere warrior(e);
+
+	return 0;
 }

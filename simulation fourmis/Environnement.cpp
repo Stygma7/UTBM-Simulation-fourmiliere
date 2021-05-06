@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Environnement.h"
+#include "caseType.h"
 
 using namespace std;
 
@@ -34,41 +35,26 @@ void Environnement::afficherCarte() {
 	for (int y = 0; y < ligne; y++) {
 		cout << "|";
 		for (int x = 0; x < colonne; x++) {
-			if (carte[y][x].getDeplacement() == false) {
-				cout << "X";
-			} else if (carte[y][x].getNourriture() == true) {
+			switch (carte[y][x].getType())
+			{
+			case Type::SrcNourr:
 				cout << "o";
-			} else {
+				break;
+			case Type::Obstacle:
+				cout << "X";
+				break;
+			default:
 				cout << " ";
+				break;
 			}
 		}
 		cout << "|\n";
 	}
 	
-	// cout << "|";
 	for (int y = 0; y < colonne+2; y++) {
 		cout << "-";
 	}
-	// cout << "|";
 }
-
-//Génération
-// void Environnement::genererCarte() {
-// 	vector<Case> vLigne;
-// 	srand(time(NULL));
-// 	for (int y = 0; y < ligne; y++) {
-// 		for (int x = 0; x < colonne; x++) {
-// 			if ((rand() % 15) == 0) {
-// 				vLigne.push_back(Case(false));
-// 				vLigne[x].setDeplacement(false);
-// 			} else {
-// 				vLigne.push_back(Case());
-// 				vLigne[x].setDeplacement(true);
-// 			}
-// 		}
-// 		carte.push_back(vLigne);
-// 	}
-// }
 
 
 void Environnement::genererCarte() {
@@ -93,8 +79,8 @@ void Environnement::ajoutObstacles() {
 		xRnd = rand() % colonne;
 		yRnd = rand() % ligne;
 
-		if ((carte[yRnd][xRnd].getDeplacement() == true) && carte[yRnd][xRnd].getNourriture() == false) {
-			carte[yRnd][xRnd].setDeplacement(false);
+		if (carte[yRnd][xRnd].getType() == Type::Normal) {
+			carte[yRnd][xRnd].setObstacle();
 			cptObs ++;
 		}
 	}
@@ -109,8 +95,8 @@ void Environnement::ajoutNourriture() {
 		xRnd = rand() % colonne;
 		yRnd = rand() % ligne;
 
-		if ((carte[yRnd][xRnd].getDeplacement() == true) && carte[yRnd][xRnd].getNourriture() == false) {
-			carte[yRnd][xRnd].setNourriture(true);
+		if (carte[yRnd][xRnd].getType() == Type::Normal) {
+			carte[yRnd][xRnd].setSrcNourr();
 			cptNou ++;
 		}
 	}
