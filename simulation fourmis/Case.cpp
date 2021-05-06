@@ -1,35 +1,30 @@
 #include "Case.h"
 
-//Consrtucteurs
 Case::Case() {
     // par défaut, case sans obstacle/nourriture
     deplacement = true;
-    qteNourriture = 0;
     updateType();
 }
 
-// Case::Case(bool dep) {
-//     this->deplacement = dep;
-//     nourriture = false;
-//     qteNourriture = 0;
+// Case::~Case() {
+//     delete(srcNour);
 // }
 
-Type Case::getType() {
-    return type;
-}
 
 void Case::updateType() {
     if (deplacement)
         type = Type::Normal;
-    else if (qteNourriture > 0)
+    else if (srcNour != nullptr)
         type = Type::SrcNourr;
     else 
         type = Type::Obstacle;
 }
 
 void Case::setSrcNourr() {
-    qteNourriture = 20;
-    setObstacle();
+    if (srcNour == nullptr);
+        this->srcNour = new SourceNourr();
+    deplacement = false;
+    updateType(); 
 }
 
 void Case::setObstacle() { 
@@ -37,6 +32,11 @@ void Case::setObstacle() {
     updateType(); 
 }
 
-void Case::setQteNourriture(int qteNourriture) { 
-    this->qteNourriture = qteNourriture; 
+void Case::setPos(Position pos) {
+    this->pos = pos;
+}
+
+void Case::setPos(int x, int y) {
+    pos.setX(x);
+    pos.setY(y);
 }

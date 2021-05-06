@@ -3,9 +3,6 @@
 // #include "Environnement.h"
 #include "FourmiGuerriere.h"
 
-#include <conio.h>
-#include <windows.h>
-
 using namespace std;
 
 void gotoxy(int x, int y) {
@@ -16,6 +13,29 @@ void gotoxy(int x, int y) {
 	SetConsoleCursorPosition(hcon, dwPos);
 }
 
+
+bool isCentre(int x, int taille) {
+	int tailleMax = pow(taille/2,2);
+	double chanceApparition = pow((x - taille/2),2);
+	double facteur = 0.9 / tailleMax;
+	int rand100 = rand()%100 +1;
+	int chance = chanceApparition * facteur * 100;
+
+	cout << "tailleMax : " << tailleMax << endl;
+	cout << "chanceApparition : " << chanceApparition << endl;
+	cout << "facteur : " << facteur << endl;
+	cout << "chance : " << chance << endl;
+	cout << "rand100 : " << rand100 << endl;
+
+	if (rand100 <= chance) {
+		cout << "true";
+		return true;
+	}
+	else {
+		cout << "false";
+		return false;
+	}
+}
 
 int main()
 {
@@ -50,11 +70,28 @@ int main()
 		nbObstacles = 1000;
 		nbNourr = 500;
 	}
-	
+	system("cls");
 	Environnement e(colonne, ligne, nbObstacles, nbNourr);
 	e.afficherCarte();
 	
 	FourmiGuerriere warrior(e);
+	FourmiGuerriere warrior2(e);
+	FourmiGuerriere warrior3(e);
+	warrior.display();
+	warrior2.display();
+	warrior3.display();
+	for(int i=0; i<50;i++){
+		warrior.move(e);
+		warrior2.move(e);
+		warrior3.move(e);
+		Sleep(400);
+	}
 
+	gotoxy(1,54);
+	// srand(time(NULL));
+
+	// int rnd = rand()%100 +1;
+	// cout << "rnd:" << rnd << endl;
+	// cout << isCentre(rnd,100) << endl;
 	return 0;
 }

@@ -1,35 +1,31 @@
 #pragma once
 #include "caseType.h"
+#include "Position.h"
+#include "SourceNourr.h"
 
 class Case {
 
-//Attributs
 private:
-	//Position de la case (à voir si on garde)
-	//int posX;
-	//int posY;
 	//Permet de savoir si le déplacement est possible ou non sur la case (oui par défaut)
 	bool deplacement;
-	// bool nourriture;
-	int qteNourriture;
+	Position pos;
 	Type type;
+	SourceNourr* srcNour = nullptr;
 
-public:
-//Constructeurs
-	Case();
-	// Case(bool);
-
-//Méthodes
-	bool getDeplacement() { return this->deplacement; }
-	// bool getNourriture() { return this->nourriture; }
-	bool getQteNourriture() { return this->qteNourriture; }
-	Type getType();
 	void updateType();
 
-	// void setDeplacement(bool deplacement) {	this->deplacement = deplacement; }
+public:
+	Case();
+	// ~Case();
+
+	bool getDeplacement() { return this->deplacement; }
+	Position getPos() { return pos; }
+	Type getType() { return type; }
+	SourceNourr getSrcNour() { return *srcNour; }
+
 	void setObstacle();
-	// void setNourriture(bool nourriture) { this->nourriture = nourriture; }
-	void setQteNourriture(int qteNourriture);
 	void setSrcNourr();
+	void setPos(Position);
+	void setPos(int, int);
 };
 

@@ -1,5 +1,7 @@
 #include <vector>
 #include "Case.h"
+#include <conio.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -15,6 +17,7 @@ public:
 	int getnbrObstacles() { return this->nbrObstacles; }
 	int getnbrSrcNourriture() { return this->nbrSrcNourriture; }
 	double gettauxEvapPheromone() { return this->tauxEvapPheromone; }
+	Case getCase(int x, int y) { return carte[y][x];}
 
 	// Setters
 	void setColonne(int colonne) { this->colonne = colonne; }

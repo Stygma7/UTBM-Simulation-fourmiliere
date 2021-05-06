@@ -141,12 +141,20 @@
   <ItemGroup>
     <ClCompile Include="Case.cpp" />
     <ClCompile Include="Environnement.cpp" />
+    <ClCompile Include="FourmiGuerriere.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Position.cpp" />
+    <ClCompile Include="SourceNourr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Case.h" />
     <ClInclude Include="Environnement.h" />
     <ClInclude Include="FilleCase.h" />
+    <ClInclude Include="FourmiGuerriere.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="SourceNourr.h" />
+    <ClInclude Include="Utiles.cpp" />
+    <ClInclude Include="Utiles.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
