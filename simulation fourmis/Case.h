@@ -11,6 +11,7 @@ private:
 	Position pos;
 	Type type;
 	SourceNourr* srcNour = nullptr;
+	// Pheromone* pheromone = nullptr;
 
 	void updateType();
 
@@ -22,9 +23,11 @@ public:
 	Position getPos() { return pos; }
 	Type getType() { return type; }
 	SourceNourr getSrcNour() { return *srcNour; }
+	// Pheromone getPheromone() { return *pheromone; }
 
 	void setObstacle();
 	void setSrcNourr();
+	// void ajoutPheromone(Pheromone*);
 	void setPos(Position);
 	void setPos(int, int);
 };

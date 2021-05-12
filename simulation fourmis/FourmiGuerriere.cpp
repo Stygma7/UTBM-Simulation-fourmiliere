@@ -10,6 +10,9 @@ FourmiGuerriere::FourmiGuerriere(Environnement& env) {
     // cout << "\nfourmis posx :" << pos.getX();
     // cout << "\nfourmis posy :" << pos.getY();
 }
+// FourmiGuerriere::FourmiGuerriere(Fourmilliere& f) {
+//     pos.setPos(f.getPos());*
+// }
 
 void dispFourmi(Position p, char c) {
 	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -46,7 +49,7 @@ void FourmiGuerriere::display(){
     }
 }
 
-void FourmiGuerriere::move(Environnement& env){
+void FourmiGuerriere::update(Environnement& env){
     lastPos = pos;
 
     if (mode == Mode::toHome) {
@@ -61,10 +64,12 @@ void FourmiGuerriere::move(Environnement& env){
 
 void FourmiGuerriere::moveToHome(Environnement& env) {
     if (!cheminToHome.empty()) {
+        
         pos = cheminToHome.back();
         cheminToHome.erase(cheminToHome.end()-1);
     } else {
-        dropNourriture();
+        //  if colonie autour
+                dropNourriture();
     }
 }
 
@@ -97,7 +102,8 @@ void FourmiGuerriere::moveToFood(Environnement& env) {
     } else {
         while((vecCase.size()) > 0 || bloque) {
             int rndDir = rand() % vecCase.size();
-            if (vecCase[rndDir].getDeplacement() && (!isDejaPasseDessus(cheminToHome, vecCase[rndDir].getPos()))) {
+            // if (vecCase[rndDir].getDeplacement() && (!isDejaPasseDessus(cheminToHome, vecCase[rndDir].getPos()))) {
+            if (vecCase[rndDir].getDeplacement() ) {
                 pos.setPos(vecCase[rndDir].getPos());
                 break;
             } 
@@ -117,5 +123,6 @@ void FourmiGuerriere::grabNourriture(SourceNourr src) {
 }
 
 void FourmiGuerriere::dropNourriture() {
+    // colonie.addNourr();
     setMode(Mode::toFood);
 }

@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
-// #include "Environnement.h"
-#include "FourmiGuerriere.h"
+#include "Environnement.h"
+#include "Fourmilliere.h"
+// #include "FourmiGuerriere.h"
 
 using namespace std;
 
@@ -74,17 +75,22 @@ int main()
 	Environnement e(colonne, ligne, nbObstacles, nbNourr);
 	e.afficherCarte();
 	
-	FourmiGuerriere warrior(e);
-	FourmiGuerriere warrior2(e);
-	FourmiGuerriere warrior3(e);
-	warrior.display();
-	warrior2.display();
-	warrior3.display();
+	// FourmiGuerriere warrior(e);
+	// FourmiGuerriere warrior2(e);
+	// FourmiGuerriere warrior3(e);
+	// warrior.display();
+	// warrior2.display();
+	// warrior3.display();
+
+	Fourmilliere colonie(e,  Position(e.getColonne()/2, e.getLigne()/2));
+
 	for(int i=0; i<50;i++){
-		warrior.move(e);
-		warrior2.move(e);
-		warrior3.move(e);
-		Sleep(400);
+		// warrior.update(e);
+		// warrior2.update(e);
+		// warrior3.update(e);
+		// e.update();
+		colonie.update(e);
+		Sleep(200);
 	}
 
 	gotoxy(1,54);

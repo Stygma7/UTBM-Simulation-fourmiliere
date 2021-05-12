@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Environnement.h"
-#include "caseType.h"
+// #include "caseType.h"
 #include <math.h>
 
 using namespace std;
@@ -31,14 +31,20 @@ bool chanceApparition(int x, int taille) {
 
 // Cosntructeurs
 Environnement::Environnement() {
+	// fourmilliere = new Fourmilliere(*this, Position( getColonne()/2, getLigne()/2 ));
 	genererCarte();
 }
 Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
 	setColonne(x);
-	setLigne(y);
+	setLigne(y);	
 	setnbrObstacles(nbObstacles);
 	setnbrSrcNourriture(nbNourriture);
+	// fourmilliere = new Fourmilliere(*this, Position( getColonne()/2, getLigne()/2 ));
 	genererCarte();
+}
+
+void Environnement::update() {
+	// fourmilliere->update(*this);
 }
 
 //Affichage
@@ -47,7 +53,7 @@ void Environnement::afficherInfos() {
 	cout << "Lignes : " << this->getLigne() << "\n";
 	cout << "Nombre d'obstacles : " << this->getnbrObstacles() << "\n";
 	cout << "Nombre de source de nourriture : " << this->getnbrSrcNourriture() << "\n";
-	cout << "Taux d'evaporation des Pheromones : " << this->gettauxEvapPheromone() << "\n";
+	// cout << "Taux d'evaporation des Pheromones : " << this->gettauxEvapPheromone() << "\n";
 }
 
 // 0: noir

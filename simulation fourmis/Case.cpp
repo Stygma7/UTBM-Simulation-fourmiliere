@@ -27,6 +27,10 @@ void Case::setSrcNourr() {
     updateType(); 
 }
 
+// void Case::ajoutPheromone(Pheromone* phero) {
+//     pheromone = phero;
+// }
+
 void Case::setObstacle() { 
     deplacement = false;
     updateType(); 

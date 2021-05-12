@@ -142,6 +142,7 @@
     <ClCompile Include="Case.cpp" />
     <ClCompile Include="Environnement.cpp" />
     <ClCompile Include="FourmiGuerriere.cpp" />
+    <ClCompile Include="Fourmilliere.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="SourceNourr.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Environnement.h" />
     <ClInclude Include="FilleCase.h" />
     <ClInclude Include="FourmiGuerriere.h" />
+    <ClInclude Include="Fourmilliere.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="SourceNourr.h" />
     <ClInclude Include="Utiles.cpp" />
