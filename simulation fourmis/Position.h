@@ -1,5 +1,4 @@
-#ifndef POSITION_H
-#define POSITION_H
+#pragma once
 
 class Position
 {
@@ -21,5 +20,3 @@ public:
     void setPos(int x, int y) {this->x = x; this->y = y;}
     void setPos(Position pos) {this->x = pos.getX(); this->y = pos.getY();}
 };
-
-#endif 

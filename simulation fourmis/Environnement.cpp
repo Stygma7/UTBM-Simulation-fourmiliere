@@ -1,7 +1,10 @@
 #include <iostream>
-#include "Environnement.h"
-// #include "caseType.h"
 #include <math.h>
+#include <string>
+#include <conio.h>
+#include <windows.h>
+#include "Environnement.h"
+#include "caseType.h"
 
 using namespace std;
 
@@ -29,33 +32,6 @@ bool chanceApparition(int x, int taille) {
 	}
 }
 
-// Cosntructeurs
-Environnement::Environnement() {
-	// fourmilliere = new Fourmilliere(*this, Position( getColonne()/2, getLigne()/2 ));
-	genererCarte();
-}
-Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
-	setColonne(x);
-	setLigne(y);	
-	setnbrObstacles(nbObstacles);
-	setnbrSrcNourriture(nbNourriture);
-	// fourmilliere = new Fourmilliere(*this, Position( getColonne()/2, getLigne()/2 ));
-	genererCarte();
-}
-
-void Environnement::update() {
-	// fourmilliere->update(*this);
-}
-
-//Affichage
-void Environnement::afficherInfos() {
-	cout << "Colonnes : " << this->getColonne() << "\n";
-	cout << "Lignes : " << this->getLigne() << "\n";
-	cout << "Nombre d'obstacles : " << this->getnbrObstacles() << "\n";
-	cout << "Nombre de source de nourriture : " << this->getnbrSrcNourriture() << "\n";
-	// cout << "Taux d'evaporation des Pheromones : " << this->gettauxEvapPheromone() << "\n";
-}
-
 // 0: noir
 // 1: bleu foncé
 // 2: vert
@@ -72,19 +48,61 @@ void Environnement::afficherInfos() {
 // 13: rose fluo
 // 14: jaune fluo
 // 15: blanc
-void affichageTxtColor(Position p, char c, int color) {
+void affichageTxtColor(Position p, string str, int color) {
 	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD dwPos;
 	dwPos.X = p.getX();
 	dwPos.Y = p.getY() +1; // +1 à cause de la premiere ligne de texte
 	SetConsoleCursorPosition(hcon, dwPos);
     SetConsoleTextAttribute(hcon, color);
-    cout << c;
+    cout << str;
     SetConsoleTextAttribute(hcon, 15);
 }
 
+// Cosntructeurs
+Environnement::Environnement() {
+	// fourmilliere = new Fourmilliere(*this, Position( getColonne()/2, getLigne()/2 ));
+	genererCarte();
+}
+Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
+	setColonne(x);
+	setLigne(y);	
+	setnbrObstacles(nbObstacles);
+	setnbrSrcNourriture(nbNourriture);
+	// fourmilliere = new Fourmilliere(*this, Position( getColonne()/2, getLigne()/2 ));
+	genererCarte();
+	fourmilliere = new Fourmilliere(this, Position(getColonne()/2, getLigne()/2));
+}
+
+void Environnement::update() {
+	fourmilliere->update();
+	showInfos();
+}
+
+//Affichage
+void Environnement::showInfosInit() {
+    // affichageTxtColor(Position(getColonne() + affOffset , 1), to_string(getColonne()), 15);
+    affichageTxtColor(Position(getColonne() + affOffset , 1), "Colonnes  : " + to_string(getColonne()), 15);
+    affichageTxtColor(Position(getColonne() + affOffset , 2), "Lignes    : " + to_string(getLigne()), 15);
+    affichageTxtColor(Position(getColonne() + affOffset , 3), "Obstacles : " + to_string(getNbrObstacles()), 15);
+    affichageTxtColor(Position(getColonne() + affOffset , 4), "Src nourr : " + to_string(getNbrSrcNourriture()), 10);
+	
+}
+
+void Environnement::showInfos() {
+	// cout << "Colonnes : " << getColonne() << "\n";
+	// cout << "Lignes : " << getLigne() << "\n";
+	// cout << "Nombre d'obstacles : " << getnbrObstacles() << "\n";
+	// cout << "Nombre de source de nourriture : " << getnbrSrcNourriture() << "\n";
+    affichageTxtColor(Position(getColonne() + affOffset , 6), "Qte nourr   : " + to_string(fourmilliere->getFood()),10);
+    affichageTxtColor(Position(getColonne() + affOffset , 7), "Nbr fourmis : " + to_string(fourmilliere->getNbrAnts()), 12);
+}
+
+// void Environnement::updateInfos() {
+//     affichageTxtColor(Position(getColonne() + affOffset 16, to_string(qteNourr), 1));
+// }
+
 void Environnement::afficherCarte() {
-	cout << "Carte des fourmis : \n";
 	// for (int y = 0; y < colonne+2; y++) {
 	// 	cout << "-";
 	// }
@@ -97,11 +115,11 @@ void Environnement::afficherCarte() {
 			{
 			case Type::SrcNourr:
 				// cout << "o";
-				affichageTxtColor(carte[y][x].getPos(), 'o', 2);
+				affichageTxtColor(carte[y][x].getPos(), "o", 2);
 				break;
 			case Type::Obstacle:
 				// cout << "X";
-				affichageTxtColor(carte[y][x].getPos(), 'X', 15);
+				affichageTxtColor(carte[y][x].getPos(), "X", 15);
 				break;
 			default:
 				cout << " ";
@@ -111,6 +129,7 @@ void Environnement::afficherCarte() {
 		cout << "\n";
 	}
 	
+	showInfosInit();
 	// for (int y = 0; y < colonne+2; y++) {
 	// 	cout << "-";
 	// }
@@ -140,13 +159,13 @@ void Environnement::ajoutObstacles() {
 	// Ajout obstacles pour la bordure de la carte
 	for (int i = 0; i < colonne+2; i++)
 	{
-		carte[0][i].setObstacle();
-		carte[ligne+1][i].setObstacle();
+		carte[0][i].setType(Type::Obstacle);
+		carte[ligne+1][i].setType(Type::Obstacle);
 	}
 	for (int i = 0; i < ligne+2; i++)
 	{
-		carte[i][0].setObstacle();
-		carte[i][colonne+1].setObstacle();
+		carte[i][0].setType(Type::Obstacle);
+		carte[i][colonne+1].setType(Type::Obstacle);
 	}
 	
 	while (cptObs < nbrObstacles) {
@@ -155,7 +174,7 @@ void Environnement::ajoutObstacles() {
 
 		// if ((carte[yRnd][xRnd].getType() == Type::Normal) && (isCentre(xRnd,yRnd,colonne,ligne) == false)) {
 		if ((carte[yRnd][xRnd].getType() == Type::Normal) && (chanceApparition(xRnd,colonne)) && (chanceApparition(yRnd,ligne)) && (!isCentre(xRnd,yRnd,colonne,ligne))) {
-			carte[yRnd][xRnd].setObstacle();
+			carte[yRnd][xRnd].setType(Type::Obstacle);
 			cptObs ++;
 		}
 	}
@@ -170,7 +189,7 @@ void Environnement::ajoutNourriture() {
 		yRnd = rand() % ligne +1;
 
 		if ((carte[yRnd][xRnd].getType() == Type::Normal) && (isCentre(xRnd,yRnd,colonne,ligne) == false)) {
-			carte[yRnd][xRnd].setSrcNourr();
+			carte[yRnd][xRnd].setType(Type::SrcNourr);
 			cptNou ++;
 		}
 	}

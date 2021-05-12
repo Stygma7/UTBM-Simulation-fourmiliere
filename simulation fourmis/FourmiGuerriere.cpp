@@ -1,12 +1,17 @@
-#include "FourmiGuerriere.h"
 #include <iostream>
+#include <conio.h>
+#include <windows.h>
 #include "caseType.h"
+#include "FourmiGuerriere.h"
 
 using namespace std;
 
-FourmiGuerriere::FourmiGuerriere(Environnement& env) {
-    pos.setX(env.getColonne() / 2);
-    pos.setY(env.getLigne() / 2);
+// FourmiGuerriere::FourmiGuerriere(Environnement* env) {
+FourmiGuerriere::FourmiGuerriere(Fourmilliere* col) {
+    colonie = col;
+    env = colonie->getEnv();
+    pos.setX(env->getColonne() / 2);
+    pos.setY(env->getLigne() / 2);
     // cout << "\nfourmis posx :" << pos.getX();
     // cout << "\nfourmis posy :" << pos.getY();
 }
@@ -14,22 +19,22 @@ FourmiGuerriere::FourmiGuerriere(Environnement& env) {
 //     pos.setPos(f.getPos());*
 // }
 
-void dispFourmi(Position p, char c) {
+void FourmiGuerriere::dispFourmi() {
 	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD dwPos;
-	dwPos.X = p.getX();
-	dwPos.Y = p.getY() +1; // +1 à cause de la premiere ligne de texte
+	dwPos.X = pos.getX();
+	dwPos.Y = pos.getY() +1; // +1 à cause de la premiere ligne de texte
 	SetConsoleCursorPosition(hcon, dwPos);
     SetConsoleTextAttribute(hcon, 12);
-    cout << c;
+    cout << '8';
     SetConsoleTextAttribute(hcon, 15);
 }
 
-void eraseLastPos(Position p) {
+void FourmiGuerriere::eraseLastPos() {
 	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD dwPos;
-	dwPos.X = p.getX();
-	dwPos.Y = p.getY() +1;
+	dwPos.X = lastPos.getX();
+	dwPos.Y = lastPos.getY() +1;
 	SetConsoleCursorPosition(hcon, dwPos);
     SetConsoleTextAttribute(hcon, 15);
     cout << " ";
@@ -44,25 +49,25 @@ bool isDejaPasseDessus(vector<Position> vPos, Position pos) {
 
 void FourmiGuerriere::display(){
     if (!(pos == lastPos)) {
-        dispFourmi(pos, '8');
-        eraseLastPos(lastPos);
+        dispFourmi();
+        eraseLastPos();
     }
 }
 
-void FourmiGuerriere::update(Environnement& env){
+void FourmiGuerriere::update(){
     lastPos = pos;
 
     if (mode == Mode::toHome) {
-        moveToHome(env);
+        moveToHome();
     } else {
-        moveToFood(env);
+        moveToFood();
     }
 
-    display();
+    // display();
 }
 
 
-void FourmiGuerriere::moveToHome(Environnement& env) {
+void FourmiGuerriere::moveToHome() {
     if (!cheminToHome.empty()) {
         
         pos = cheminToHome.back();
@@ -73,14 +78,18 @@ void FourmiGuerriere::moveToHome(Environnement& env) {
     }
 }
 
-void FourmiGuerriere::moveToFood(Environnement& env) {
+void FourmiGuerriere::moveToFood() {
 
     // Récupération des cases voisines
-    vector<Case> vecCase;
-    vecCase.push_back(env.getCase(pos.getX(), pos.getY() + 1));
-    vecCase.push_back(env.getCase(pos.getX() + 1, pos.getY()));
-    vecCase.push_back(env.getCase(pos.getX(), pos.getY() - 1));
-    vecCase.push_back(env.getCase(pos.getX() - 1, pos.getY()));
+    vector<Case*> vecCase;
+    // vecCase.push_back(env->getCase(pos.getX(), pos.getY() + 1));
+    // vecCase.push_back(env->getCase(pos.getX() + 1, pos.getY()));
+    // vecCase.push_back(env->getCase(pos.getX(), pos.getY() - 1));
+    // vecCase.push_back(env->getCase(pos.getX() - 1, pos.getY()));
+    vecCase.push_back(env->getPtrCase(pos.getX(), pos.getY() + 1));
+    vecCase.push_back(env->getPtrCase(pos.getX() + 1, pos.getY()));
+    vecCase.push_back(env->getPtrCase(pos.getX(), pos.getY() - 1));
+    vecCase.push_back(env->getPtrCase(pos.getX() - 1, pos.getY()));
 
     // Stocke la position avant déplacement
     cheminToHome.push_back(pos);
@@ -88,41 +97,44 @@ void FourmiGuerriere::moveToFood(Environnement& env) {
     bool nourrTrouve = false;
     bool bloque = false;
     Case* caseNour = nullptr;
+    // if (caseNour == nullptr)
+    //     cout << "null";
 
-    for(Case & c : vecCase ) {
-        if (c.getType() == Type::SrcNourr){
+    for(Case* & c : vecCase ) {
+        if (c->getType() == Type::SrcNourr){
             nourrTrouve = true;
-            caseNour = &c;
+            caseNour = c;
             break;
         }
     }
     
     if (nourrTrouve) {
-        grabNourriture(caseNour->getSrcNour());
+        grabNourriture(caseNour);
     } else {
-        while((vecCase.size()) > 0 || bloque) {
+        while(!vecCase.empty() || bloque) {
             int rndDir = rand() % vecCase.size();
-            // if (vecCase[rndDir].getDeplacement() && (!isDejaPasseDessus(cheminToHome, vecCase[rndDir].getPos()))) {
-            if (vecCase[rndDir].getDeplacement() ) {
-                pos.setPos(vecCase[rndDir].getPos());
+            // if (vecCase[rndDir]->getDeplacement() && (!isDejaPasseDessus(cheminToHome, vecCase[rndDir]->getPos()))) {
+            if ( vecCase[rndDir]->getDeplacement() ) {
+                pos.setPos(vecCase[rndDir]->getPos());
                 break;
             } 
-            // if(!vecCase[rndDir].getDeplacement())
-            //     cout << "Obstacle";
-            // if((isDejaPasseDessus(chemin, vecCase[rndDir].getPos())))
-            //     cout << "isDejaPasseDessus";
             
             vecCase.erase(vecCase.begin()+rndDir);
         }
+
+        // se dépalce uniquement à gauche
+        // pos.setPos(getPos().getX()-1,getPos().getY());
     }
 }
 
-void FourmiGuerriere::grabNourriture(SourceNourr src) {
-    src.pickNourr();
+void FourmiGuerriere::grabNourriture(Case* caseNour) {
+    caseNour->pickNourr();
     setMode(Mode::toHome);
 }
 
 void FourmiGuerriere::dropNourriture() {
-    // colonie.addNourr();
-    setMode(Mode::toFood);
+    if (!colonie->isFoodStockFull()) {
+        colonie->addFood(1);
+        setMode(Mode::toFood);
+    }
 }

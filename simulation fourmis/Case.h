@@ -1,4 +1,5 @@
 #pragma once
+
 #include "caseType.h"
 #include "Position.h"
 #include "SourceNourr.h"
@@ -13,7 +14,7 @@ private:
 	SourceNourr* srcNour = nullptr;
 	// Pheromone* pheromone = nullptr;
 
-	void updateType();
+	// void updateType();
 
 public:
 	Case();
@@ -25,10 +26,11 @@ public:
 	SourceNourr getSrcNour() { return *srcNour; }
 	// Pheromone getPheromone() { return *pheromone; }
 
-	void setObstacle();
-	void setSrcNourr();
+	// void setObstacle();
+	// void setSrcNourr();
 	// void ajoutPheromone(Pheromone*);
 	void setPos(Position);
 	void setPos(int, int);
+	void pickNourr();
+	void setType(Type);
 };
-

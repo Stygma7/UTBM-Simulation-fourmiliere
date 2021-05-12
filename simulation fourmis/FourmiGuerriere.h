@@ -1,37 +1,39 @@
-#ifndef FOURMIG_H
-#define FOURMIG_H
-
 #pragma once
+// #ifndef FOURMIG_H
+// #define FOURMIG_H
 #include <vector>
-#include <conio.h>
-#include <windows.h>
-#include "Fourmi.h"
+#include "Fourmilliere.h"
+class Fourmilliere;
 #include "Environnement.h"
+class Environnement;
+#include "Position.h"
 #include "ModeFourmi.h"
-// #include "Fourmilliere.h"
-
-using namespace std;
+#include "Fourmi.h"
 
 class FourmiGuerriere : public Fourmi
 {
 private:
-    vector<Position> cheminToHome;
+    std::vector<Position> cheminToHome;
     Position pos;
     Position lastPos;
     Mode mode = Mode::toFood;
-    void moveToHome(Environnement&);
-    void moveToFood(Environnement&);
+    Environnement* env;
+    Fourmilliere* colonie;
+    void moveToHome();
+    void moveToFood();
     void setMode(Mode mode) { this->mode = mode;}
 
 public:
-    FourmiGuerriere(Environnement&);
-    //FourmiGuerriere(Fourmilliere&);
+    // FourmiGuerriere(Environnement*);
+    FourmiGuerriere(Fourmilliere*);
 
     void display();
-    void update(Environnement&);
+    void update();
     Position getPos() { return pos; }
-    void grabNourriture(SourceNourr);
+    void grabNourriture(Case*);
     void dropNourriture();
+    void eraseLastPos();
+    void dispFourmi();
 };
 
-#endif
+// #endif

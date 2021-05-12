@@ -1,13 +1,9 @@
-#ifndef ENVIRONNEMENT_H
-#define ENVIRONNEMENT_H
+#pragma once
 
 #include <vector>
-#include <conio.h>
-#include <windows.h>
 #include "Case.h"
-// #include "Fourmilliere.h"
-
-using namespace std;
+#include "Fourmilliere.h"
+class Fourmilliere;
 
 class Environnement {
 public:
@@ -18,10 +14,11 @@ public:
 	// Getters
 	int getColonne() { return this->colonne; }
 	int getLigne() { return this->ligne; }
-	int getnbrObstacles() { return this->nbrObstacles; }
-	int getnbrSrcNourriture() { return this->nbrSrcNourriture; }
+	int getNbrObstacles() { return this->nbrObstacles; }
+	int getNbrSrcNourriture() { return this->nbrSrcNourriture; }
 	// double gettauxEvapPheromone() { return this->tauxEvapPheromone; }
 	Case getCase(int x, int y) { return carte[y][x];}
+	Case* getPtrCase(int x, int y) { return &carte[y][x];}
 
 	// Setters
 	void setColonne(int colonne) { this->colonne = colonne; }
@@ -31,7 +28,9 @@ public:
 	// void settauxEvapPheromone(double evap) { this->tauxEvapPheromone = evap; }
 
 	// Affichage
-	void afficherInfos();
+	void showInfos();
+	void showInfosInit();
+	void updateInfos();
 	void afficherCarte();
 
 	// MaJ du monde
@@ -43,15 +42,13 @@ private:
 	int ligne = 50;
 	int nbrObstacles = 10;
 	int nbrSrcNourriture = 500;
+	const int affOffset = 4;
 	// double tauxEvapPheromone = 0.95;
-	vector<vector<Case>> carte;
-	// Fourmilliere fourmilliere;
-	// Fourmilliere* fourmilliere = nullptr;
+	std::vector<std::vector<Case>> carte;
+	Fourmilliere* fourmilliere;
 
 	//Génération
 	void genererCarte();
 	void ajoutObstacles();
 	void ajoutNourriture();
 };
-
-#endif
