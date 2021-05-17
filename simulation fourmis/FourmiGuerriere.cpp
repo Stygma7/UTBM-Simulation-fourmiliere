@@ -30,20 +30,22 @@ void FourmiGuerriere::update(){
     if (mode == Mode::toHome) {
         moveToHome();
     } else {
+        direction.update();
         moveToFood();
     }
 }
 
 // --------------- DEPLACEMENT --------------------------------------------------------------------------------------
 void FourmiGuerriere::moveToHome() {
+    // if (!(pos == colonie->getPos()))
+    //     env->addPhero(pos);
+
     if (pos.isNextTo(colonie->getPos())) {
-        env->addPhero(pos);
         pos = colonie->getPos();
         cheminToHome.clear();
     } else if (cheminToHome.empty()) {
         dropNourriture();
     } else {
-        env->addPhero(pos);
         pos = cheminToHome.back();
         cheminToHome.erase(cheminToHome.end()-1);
     }
@@ -87,19 +89,28 @@ void FourmiGuerriere::moveToFood() {
 
     // Sinon on continue de chercher aléatoirement
     } else {
-        while(!vecCase.empty()) {
-            int rndDir = rand() % vecCase.size();
-            // if (vecCase[rndDir]->getDeplacement() && (!isDejaPasseDessus(cheminToHome, vecCase[rndDir]->getPos()))) {
-            if ( vecCase[rndDir]->getDeplacement() ) {
-                pos.setPos(vecCase[rndDir]->getPos());
-                break;
-            } 
-            
-            vecCase.erase(vecCase.begin()+rndDir);
+        while (!vecCase[(int)direction.getCaseDir()]->getDeplacement()) {
+            direction.update();
         }
+        pos.setPos(vecCase[(int)direction.getCaseDir()]->getPos());
 
-        // ---POUR TEST--- se déplace uniquement à gauche (écrase obstacles)
+            
+        // while(!vecCase.empty()) {
+        //     int rndDir = rand() % vecCase.size();
+        //     // if (vecCase[rndDir]->getDeplacement() && (!isDejaPasseDessus(cheminToHome, vecCase[rndDir]->getPos()))) {
+        //     if ( vecCase[rndDir]->getDeplacement() ) {
+        //         pos.setPos(vecCase[rndDir]->getPos());
+        //         break;
+        //     } 
+        //     vecCase.erase(vecCase.begin()+rndDir);
+        // }
+
+        // ---------- POUR TEST ----------------------------------
+        // se déplace dans une direction uniquement (écrase obstacles)
         // pos.setPos(getPos().getX()-1,getPos().getY());
+
+        // se déplace dans une direction variable (écrase obstacles)
+        // pos.setPos(vecCase[(int)direction.getCaseDir()]->getPos());
     }
 }
 

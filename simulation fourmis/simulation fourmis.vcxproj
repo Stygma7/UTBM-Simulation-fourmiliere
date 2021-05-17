@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Case.cpp" />
+    <ClCompile Include="Direction.cpp" />
     <ClCompile Include="Environnement.cpp" />
     <ClCompile Include="FourmiGuerriere.cpp" />
     <ClCompile Include="Fourmilliere.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Case.h" />
+    <ClInclude Include="Direction.h" />
     <ClInclude Include="Environnement.h" />
     <ClInclude Include="FilleCase.h" />
     <ClInclude Include="FourmiGuerriere.h" />

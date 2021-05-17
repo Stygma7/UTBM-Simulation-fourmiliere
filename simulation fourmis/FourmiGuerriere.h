@@ -9,6 +9,7 @@ class Environnement;
 #include "Position.h"
 #include "ModeFourmi.h"
 #include "Fourmi.h"
+#include "Direction.h"
 
 class FourmiGuerriere : public Fourmi
 {
@@ -27,6 +28,8 @@ private:
     Environnement* env;
     // pointeur sur la colonie de la fourmi
     Fourmilliere* colonie;
+    // direction de déplacement de la fourmi
+    Direction direction;
 
     // transport de nourriture vers la fourmilliere
     void moveToHome();

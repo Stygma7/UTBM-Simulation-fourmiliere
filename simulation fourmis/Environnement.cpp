@@ -88,7 +88,6 @@ void Environnement::update() {
 			listPhero.erase(listPhero.begin() +i);
 		}
 	}
-   	// affichageTxtColor(Position(getColonne() + affOffset , 9), "listphero " + to_string(listPhero.size()) + "  ", 12);
 
 	nbrTour++;
 
@@ -127,21 +126,21 @@ void Environnement::dispPhero() {
 }
 
 void Environnement::dispFourmilliere() {
-    affichageTxtColor(fourmilliere->getPos(), "O", 5);
+    affichageTxtColor(fourmilliere->getPos(), "O", 6);
 }
 
 //Affichage
 void Environnement::showInfosInit() {
-    affichageTxtColor(Position(getColonne() + affOffset , 1), "Colonnes  : " + to_string(getColonne()), 15);
-    affichageTxtColor(Position(getColonne() + affOffset , 2), "Lignes    : " + to_string(getLigne()), 15);
-    affichageTxtColor(Position(getColonne() + affOffset , 3), "Obstacles : " + to_string(getNbrObstacles()), 15);
-    affichageTxtColor(Position(getColonne() + affOffset , 4), "Src nourr : " + to_string(getNbrSrcNourriture()), 10);
+    affichageTxtColor(Position(getColonne() + affOffset , 2), "Colonnes  : " + to_string(getColonne()), 15);
+    affichageTxtColor(Position(getColonne() + affOffset , 3), "Lignes    : " + to_string(getLigne()), 15);
+    affichageTxtColor(Position(getColonne() + affOffset , 4), "Obstacles : " + to_string(getNbrObstacles()), 15);
+    affichageTxtColor(Position(getColonne() + affOffset , 5), "Src nourr : " + to_string(getNbrSrcNourriture()), 10);
 	
 }
 
 void Environnement::showInfos() {
-    affichageTxtColor(Position(getColonne() + affOffset , 0), "Tour : " + to_string(nbrTour),10);
-    affichageTxtColor(Position(getColonne() + affOffset , 7), "Qte nourr   : " + to_string(fourmilliere->getFood()),10);
+    affichageTxtColor(Position(getColonne() + affOffset , 0), "Tour : " + to_string(nbrTour), 11);
+    affichageTxtColor(Position(getColonne() + affOffset , 7), "Qte nourr   : " + to_string(fourmilliere->getFood()), 10);
     affichageTxtColor(Position(getColonne() + affOffset , 8), "Nbr fourmis : " + to_string(fourmilliere->getNbrAnts()), 12);
 }
 

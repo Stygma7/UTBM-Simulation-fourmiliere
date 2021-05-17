@@ -4,6 +4,7 @@
 #include <windows.h>
 #include "Environnement.h"
 #include "Position.h"
+#include "Direction.h"
 
 using namespace std;
 
@@ -42,10 +43,14 @@ int main()
 			cin >> nbNourr;
 		}
 	} else {
-		ligne = 50;
-		colonne = 100;
-		nbObstacles = 1000;
-		nbNourr = 500;
+		// ligne = 50;
+		// colonne = 100;
+		// nbObstacles = 1000;
+		// nbNourr = 500;
+		ligne = 60;
+		colonne = 200;
+		nbObstacles = 1800;
+		nbNourr = 100;
 	}
 	
 	system("cls");
