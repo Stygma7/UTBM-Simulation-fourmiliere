@@ -13,40 +13,11 @@ void affichageTxt(Position p) {
     SetConsoleTextAttribute(hcon, 15);
 }
 
+// Constructeur
 Case::Case() {
-    // par défaut, case sans obstacle/nourriture
+    // par défaut, case normale
     setType(Type::Normal);
 }
-
-// Case::~Case() {
-//     delete(srcNour);
-// }
-
-
-// void Case::updateType() {
-//     if (deplacement)
-//         type = Type::Normal;
-//     else if (srcNour != nullptr)
-//         type = Type::SrcNourr;
-//     else 
-//         type = Type::Obstacle;
-// }
-
-// void Case::setSrcNourr() {
-//     if (srcNour == nullptr);
-//         srcNour = new SourceNourr();
-//     deplacement = false;
-//     updateType(); 
-// }
-
-// void Case::ajoutPheromone(Pheromone* phero) {
-//     pheromone = phero;
-// }
-
-// void Case::setObstacle() { 
-//     deplacement = false;
-//     updateType(); 
-// }
 
 void Case::setPos(Position pos) {
     this->pos = pos;
@@ -57,6 +28,7 @@ void Case::setPos(int x, int y) {
     pos.setY(y);
 }
 
+// réduit la quantité de nourriture sur la source associée
 void Case::pickNourr() {
     srcNour->pickNourr();
     if (srcNour->getquantite() <= 0) {
@@ -68,6 +40,7 @@ void Case::pickNourr() {
     }
 }
 
+// change le type de la case
 void Case::setType(Type type) {
     switch (type)
     {
@@ -89,21 +62,22 @@ void Case::setType(Type type) {
     this->type = type;
 }
 
+// true : pheromone dispo, false : pas de pheromone
 bool Case::isTherePhero() {
-    if (phero == nullptr) {
+    if (phero == nullptr)
+        return false;
+
+    if (phero->getAmount() > 0)
+        return true;
+    else
         return false;  
-    } else {
-        if (phero->getAmount() > 0) 
-            return true;
-        else
-            return false;  
-    }  
 }
 
 void Case::setPhero(Pheromone* ph) {
     phero = ph;
 }
 
+// ajoute de la pheromone
 void Case::addPhero() {
     phero->addAmount();
 }

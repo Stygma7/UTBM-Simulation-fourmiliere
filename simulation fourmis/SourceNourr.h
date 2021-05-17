@@ -7,6 +7,8 @@ private:
 
 public:
     SourceNourr();
+
     int getquantite() { return qteNourr; }
+    // réduit la quantité de nourriture
     void pickNourr();
 };

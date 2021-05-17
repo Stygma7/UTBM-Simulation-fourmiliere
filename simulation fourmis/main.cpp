@@ -28,7 +28,7 @@ int main()
 		}
 		
 		while(colonne <= 0) {
-			cout <<"Entrer le nombre de colonne : ";
+			cout <<"Entrer le nombre de colonnes : ";
 			cin >> colonne;
 		}
 
@@ -38,26 +38,25 @@ int main()
 		}
 
 		while((nbNourr < 0) || (nbNourr > (ligne*colonne - nbObstacles))) {
-			cout <<"Entrer le nombre de nourriture : ";
+			cout <<"Entrer le nombre de sources de nourriture : ";
 			cin >> nbNourr;
 		}
 	} else {
-		cout << "\nUtilisation des valeurs par defaut";
 		ligne = 50;
 		colonne = 100;
 		nbObstacles = 1000;
 		nbNourr = 500;
 	}
+	
 	system("cls");
 	Environnement e(colonne, ligne, nbObstacles, nbNourr);
 	
 	cout << "Carte des fourmis : \n";
 	e.afficherCarteInit();
 
-	for(int i=0; i<1500;i++){
+	for(int i=0; i<2500;i++){
 		e.update();
-		// Sleep(200);
-		Sleep(50);
+		Sleep(200);
 	}
 
 	gotoxy(1,54);

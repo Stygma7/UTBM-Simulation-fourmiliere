@@ -41,6 +41,7 @@ private:
 	int ligne = 50;
 	int nbrObstacles = 10;
 	int nbrSrcNourriture = 500;
+	int nbrTour = 0;
 	const int affOffset = 4;
 	// double tauxEvapPheromone = 0.95;
 	std::vector<std::vector<Case>> carte;

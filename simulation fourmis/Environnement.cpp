@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// ----------------- FONCTIONS -----------------------------------------------------------------------------------------------------------------------
 bool isCentre(int x, int y, int colonne, int ligne) {
 // bool isCentre(int x, int taille) {
 	int offset = 5;
@@ -59,9 +60,8 @@ void affichageTxtColor(Position p, string str, int color) {
     SetConsoleTextAttribute(hcon, 15);
 }
 
-// Cosntructeurs
+// ----------------- CONSTRUCTEURS -----------------------------------------------------------------------------------------------------------------------
 Environnement::Environnement() {
-	// fourmilliere = new Fourmilliere(*this, Position( getColonne()/2, getLigne()/2 ));
 	genererCarte();
 }
 Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
@@ -69,11 +69,12 @@ Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
 	setLigne(y);	
 	setnbrObstacles(nbObstacles);
 	setnbrSrcNourriture(nbNourriture);
-	// fourmilliere = new Fourmilliere(*this, Position( getColonne()/2, getLigne()/2 ));
 	genererCarte();
 	fourmilliere = new Fourmilliere(this, Position(getColonne()/2, getLigne()/2));
 }
 
+
+// ----------------- UPDATE ------------------------------------------------------------------------------------------------------------------------------
 void Environnement::update() {
 	// update fourmilliere + fourmis
 	fourmilliere->update();
@@ -86,30 +87,38 @@ void Environnement::update() {
 			delete listPhero[i];
 			listPhero.erase(listPhero.begin() +i);
 		}
-			// Sleep(2000);
-		// if (listPhero.at(i) == nullptr) {
-   		// 	affichageTxtColor(Position(getColonne() + affOffset , 10), "null " + to_string(i), 12);
-		// 	listPhero.erase(listPhero.begin() +i);
-		// }
 	}
-   	affichageTxtColor(Position(getColonne() + affOffset , 9), "listphero " + to_string(listPhero.size()) + "  ", 12);
+   	// affichageTxtColor(Position(getColonne() + affOffset , 9), "listphero " + to_string(listPhero.size()) + "  ", 12);
+
+	nbrTour++;
 
 	updateDisp();
 }
 
+void Environnement::addPhero(Position pos) {
+	if (carte[pos.getY()][pos.getX()].getPheromone() == nullptr) {
+		Pheromone* ph = new Pheromone(pos);
+		listPhero.push_back(ph);
+		carte[pos.getY()][pos.getX()].setPhero(ph);
+	} else {
+		carte[pos.getY()][pos.getX()].addPhero();
+	}
+
+}
+
+
+// ----------------- DISPLAY ------------------------------------------------------------------------------------------------------------------------------
 void Environnement::updateDisp() {
 	fourmilliere->EraseAnts();
 	dispPhero();
 	fourmilliere->DispAnts();
-	dispFourmilliere();
+	// dispFourmilliere();
 	
 	showInfos();
 }
 
 void Environnement::dispPhero() {
 	for(int i=0; i<listPhero.size();  i++) {
-		// if (listPhero.at(i) == nullptr)
-		// 	affichageTxtColor(Position(getColonne() + affOffset , 15), "null : ", 12);
 		if ( listPhero.at(i)->getAmount() >0 )
 			affichageTxtColor(listPhero.at(i)->getPos(), ".", 14);
 		else
@@ -123,7 +132,6 @@ void Environnement::dispFourmilliere() {
 
 //Affichage
 void Environnement::showInfosInit() {
-    // affichageTxtColor(Position(getColonne() + affOffset , 1), to_string(getColonne()), 15);
     affichageTxtColor(Position(getColonne() + affOffset , 1), "Colonnes  : " + to_string(getColonne()), 15);
     affichageTxtColor(Position(getColonne() + affOffset , 2), "Lignes    : " + to_string(getLigne()), 15);
     affichageTxtColor(Position(getColonne() + affOffset , 3), "Obstacles : " + to_string(getNbrObstacles()), 15);
@@ -132,23 +140,12 @@ void Environnement::showInfosInit() {
 }
 
 void Environnement::showInfos() {
-	// cout << "Colonnes : " << getColonne() << "\n";
-	// cout << "Lignes : " << getLigne() << "\n";
-	// cout << "Nombre d'obstacles : " << getnbrObstacles() << "\n";
-	// cout << "Nombre de source de nourriture : " << getnbrSrcNourriture() << "\n";
-    affichageTxtColor(Position(getColonne() + affOffset , 6), "Qte nourr   : " + to_string(fourmilliere->getFood()),10);
-    affichageTxtColor(Position(getColonne() + affOffset , 7), "Nbr fourmis : " + to_string(fourmilliere->getNbrAnts()), 12);
+    affichageTxtColor(Position(getColonne() + affOffset , 0), "Tour : " + to_string(nbrTour),10);
+    affichageTxtColor(Position(getColonne() + affOffset , 7), "Qte nourr   : " + to_string(fourmilliere->getFood()),10);
+    affichageTxtColor(Position(getColonne() + affOffset , 8), "Nbr fourmis : " + to_string(fourmilliere->getNbrAnts()), 12);
 }
 
-// void Environnement::updateInfos() {
-//     affichageTxtColor(Position(getColonne() + affOffset 16, to_string(qteNourr), 1));
-// }
-
 void Environnement::afficherCarteInit() {
-	// for (int y = 0; y < colonne+2; y++) {
-	// 	cout << "-";
-	// }
-	// cout << "\n";
 
 	for (int y = 0; y < ligne+2; y++) {
 		// cout << "|";
@@ -171,13 +168,11 @@ void Environnement::afficherCarteInit() {
 		cout << "\n";
 	}
 	
+	dispFourmilliere();
 	showInfosInit();
-	// for (int y = 0; y < colonne+2; y++) {
-	// 	cout << "-";
-	// }
 }
 
-
+// ----------------- GENERATION ------------------------------------------------------------------------------------------------------------------------------
 void Environnement::genererCarte() {
 	vector<Case> vLigne;
 	for (int y = 0; y < ligne+2; y++) {
@@ -235,15 +230,4 @@ void Environnement::ajoutNourriture() {
 			cptNou ++;
 		}
 	}
-}
-
-void Environnement::addPhero(Position pos) {
-	if (carte[pos.getY()][pos.getX()].getPheromone() == nullptr) {
-		Pheromone* ph = new Pheromone(pos);
-		listPhero.push_back(ph);
-		carte[pos.getY()][pos.getX()].setPhero(ph);
-	} else {
-		carte[pos.getY()][pos.getX()].addPhero();
-	}
-
 }

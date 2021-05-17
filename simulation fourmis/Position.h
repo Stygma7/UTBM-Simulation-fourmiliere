@@ -19,5 +19,6 @@ public:
     void setY(int y) {this->y = y;};
     void setPos(int x, int y) {this->x = x; this->y = y;}
     void setPos(Position pos) {this->x = pos.getX(); this->y = pos.getY();}
+    // test si les 2 positions sont adjacentes
     bool isNextTo(Position pos);
 };

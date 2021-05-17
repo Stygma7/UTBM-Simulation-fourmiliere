@@ -3,7 +3,7 @@
 
 SourceNourr::SourceNourr() {
     // qteNourr = rand() % 21 +5;
-    qteNourr = 3;
+    qteNourr = 1;
 }
 
 void SourceNourr::pickNourr() {

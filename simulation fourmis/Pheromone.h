@@ -5,12 +5,16 @@
 class Pheromone
 {
 private:
+    // quantite de pheromone actuelle
     int amount;
-    const int amountMax = 30;
+    // quantite max de pheromone
+    const int amountMax = 12;
+    // position des pheromones
     Position pos;
 
 public:
-    Pheromone(Position p) : amount(30), pos(p) {}
+    Pheromone(Position p) : amount(12), pos(p) {}
+    
     int getAmount() {return amount;}
     Position getPos() {return pos;}
 

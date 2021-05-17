@@ -8,31 +8,35 @@
 class Case {
 
 private:
-	//Permet de savoir si le déplacement est possible ou non sur la case (oui par défaut)
+	// deplacement sur la case
 	bool deplacement;
+	// position de la case
 	Position pos;
+	// type de case
 	Type type;
+	// pointeur sur source de nourriture
 	SourceNourr* srcNour = nullptr;
+	// pointeur sur pheromone
 	Pheromone* phero = nullptr;
 
 public:
+	// Constructeurs
 	Case();
 
+	// Getters
 	bool getDeplacement() { return this->deplacement; }
 	Position getPos() { return pos; }
 	Type getType() { return type; }
-	// SourceNourr getSrcNour() { return *srcNour; }
 	Pheromone* getPheromone() { return phero; }
-	bool isTherePhero();
 
-	// void setObstacle();
-	// void setSrcNourr();
-	// void ajoutPheromone(Pheromone*);
+	// Setters
 	void setPos(Position);
 	void setPos(int, int);
-	void pickNourr();
 	void setType(Type);
 	void setPhero(Pheromone*);
+
+	// 
+	void pickNourr();
 	void addPhero();
-	void update();
+	bool isTherePhero();
 };
