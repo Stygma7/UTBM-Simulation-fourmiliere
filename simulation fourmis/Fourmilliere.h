@@ -27,6 +27,8 @@ public:
     Position getPos() {return pos;}
     Environnement* getEnv() {return env;}
     void update();
+    void EraseAnts();
+    void DispAnts();
     void addFood(int);
     int getFood() {return food;}
     int getNbrAnts() {return listFourmisGuerrieres.size();}

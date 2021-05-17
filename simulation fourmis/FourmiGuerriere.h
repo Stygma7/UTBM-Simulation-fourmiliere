@@ -17,6 +17,7 @@ private:
     Position pos;
     Position lastPos;
     Mode mode = Mode::toFood;
+    std::vector<Case*> vecCase;
     Environnement* env;
     Fourmilliere* colonie;
     void moveToHome();

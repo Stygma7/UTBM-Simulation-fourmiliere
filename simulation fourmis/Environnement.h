@@ -4,6 +4,7 @@
 #include "Case.h"
 #include "Fourmilliere.h"
 class Fourmilliere;
+#include "Pheromone.h"
 
 class Environnement {
 public:
@@ -28,13 +29,11 @@ public:
 	// void settauxEvapPheromone(double evap) { this->tauxEvapPheromone = evap; }
 
 	// Affichage
-	void showInfos();
-	void showInfosInit();
-	void updateInfos();
-	void afficherCarte();
+	void afficherCarteInit();
 
 	// MaJ du monde
 	void update();
+	void addPhero(Position);
 
 private:
 	// Attributs
@@ -45,10 +44,18 @@ private:
 	const int affOffset = 4;
 	// double tauxEvapPheromone = 0.95;
 	std::vector<std::vector<Case>> carte;
+	std::vector<Pheromone*> listPhero;
 	Fourmilliere* fourmilliere;
 
 	//Génération
 	void genererCarte();
 	void ajoutObstacles();
 	void ajoutNourriture();
+	
+	void showInfos();
+	void showInfosInit();
+	void updateInfos();
+	void dispPhero();
+	void dispFourmilliere();
+	void updateDisp();
 };

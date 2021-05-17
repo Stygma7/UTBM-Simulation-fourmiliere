@@ -2,8 +2,8 @@
 #include <cstdlib>
 
 SourceNourr::SourceNourr() {
-    qteNourr = rand() % 21 +5;
-    // qteNourr = 1;
+    // qteNourr = rand() % 21 +5;
+    qteNourr = 3;
 }
 
 void SourceNourr::pickNourr() {

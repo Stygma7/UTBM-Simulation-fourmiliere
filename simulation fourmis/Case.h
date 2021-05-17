@@ -3,6 +3,7 @@
 #include "caseType.h"
 #include "Position.h"
 #include "SourceNourr.h"
+#include "Pheromone.h"
 
 class Case {
 
@@ -12,19 +13,17 @@ private:
 	Position pos;
 	Type type;
 	SourceNourr* srcNour = nullptr;
-	// Pheromone* pheromone = nullptr;
-
-	// void updateType();
+	Pheromone* phero = nullptr;
 
 public:
 	Case();
-	// ~Case();
 
 	bool getDeplacement() { return this->deplacement; }
 	Position getPos() { return pos; }
 	Type getType() { return type; }
-	SourceNourr getSrcNour() { return *srcNour; }
-	// Pheromone getPheromone() { return *pheromone; }
+	// SourceNourr getSrcNour() { return *srcNour; }
+	Pheromone* getPheromone() { return phero; }
+	bool isTherePhero();
 
 	// void setObstacle();
 	// void setSrcNourr();
@@ -33,4 +32,7 @@ public:
 	void setPos(int, int);
 	void pickNourr();
 	void setType(Type);
+	void setPhero(Pheromone*);
+	void addPhero();
+	void update();
 };

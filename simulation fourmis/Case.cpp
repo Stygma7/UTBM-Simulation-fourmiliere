@@ -88,3 +88,22 @@ void Case::setType(Type type) {
 
     this->type = type;
 }
+
+bool Case::isTherePhero() {
+    if (phero == nullptr) {
+        return false;  
+    } else {
+        if (phero->getAmount() > 0) 
+            return true;
+        else
+            return false;  
+    }  
+}
+
+void Case::setPhero(Pheromone* ph) {
+    phero = ph;
+}
+
+void Case::addPhero() {
+    phero->addAmount();
+}

@@ -75,8 +75,50 @@ Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
 }
 
 void Environnement::update() {
+	// update fourmilliere + fourmis
 	fourmilliere->update();
+
+	// update pheromone
+	for(int i=0; i<listPhero.size();  i++) {
+		listPhero[i]->update();
+		if (listPhero[i]->getAmount() < 0) {
+			carte[listPhero[i]->getPos().getY()][listPhero[i]->getPos().getX()].setPhero(nullptr);
+			delete listPhero[i];
+			listPhero.erase(listPhero.begin() +i);
+		}
+			// Sleep(2000);
+		// if (listPhero.at(i) == nullptr) {
+   		// 	affichageTxtColor(Position(getColonne() + affOffset , 10), "null " + to_string(i), 12);
+		// 	listPhero.erase(listPhero.begin() +i);
+		// }
+	}
+   	affichageTxtColor(Position(getColonne() + affOffset , 9), "listphero " + to_string(listPhero.size()) + "  ", 12);
+
+	updateDisp();
+}
+
+void Environnement::updateDisp() {
+	fourmilliere->EraseAnts();
+	dispPhero();
+	fourmilliere->DispAnts();
+	dispFourmilliere();
+	
 	showInfos();
+}
+
+void Environnement::dispPhero() {
+	for(int i=0; i<listPhero.size();  i++) {
+		// if (listPhero.at(i) == nullptr)
+		// 	affichageTxtColor(Position(getColonne() + affOffset , 15), "null : ", 12);
+		if ( listPhero.at(i)->getAmount() >0 )
+			affichageTxtColor(listPhero.at(i)->getPos(), ".", 14);
+		else
+			affichageTxtColor(listPhero.at(i)->getPos(), " ", 14);
+	}
+}
+
+void Environnement::dispFourmilliere() {
+    affichageTxtColor(fourmilliere->getPos(), "O", 5);
 }
 
 //Affichage
@@ -102,7 +144,7 @@ void Environnement::showInfos() {
 //     affichageTxtColor(Position(getColonne() + affOffset 16, to_string(qteNourr), 1));
 // }
 
-void Environnement::afficherCarte() {
+void Environnement::afficherCarteInit() {
 	// for (int y = 0; y < colonne+2; y++) {
 	// 	cout << "-";
 	// }
@@ -193,4 +235,15 @@ void Environnement::ajoutNourriture() {
 			cptNou ++;
 		}
 	}
+}
+
+void Environnement::addPhero(Position pos) {
+	if (carte[pos.getY()][pos.getX()].getPheromone() == nullptr) {
+		Pheromone* ph = new Pheromone(pos);
+		listPhero.push_back(ph);
+		carte[pos.getY()][pos.getX()].setPhero(ph);
+	} else {
+		carte[pos.getY()][pos.getX()].addPhero();
+	}
+
 }

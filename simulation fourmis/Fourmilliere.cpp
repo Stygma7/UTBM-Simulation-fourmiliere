@@ -21,15 +21,23 @@ Fourmilliere::Fourmilliere(Environnement* env) {
 void Fourmilliere::update() {
     for(FourmiGuerriere & fourmiG : listFourmisGuerrieres ) {
         fourmiG.update();
+    }
+}
+
+void Fourmilliere::EraseAnts() {
+    for(FourmiGuerriere & fourmiG : listFourmisGuerrieres ) {
         fourmiG.eraseLastPos();
     }
+}
+
+void Fourmilliere::DispAnts() {
     for (FourmiGuerriere& fourmiG : listFourmisGuerrieres) {
-        fourmiG.dispFourmi();
+        fourmiG.display();
     }
 }
 
 void Fourmilliere::addAnts() {
-    for (int i = 0; i < 80; i++)
+    for (int i = 0; i < 10; i++)
     {
         listFourmisGuerrieres.push_back(FourmiGuerriere(this));
     }

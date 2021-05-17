@@ -52,13 +52,15 @@ int main()
 	Environnement e(colonne, ligne, nbObstacles, nbNourr);
 	
 	cout << "Carte des fourmis : \n";
-	e.afficherCarte();
+	e.afficherCarteInit();
 
-	for(int i=0; i<500;i++){
+	for(int i=0; i<1500;i++){
 		e.update();
-		Sleep(200);
+		// Sleep(200);
+		Sleep(50);
 	}
 
 	gotoxy(1,54);
+
 	return 0;
 }

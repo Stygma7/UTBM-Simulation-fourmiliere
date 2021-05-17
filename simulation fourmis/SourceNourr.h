@@ -3,7 +3,7 @@
 class SourceNourr
 {
 private:
-    int qteNourr = 5;
+    int qteNourr;
 
 public:
     SourceNourr();
