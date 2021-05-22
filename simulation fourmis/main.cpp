@@ -47,10 +47,10 @@ int main()
 		// colonne = 100;
 		// nbObstacles = 1000;
 		// nbNourr = 500;
-		ligne = 60;
-		colonne = 200;
-		nbObstacles = 1800;
-		nbNourr = 100;
+		ligne = 50;
+		colonne = 100;
+		nbObstacles = 500;
+		nbNourr = 1000;
 	}
 	
 	system("cls");
@@ -61,7 +61,7 @@ int main()
 
 	for(int i=0; i<2500;i++){
 		e.update();
-		Sleep(200);
+		Sleep(400);
 	}
 
 	gotoxy(1,54);

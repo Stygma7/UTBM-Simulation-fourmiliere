@@ -16,8 +16,12 @@ private:
 	Type type;
 	// pointeur sur source de nourriture
 	SourceNourr* srcNour = nullptr;
-	// pointeur sur pheromone
-	Pheromone* phero = nullptr;
+	// pointeur sur pheromone toFood
+	Pheromone* pheroToFood = nullptr;
+	// pointeur sur pheromone toHome
+	Pheromone* pheroToHome = nullptr;
+	
+	bool isTherePhero(Pheromone*);
 
 public:
 	// Constructeurs
@@ -27,16 +31,22 @@ public:
 	bool getDeplacement() { return this->deplacement; }
 	Position getPos() { return pos; }
 	Type getType() { return type; }
-	Pheromone* getPheromone() { return phero; }
+	Pheromone* getPheroToFood() { return pheroToFood; }
+	Pheromone* getPheroToHome() { return pheroToHome; }
 
 	// Setters
 	void setPos(Position);
 	void setPos(int, int);
 	void setType(Type);
-	void setPhero(Pheromone*);
+	void setPheroToFood(Pheromone*);
+	void setPheroToHome(Pheromone*);
 
 	// 
 	void pickNourr();
-	void addPhero();
-	bool isTherePhero();
+	void addReducPheroToFood(int);
+	void addReducPheroToHome(int);
+	
+	bool isTherePheroToFood();
+	bool isTherePheroToHome();
+
 };

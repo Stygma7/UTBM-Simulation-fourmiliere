@@ -79,13 +79,23 @@ void Environnement::update() {
 	// update fourmilliere + fourmis
 	fourmilliere->update();
 
-	// update pheromone
-	for(int i=0; i<listPhero.size();  i++) {
-		listPhero[i]->update();
-		if (listPhero[i]->getAmount() < 0) {
-			carte[listPhero[i]->getPos().getY()][listPhero[i]->getPos().getX()].setPhero(nullptr);
-			delete listPhero[i];
-			listPhero.erase(listPhero.begin() +i);
+	// update pheromoneToFood
+	for(int i=0; i<listPheroToFood.size();  i++) {
+		listPheroToFood[i]->update();
+		if (listPheroToFood[i]->getAmount() < 0) {
+			carte[listPheroToFood[i]->getPos().getY()][listPheroToFood[i]->getPos().getX()].setPheroToFood(nullptr);
+			delete listPheroToFood[i];
+			listPheroToFood.erase(listPheroToFood.begin() +i);
+		}
+	}
+
+	// update pheromoneToHome
+	for(int i=0; i<listPheroToHome.size();  i++) {
+		listPheroToHome[i]->update();
+		if (listPheroToHome[i]->getAmount() < 0) {
+			carte[listPheroToHome[i]->getPos().getY()][listPheroToHome[i]->getPos().getX()].setPheroToFood(nullptr);
+			delete listPheroToHome[i];
+			listPheroToHome.erase(listPheroToHome.begin() +i);
 		}
 	}
 
@@ -94,15 +104,25 @@ void Environnement::update() {
 	updateDisp();
 }
 
-void Environnement::addPhero(Position pos) {
-	if (carte[pos.getY()][pos.getX()].getPheromone() == nullptr) {
-		Pheromone* ph = new Pheromone(pos);
-		listPhero.push_back(ph);
-		carte[pos.getY()][pos.getX()].setPhero(ph);
-	} else {
-		carte[pos.getY()][pos.getX()].addPhero();
-	}
 
+void Environnement::addPheroToFood(Position pos, int reduc) {
+	if (carte[pos.getY()][pos.getX()].getPheroToFood() == nullptr) {
+		Pheromone* ph = new Pheromone(pos, reduc);
+		listPheroToFood.push_back(ph);
+		carte[pos.getY()][pos.getX()].setPheroToFood(ph);
+	} else {
+		carte[pos.getY()][pos.getX()].addReducPheroToFood(reduc);
+	}
+}
+
+void Environnement::addPheroToHome(Position pos, int reduc) {
+	if (carte[pos.getY()][pos.getX()].getPheroToHome() == nullptr) {
+		Pheromone* ph = new Pheromone(pos, reduc);
+		listPheroToHome.push_back(ph);
+		carte[pos.getY()][pos.getX()].setPheroToHome(ph);
+	} else {
+		carte[pos.getY()][pos.getX()].addReducPheroToHome(reduc);
+	}
 }
 
 
@@ -117,11 +137,18 @@ void Environnement::updateDisp() {
 }
 
 void Environnement::dispPhero() {
-	for(int i=0; i<listPhero.size();  i++) {
-		if ( listPhero.at(i)->getAmount() >0 )
-			affichageTxtColor(listPhero.at(i)->getPos(), ".", 14);
+	 for(int i=0; i<listPheroToFood.size();  i++) {
+	 	if ( listPheroToFood.at(i)->getAmount() >0 )
+	 		affichageTxtColor(listPheroToFood.at(i)->getPos(), ".", 14);
+	 	else
+	 		affichageTxtColor(listPheroToFood.at(i)->getPos(), " ", 14);
+	 }
+
+	for(int i=0; i<listPheroToHome.size();  i++) {
+		if ( listPheroToHome.at(i)->getAmount() >0 )
+			affichageTxtColor(listPheroToHome.at(i)->getPos(), ".", 9);
 		else
-			affichageTxtColor(listPhero.at(i)->getPos(), " ", 14);
+			affichageTxtColor(listPheroToHome.at(i)->getPos(), " ", 9);
 	}
 }
 
@@ -135,7 +162,6 @@ void Environnement::showInfosInit() {
     affichageTxtColor(Position(getColonne() + affOffset , 3), "Lignes    : " + to_string(getLigne()), 15);
     affichageTxtColor(Position(getColonne() + affOffset , 4), "Obstacles : " + to_string(getNbrObstacles()), 15);
     affichageTxtColor(Position(getColonne() + affOffset , 5), "Src nourr : " + to_string(getNbrSrcNourriture()), 10);
-	
 }
 
 void Environnement::showInfos() {
@@ -147,16 +173,13 @@ void Environnement::showInfos() {
 void Environnement::afficherCarteInit() {
 
 	for (int y = 0; y < ligne+2; y++) {
-		// cout << "|";
 		for (int x = 0; x < colonne+2; x++) {
 			switch (carte[y][x].getType())
 			{
 			case Type::SrcNourr:
-				// cout << "o";
 				affichageTxtColor(carte[y][x].getPos(), "o", 2);
 				break;
 			case Type::Obstacle:
-				// cout << "X";
 				affichageTxtColor(carte[y][x].getPos(), "X", 15);
 				break;
 			default:

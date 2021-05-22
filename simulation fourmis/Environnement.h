@@ -33,7 +33,8 @@ public:
 
 	// MaJ du monde
 	void update();
-	void addPhero(Position);
+	void addPheroToFood(Position, int);
+	void addPheroToHome(Position, int);
 
 private:
 	// Attributs
@@ -45,7 +46,11 @@ private:
 	const int affOffset = 4;
 	// double tauxEvapPheromone = 0.95;
 	std::vector<std::vector<Case>> carte;
-	std::vector<Pheromone*> listPhero;
+	// Liste des pheromones déposée lors de trajet à la nourriture
+	std::vector<Pheromone*> listPheroToFood;
+	// Liste des pheromones déposée lors de trajet à la maison
+	std::vector<Pheromone*> listPheroToHome;
+	// Pointeur sur fourmilliere (à transformer en liste plus tard lorsqu'il y en aura plusieurs)
 	Fourmilliere* fourmilliere;
 
 	//Génération

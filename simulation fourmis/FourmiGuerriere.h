@@ -15,28 +15,33 @@ class FourmiGuerriere : public Fourmi
 {
 private:
     // liste des cases parcourues depuis la fourmilliere
-    std::vector<Position> cheminToHome;
+    // std::vector<Position> cheminToHome;
     // position de la fourmi
     Position pos;
     // derniere position de la fourmi
     Position lastPos;
+    Position tempPos;
     // mode de déplacement de la fourmi (vers maison ou vers nourriture)
     Mode mode = Mode::toFood;
     // liste des cases se trouvant autour de la fourmi
-    std::vector<Case*> vecCase;
+    std::vector<Case*> aroundCase;
     // pointeur sur l'environnement de la fourmi
     Environnement* env;
     // pointeur sur la colonie de la fourmi
     Fourmilliere* colonie;
     // direction de déplacement de la fourmi
     Direction direction;
+    // compteur de tour pour pouvoir réduire la quantité de pheromone à déposer
+    int cptTour = 0;
 
     // transport de nourriture vers la fourmilliere
     void moveToHome();
     // recherche de nourriture 
     void moveToFood();
+    // suit la direction
+    void moveToDirection();
     // change le mode de deplacement
-    void setMode(Mode mode) { this->mode = mode;}
+    void setMode(Mode mode) { this->mode = mode; cptTour = 0;}
 
 public:
     // Constructeur

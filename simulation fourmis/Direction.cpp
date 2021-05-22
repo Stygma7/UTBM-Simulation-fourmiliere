@@ -21,6 +21,21 @@ void Direction::update() {
     updateCaseDir();
 }
 
+// // Direction a +90
+// CaseDirection Direction::getCaseDir90() {
+//     return (CaseDirection) ( ((int)caseDir+1) % 4 );
+// }
+
+// // Direction a -90
+// CaseDirection Direction::getCaseDirm90() {
+//     return (CaseDirection) ( ((int)caseDir+3) % 4 );
+// }
+
+// Direction a +90
+CaseDirection Direction::getCaseDir180() {
+    return (CaseDirection) ( ((int)caseDir+2) % 4 );
+}
+
 void Direction::updateCaseDir() {
     if (angle < 90)
         caseDir = CaseDirection::Haut;
@@ -30,4 +45,9 @@ void Direction::updateCaseDir() {
         caseDir = CaseDirection::Bas;
     else
         caseDir = CaseDirection::Gauche;
+}
+
+void Direction::add180() {
+    angle += 180;
+    updateCaseDir();
 }

@@ -63,21 +63,57 @@ void Case::setType(Type type) {
 }
 
 // true : pheromone dispo, false : pas de pheromone
-bool Case::isTherePhero() {
-    if (phero == nullptr)
+bool Case::isTherePhero(Pheromone* ph) {
+    if (ph == nullptr)
         return false;
 
-    if (phero->getAmount() > 0)
+    if (ph->getAmount() > 0)
         return true;
     else
-        return false;  
+        return false;
 }
 
-void Case::setPhero(Pheromone* ph) {
-    phero = ph;
+// bool Case::isTherePheroToFood() {
+//     return isTherePhero(pheroToFood);
+// }
+bool Case::isTherePheroToFood() {
+    if (pheroToFood == nullptr)
+        return false;
+
+    if (pheroToFood->getAmount() > 0)
+        return true;
+    else
+        return false;
+}
+
+bool Case::isTherePheroToHome() {
+    return isTherePhero(pheroToHome);
+}
+
+void Case::setPheroToFood(Pheromone* ph) {
+    pheroToFood = ph;
 }
 
 // ajoute de la pheromone
-void Case::addPhero() {
-    phero->addAmount();
+// void Case::addPheroToFood(int amount) {
+//     pheroToFood->addAmount(amount);
+// }
+
+// ajoute de la phero seulement si la quantité deja présente est inférieure à ce qu'on veut mettre
+void Case::addReducPheroToFood(int reduc) {
+    pheroToFood->addReducAmount(reduc);
+}
+
+void Case::setPheroToHome(Pheromone* ph) {
+    pheroToHome = ph;
+}
+
+// ajoute de la pheromone
+// void Case::addPheroToHome(int amount) {
+//     pheroToHome->addAmount(amount);
+// }
+
+// ajoute de la phero seulement si la quantité deja présente est inférieure à ce qu'on veut mettre
+void Case::addReducPheroToHome(int reduc) {
+    pheroToHome->addReducAmount(reduc);
 }

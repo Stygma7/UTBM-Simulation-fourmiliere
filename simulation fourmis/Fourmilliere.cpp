@@ -39,7 +39,7 @@ void Fourmilliere::DispAnts() {
 }
 
 void Fourmilliere::addAnts() {
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 1; i++)
     {
         listFourmisGuerrieres.push_back(FourmiGuerriere(this));
     }
