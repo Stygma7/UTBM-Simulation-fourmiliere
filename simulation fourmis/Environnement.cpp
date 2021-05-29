@@ -76,13 +76,12 @@ Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
 
 // ----------------- UPDATE ------------------------------------------------------------------------------------------------------------------------------
 void Environnement::update() {
-	// update fourmilliere + fourmis
-	fourmilliere->update();
-
+	listPosToErase.clear();
 	// update pheromoneToFood
 	for(int i=0; i<listPheroToFood.size();  i++) {
 		listPheroToFood[i]->update();
-		if (listPheroToFood[i]->getAmount() < 0) {
+		if (listPheroToFood[i]->getAmount() <= 0) {
+			listPosToErase.push_back(listPheroToFood[i]->getPos());
 			carte[listPheroToFood[i]->getPos().getY()][listPheroToFood[i]->getPos().getX()].setPheroToFood(nullptr);
 			delete listPheroToFood[i];
 			listPheroToFood.erase(listPheroToFood.begin() +i);
@@ -92,12 +91,34 @@ void Environnement::update() {
 	// update pheromoneToHome
 	for(int i=0; i<listPheroToHome.size();  i++) {
 		listPheroToHome[i]->update();
-		if (listPheroToHome[i]->getAmount() < 0) {
-			carte[listPheroToHome[i]->getPos().getY()][listPheroToHome[i]->getPos().getX()].setPheroToFood(nullptr);
+		if (listPheroToHome[i]->getAmount() <= 0) {
+			listPosToErase.push_back(listPheroToHome[i]->getPos());
+			carte[listPheroToHome[i]->getPos().getY()][listPheroToHome[i]->getPos().getX()].setPheroToHome(nullptr);
 			delete listPheroToHome[i];
 			listPheroToHome.erase(listPheroToHome.begin() +i);
 		}
 	}
+	// update fourmilliere + fourmis
+	fourmilliere->update();
+
+
+	// for (vector<Pheromone*>::iterator it = listPheroToFood.begin() ; it != listPheroToFood.end(); it++) {
+	// 	(*it)->update();
+	// 	if ((*it)->getAmount() < 0) {
+	// 		carte[(*it)->getPos().getY()][(*it)->getPos().getX()].setPheroToFood(nullptr);
+	// 		delete (*it);
+	// 		listPheroToFood.erase(it);
+	// 	}
+	// }
+
+	// for (vector<Pheromone*>::iterator it = listPheroToHome.begin() ; it != listPheroToHome.end(); it++) {
+	// 	(*it)->update();
+	// 	if ((*it)->getAmount() < 0) {
+	// 		carte[(*it)->getPos().getY()][(*it)->getPos().getX()].setPheroToFood(nullptr);
+	// 		delete (*it);
+	// 		listPheroToHome.erase(it);
+	// 	}
+	// }
 
 	nbrTour++;
 
@@ -106,23 +127,39 @@ void Environnement::update() {
 
 
 void Environnement::addPheroToFood(Position pos, int reduc) {
-	if (carte[pos.getY()][pos.getX()].getPheroToFood() == nullptr) {
+	// if (carte[pos.getY()][pos.getX()].getPheroToFood() == nullptr) {
+	// 	Pheromone* ph = new Pheromone(pos, reduc);
+	// 	listPheroToFood.push_back(ph);
+	// 	carte[pos.getY()][pos.getX()].setPheroToFood(ph);
+	// } else {
+	// 	carte[pos.getY()][pos.getX()].addReducPheroToFood(reduc);
+	// }
+	if (carte[pos.getY()][pos.getX()].isTherePheroToFood()) {
+		carte[pos.getY()][pos.getX()].addReducPheroToFood(reduc);
+	} else if (Pheromone::AMOUNT_MAX - reduc > 0) {
 		Pheromone* ph = new Pheromone(pos, reduc);
 		listPheroToFood.push_back(ph);
 		carte[pos.getY()][pos.getX()].setPheroToFood(ph);
-	} else {
-		carte[pos.getY()][pos.getX()].addReducPheroToFood(reduc);
 	}
 }
 
 void Environnement::addPheroToHome(Position pos, int reduc) {
-	if (carte[pos.getY()][pos.getX()].getPheroToHome() == nullptr) {
+	// if (carte[pos.getY()][pos.getX()].getPheroToHome() == nullptr) {
+	// 	Pheromone* ph = new Pheromone(pos, reduc);
+	// 	listPheroToHome.push_back(ph);
+	// 	carte[pos.getY()][pos.getX()].setPheroToHome(ph);
+	// } else {
+	// 	carte[pos.getY()][pos.getX()].addReducPheroToHome(reduc);
+	// }
+
+	if (carte[pos.getY()][pos.getX()].isTherePheroToHome()) {
+		carte[pos.getY()][pos.getX()].addReducPheroToHome(reduc);
+	} else if (Pheromone::AMOUNT_MAX - reduc > 0) {
 		Pheromone* ph = new Pheromone(pos, reduc);
 		listPheroToHome.push_back(ph);
 		carte[pos.getY()][pos.getX()].setPheroToHome(ph);
-	} else {
-		carte[pos.getY()][pos.getX()].addReducPheroToHome(reduc);
 	}
+	
 }
 
 
@@ -137,31 +174,20 @@ void Environnement::updateDisp() {
 }
 
 void Environnement::dispPhero() {
-	// for(int i=0; i<listPheroToFood.size();  i++) {
-	//  	if ( listPheroToFood.at(i)->getAmount() >0 )
-	//  		affichageTxtColor(listPheroToFood.at(i)->getPos(), ".", 14);
-	//  	else
-	//  		affichageTxtColor(listPheroToFood.at(i)->getPos(), " ", 14);
-	// }
-
-	// for(int i=0; i<listPheroToHome.size();  i++) {
-	// 	if ( listPheroToHome.at(i)->getAmount() >0 )
-	// 		affichageTxtColor(listPheroToHome.at(i)->getPos(), ".", 9);
-	// 	else
-	// 		affichageTxtColor(listPheroToHome.at(i)->getPos(), " ", 9);
-	// }
-	for(Pheromone* & ph : listPheroToFood) {
-		if ( ph->getAmount() >0 )
-			affichageTxtColor(ph->getPos(), ".", 14);
-		else
-			affichageTxtColor(ph->getPos(), " ", 14);
+	for(Position & pos : listPosToErase) {
+		affichageTxtColor(pos, " ", 9);
 	}
 
 	for(Pheromone* & ph : listPheroToHome) {
-		if ( ph->getAmount() >0 )
-			affichageTxtColor(ph->getPos(), ".", 9);
-		else
-			affichageTxtColor(ph->getPos(), " ", 9);
+		affichageTxtColor(ph->getPos(), ".", 9);
+	}
+
+	for(Pheromone* & ph : listPheroToFood) {
+		// if ( ph->getAmount() >0 )
+		// 	affichageTxtColor(ph->getPos(), ".", 14);
+		// else
+		// 	affichageTxtColor(ph->getPos(), " ", 14);
+		affichageTxtColor(ph->getPos(), ".", 14);
 	}
 }
 
@@ -183,11 +209,20 @@ void Environnement::showInfos() {
     affichageTxtColor(Position(getColonne() + affOffset , 8), "Nbr fourmis G : " + to_string(fourmilliere->getNbrAntsG()) + "  ", 12);
     affichageTxtColor(Position(getColonne() + affOffset , 9), "Nbr fourmis O : " + to_string(fourmilliere->getNbrAntsO()) + "  ", 12);
 
-	int cpt = 0;
-	for (Pheromone* & ph : listPheroToHome) {
-    	affichageTxtColor(Position(104,22+cpt), "ph " + to_string(cpt) + " : " + to_string(ph->getAmount()) + " ", 15);
-		cpt++;
-	}
+
+    // affichageTxtColor(Position(104,22), "toHome", 15);
+	// int cpt = 0;
+	// for (Pheromone* & ph : listPheroToHome) {
+    // 	affichageTxtColor(Position(104,23+cpt), "ph " + to_string(cpt) + " : " + to_string(ph->getAmount()) + " ", 15);
+	// 	cpt++;
+	// }
+
+    // affichageTxtColor(Position(116,22), "toFood", 15);
+	// cpt = 0;
+	// for (Pheromone* & ph : listPheroToFood) {
+    // 	affichageTxtColor(Position(116,23+cpt), "ph " + to_string(cpt) + " : " + to_string(ph->getAmount()) + " ", 15);
+	// 	cpt++;
+	// }
 }
 
 void Environnement::afficherCarteInit() {

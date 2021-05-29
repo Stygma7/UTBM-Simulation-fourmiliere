@@ -50,6 +50,8 @@ private:
 	std::vector<Pheromone*> listPheroToFood;
 	// Liste des pheromones déposée lors de trajet à la maison
 	std::vector<Pheromone*> listPheroToHome;
+	// Liste de Position de Pheromone à désafficher
+	std::vector<Position> listPosToErase;
 	// Pointeur sur fourmilliere (à transformer en liste plus tard lorsqu'il y en aura plusieurs)
 	Fourmilliere* fourmilliere;
 

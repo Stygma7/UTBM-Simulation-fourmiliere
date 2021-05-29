@@ -51,74 +51,73 @@ void FourmiGuerriere::update() {
         moveToFood();
     }
     
-    affichageTxtColor2(Position(104,11), "pos X : " + to_string(pos.getX()) + " Y : " + to_string(pos.getY()) + " ", 15);
-    affichageTxtColor2(Position(104,12), "las X : " + to_string(lastPos.getX()) + " Y : " + to_string(lastPos.getY()) + " ", 15);
-    affichageTxtColor2(Position(104,13), "cpt   : " + to_string(cptTour) + "  ", 15);
-    if (mode == Mode::toHome)
-        affichageTxtColor2(Position(104,14), "toHome ", 15);
-    else
-        affichageTxtColor2(Position(104,14), "toFood ", 15);
+    // affichageTxtColor2(Position(104,11), "pos X : " + to_string(pos.getX()) + " Y : " + to_string(pos.getY()) + " ", 15);
+    // affichageTxtColor2(Position(104,12), "las X : " + to_string(lastPos.getX()) + " Y : " + to_string(lastPos.getY()) + " ", 15);
+    // if (mode == Mode::toHome)
+    //     affichageTxtColor2(Position(104,13), "toHome " + to_string(Pheromone::AMOUNT_MAX - 2*cptTour) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(104,13), "toFood " + to_string(Pheromone::AMOUNT_MAX - 2*cptTour) + " ", 15);
 
 
-    Case* ptrCase;
+    // Case* ptrCase;
 
-    ptrCase = env->getPtrCase(pos.getX(), pos.getY());
-    affichageTxtColor2(Position(104,16), "case fourmi ", 15);
-    if (ptrCase->isTherePheroToFood()) 
-        affichageTxtColor2(Position(116,16), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(116,16), "          " , 15);
+    // ptrCase = env->getPtrCase(pos.getX(), pos.getY());
+    // affichageTxtColor2(Position(104,16), "case fourmi ", 15);
+    // if (ptrCase->isTherePheroToFood()) 
+    //     affichageTxtColor2(Position(116,16), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(116,16), "          " , 15);
 
-    if (ptrCase->isTherePheroToHome()) 
-        affichageTxtColor2(Position(126,16), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(126,16), "          " , 15);
+    // if (ptrCase->isTherePheroToHome()) 
+    //     affichageTxtColor2(Position(126,16), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(126,16), "          " , 15);
 
-    ptrCase = env->getPtrCase(pos.getX(), pos.getY()-1);
-    affichageTxtColor2(Position(104,17), "case haut ", 15);
-    if (ptrCase->isTherePheroToFood()) 
-        affichageTxtColor2(Position(116,17), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(116,17), "          " , 15);
+    // ptrCase = env->getPtrCase(pos.getX(), pos.getY()-1);
+    // affichageTxtColor2(Position(104,17), "case haut ", 15);
+    // if (ptrCase->isTherePheroToFood()) 
+    //     affichageTxtColor2(Position(116,17), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(116,17), "          " , 15);
 
-    if (ptrCase->isTherePheroToHome()) 
-        affichageTxtColor2(Position(126,17), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(126,17), "          " , 15);
+    // if (ptrCase->isTherePheroToHome()) 
+    //     affichageTxtColor2(Position(126,17), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(126,17), "          " , 15);
 
-    ptrCase = env->getPtrCase(pos.getX()+1, pos.getY());
-    affichageTxtColor2(Position(104,18), "case droite ", 15);
-    if (ptrCase->isTherePheroToFood()) 
-        affichageTxtColor2(Position(116,18), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(116,18), "          " , 15);
+    // ptrCase = env->getPtrCase(pos.getX()+1, pos.getY());
+    // affichageTxtColor2(Position(104,18), "case droite ", 15);
+    // if (ptrCase->isTherePheroToFood()) 
+    //     affichageTxtColor2(Position(116,18), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(116,18), "          " , 15);
 
-    if (ptrCase->isTherePheroToHome()) 
-        affichageTxtColor2(Position(126,18), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(126,18), "          " , 15);
+    // if (ptrCase->isTherePheroToHome()) 
+    //     affichageTxtColor2(Position(126,18), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(126,18), "          " , 15);
 
-    ptrCase = env->getPtrCase(pos.getX(), pos.getY()+1);
-    affichageTxtColor2(Position(104,19), "case bas ", 15);
-    if (ptrCase->isTherePheroToFood()) 
-        affichageTxtColor2(Position(116,19), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(116,19), "          " , 15);
-    if (ptrCase->isTherePheroToHome()) 
-        affichageTxtColor2(Position(126,19), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(126,19), "          " , 15);
+    // ptrCase = env->getPtrCase(pos.getX(), pos.getY()+1);
+    // affichageTxtColor2(Position(104,19), "case bas ", 15);
+    // if (ptrCase->isTherePheroToFood()) 
+    //     affichageTxtColor2(Position(116,19), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(116,19), "          " , 15);
+    // if (ptrCase->isTherePheroToHome()) 
+    //     affichageTxtColor2(Position(126,19), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(126,19), "          " , 15);
 
-    ptrCase = env->getPtrCase(pos.getX()-1, pos.getY());
-    affichageTxtColor2(Position(104,20), "case gauche ", 15);
-    if (ptrCase->isTherePheroToFood()) 
-        affichageTxtColor2(Position(116,20), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(116,20), "          " , 15);
-    if (ptrCase->isTherePheroToHome()) 
-        affichageTxtColor2(Position(126,20), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    else
-        affichageTxtColor2(Position(126,20), "          " , 15);
+    // ptrCase = env->getPtrCase(pos.getX()-1, pos.getY());
+    // affichageTxtColor2(Position(104,20), "case gauche ", 15);
+    // if (ptrCase->isTherePheroToFood()) 
+    //     affichageTxtColor2(Position(116,20), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(116,20), "          " , 15);
+    // if (ptrCase->isTherePheroToHome()) 
+    //     affichageTxtColor2(Position(126,20), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
+    // else
+    //     affichageTxtColor2(Position(126,20), "          " , 15);
 
 
 

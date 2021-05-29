@@ -28,7 +28,7 @@ private:
     Environnement* env;
 
     // ajoute les fourmis de base
-    void addAnts();
+    void addAntsDefault();
 
 public:
     // Constructeurs

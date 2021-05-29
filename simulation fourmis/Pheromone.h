@@ -2,7 +2,7 @@
 #include "Position.h"
 
 // quantite max de pheromone
-#define AMOUNT_MAX 80
+// #define AMOUNT_MAX 20
 
 class Pheromone
 {
@@ -13,6 +13,8 @@ private:
     Position pos;
 
 public:
+    static const int AMOUNT_MAX = 80;
+
     Pheromone(Position p) : amount(AMOUNT_MAX), pos(p) {}
     Pheromone(Position p, int reduc) : amount(AMOUNT_MAX-reduc), pos(p) {}
 

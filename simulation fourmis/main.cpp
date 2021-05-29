@@ -65,7 +65,7 @@ int main()
 			Sleep(200);
 	}
 
-	gotoxy(1,54);
+	gotoxy(1,54);	
 
 	return 0;
 }

@@ -20,7 +20,7 @@ void affichageTxtColor3(Position p, string str, int color) {
 Fourmilliere::Fourmilliere(Environnement* env, Position position) {
     this->env = env;
     pos = position;
-    addAnts();
+    addAntsDefault();
 }
 
 // Fourmilliere::Fourmilliere(Environnement* env) {
@@ -55,8 +55,8 @@ void Fourmilliere::DispAnts() {
     }
 }
 
-void Fourmilliere::addAnts() {
-    for (int i = 0; i < 1; i++)
+void Fourmilliere::addAntsDefault() {
+    for (int i = 0; i < 30; i++)
     {
         listFourmisGuerrieres.push_back(FourmiGuerriere(this));
     }
