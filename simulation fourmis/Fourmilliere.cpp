@@ -6,17 +6,6 @@
 
 using namespace std;
 
-void affichageTxtColor3(Position p, string str, int color) {
-	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD dwPos;
-	dwPos.X = p.getX();
-	dwPos.Y = p.getY() +1; // +1 à cause de la premiere ligne de texte
-	SetConsoleCursorPosition(hcon, dwPos);
-    SetConsoleTextAttribute(hcon, color);
-    cout << str;
-    SetConsoleTextAttribute(hcon, 15);
-}
-
 Fourmilliere::Fourmilliere(Environnement* env, Position position) {
     this->env = env;
     pos = position;
@@ -31,38 +20,49 @@ Fourmilliere::Fourmilliere(Environnement* env, Position position) {
 
 void Fourmilliere::update() {
     // int cpt = 0;
-    for(FourmiGuerriere & fourmiG : listFourmisGuerrieres ) {
-        fourmiG.update();
+    for(FourmiGuerriere* & fourmiG : listFourmisGuerrieres ) {
+        fourmiG->update();
     }
-    for(FourmiOuvriere & fourmiO : listFourmisOuvrieres ) {
-        fourmiO.update();
-        // affichageTxtColor3(Position(104,16 + cpt), "vie " + to_string(cpt) + " : " + to_string(fourmiO.getVie()) + " ", 15);
-        // cpt++;
+
+    for(int i=0; i<listFourmisOuvrieres.size(); i++) {
+        if (listFourmisOuvrieres[i]->isAlive()) {
+            listFourmisOuvrieres[i]->update();
+        } else {
+            delete listFourmisOuvrieres[i];
+            listFourmisOuvrieres.erase(listFourmisOuvrieres.begin() +i);
+        }
+
     }
 }
 
 void Fourmilliere::EraseAnts() {
-    for(FourmiGuerriere & fourmiG : listFourmisGuerrieres ) {
-        if (!(fourmiG.getLastPos() == pos))
-            fourmiG.eraseLastPos();
+    for(FourmiGuerriere* & fourmiG : listFourmisGuerrieres ) {
+        if (!(fourmiG->getLastPos() == pos))
+            fourmiG->eraseLastPos();
     }
 }
 
 void Fourmilliere::DispAnts() {
-    for (FourmiGuerriere& fourmiG : listFourmisGuerrieres) {
-        if (!(fourmiG.getPos() == pos))
-            fourmiG.display();
+    for (FourmiGuerriere* & fourmiG : listFourmisGuerrieres) {
+        if (!(fourmiG->getPos() == pos))
+            fourmiG->display();
     }
 }
 
 void Fourmilliere::addAntsDefault() {
-    for (int i = 0; i < 30; i++)
-    {
-        listFourmisGuerrieres.push_back(FourmiGuerriere(this));
+    addFourmisGuerrieres(1);
+    addFourmisOuvrieres(5);
+}
+
+void Fourmilliere::addFourmisGuerrieres(int nb) {
+    for (int i = 0; i < nb; i++) {
+        listFourmisGuerrieres.push_back(new FourmiGuerriere(this));
     }
-    for (int i = 0; i < 5; i++)
-    {
-        listFourmisOuvrieres.push_back(FourmiOuvriere(this));
+}
+
+void Fourmilliere::addFourmisOuvrieres(int nb) {
+    for (int i = 0; i < nb; i++) {
+        listFourmisOuvrieres.push_back(new FourmiOuvriere(this));
     }
 }
 

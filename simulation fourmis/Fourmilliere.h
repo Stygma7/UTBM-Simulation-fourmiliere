@@ -5,6 +5,7 @@
 #include "FourmiGuerriere.h"
 class FourmiGuerriere;
 #include "FourmiOuvriere.h"
+class FourmiOuvriere;
 #include "Position.h"
 #include "Environnement.h"
 class Environnement;
@@ -21,15 +22,17 @@ private:
     // nourriture actuellement disponible
     int food = 0;
     // liste des fourmis guerrieres de la fourmilliere
-    std::vector<FourmiGuerriere> listFourmisGuerrieres;
+    std::vector<FourmiGuerriere*> listFourmisGuerrieres;
     // liste des fourmis ouvrières de la fourmilliere
-    std::vector<FourmiOuvriere> listFourmisOuvrieres;
+    std::vector<FourmiOuvriere*> listFourmisOuvrieres;
     // pointeur sur l'environnement de la fourmilliere
     Environnement* env;
 
     // ajoute les fourmis de base
     void addAntsDefault();
-
+    void addFourmisGuerrieres(int);
+    void addFourmisOuvrieres(int);
+    
 public:
     // Constructeurs
     Fourmilliere(Environnement*, Position);

@@ -142,6 +142,7 @@
     <ClCompile Include="Case.cpp" />
     <ClCompile Include="Direction.cpp" />
     <ClCompile Include="Environnement.cpp" />
+    <ClCompile Include="Fourmi.cpp" />
     <ClCompile Include="FourmiGuerriere.cpp" />
     <ClCompile Include="Fourmilliere.cpp" />
     <ClCompile Include="FourmiOuvriere.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Environnement.h" />
     <ClInclude Include="FilleCase.h" />
+    <ClInclude Include="Fourmi.h" />
     <ClInclude Include="FourmiGuerriere.h" />
     <ClInclude Include="Fourmilliere.h" />
     <ClInclude Include="FourmiOuvriere.h" />

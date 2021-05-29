@@ -30,8 +30,9 @@ bool isDejaPasseDessus(vector<Position> vPos, Position pos) {
 FourmiGuerriere::FourmiGuerriere(Fourmilliere* col) {
     colonie = col;
     env = colonie->getEnv();
-    pos.setX(env->getColonne() / 2);
-    pos.setY(env->getLigne() / 2);
+    // pos.setX(env->getColonne() / 2);
+    // pos.setY(env->getLigne() / 2);
+    pos = col->getPos();
 }
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------

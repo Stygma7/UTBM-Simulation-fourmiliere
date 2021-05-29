@@ -1,28 +1,24 @@
 #pragma once
 // #ifndef FOURMIG_H
 // #define FOURMIG_H
-#include <vector>
+#include "Fourmi.h"
 #include "Fourmilliere.h"
 class Fourmilliere;
 #include "Environnement.h"
 class Environnement;
-#include "Position.h"
-#include "ModeFourmi.h"
-#include "Fourmi.h"
-#include "Direction.h"
 
 class FourmiOuvriere : public Fourmi
 {
 private:
-    // pointeur sur l'environnement de la fourmi
+    // // pointeur sur l'environnement de la fourmi
     Environnement* env;
-    // pointeur sur la colonie de la fourmi
+    // // pointeur sur la colonie de la fourmi
     Fourmilliere* colonie;
 
-    //nombre de points de vie perdue par une fourmi par tour
+    // //nombre de points de vie perdue par une fourmi par tour
     int perteVie = 1;
 
-    //quantité de nourriture consommée lors du ravitaillement
+    // //quantité de nourriture consommée lors du ravitaillement
     int consoNourriture = 3;
 
 public:
@@ -32,10 +28,11 @@ public:
     // deplacement de la fourmi
     void update();
 
+
     // Consommer de nourriture
     void eat();
 
-    // Complète la vie de la fourmi
+    // // Complète la vie de la fourmi
     void giveLife();
 };
 

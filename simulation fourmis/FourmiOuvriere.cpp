@@ -1,9 +1,3 @@
-#include <iostream>
-#include <conio.h>
-#include <windows.h>
-#include <string>
-#include "caseType.h"
-#include "FourmiGuerriere.h"
 #include "FourmiOuvriere.h"
 
 using namespace std;
@@ -24,8 +18,8 @@ void FourmiOuvriere::update(){
     if (vie <= seuilRavitaillement) {
         //conso Nourriture
         eat();
-        //ajout vie
     }
+    // updateVie();
 }
 
 void FourmiOuvriere::eat() {
@@ -36,5 +30,5 @@ void FourmiOuvriere::eat() {
 }
 
 void FourmiOuvriere::giveLife() {
-    vie = maxVie;
+    vie = MAX_VIE;
 }
