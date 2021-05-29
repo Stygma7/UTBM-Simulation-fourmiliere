@@ -137,18 +137,31 @@ void Environnement::updateDisp() {
 }
 
 void Environnement::dispPhero() {
-	 for(int i=0; i<listPheroToFood.size();  i++) {
-	 	if ( listPheroToFood.at(i)->getAmount() >0 )
-	 		affichageTxtColor(listPheroToFood.at(i)->getPos(), ".", 14);
-	 	else
-	 		affichageTxtColor(listPheroToFood.at(i)->getPos(), " ", 14);
-	 }
+	// for(int i=0; i<listPheroToFood.size();  i++) {
+	//  	if ( listPheroToFood.at(i)->getAmount() >0 )
+	//  		affichageTxtColor(listPheroToFood.at(i)->getPos(), ".", 14);
+	//  	else
+	//  		affichageTxtColor(listPheroToFood.at(i)->getPos(), " ", 14);
+	// }
 
-	for(int i=0; i<listPheroToHome.size();  i++) {
-		if ( listPheroToHome.at(i)->getAmount() >0 )
-			affichageTxtColor(listPheroToHome.at(i)->getPos(), ".", 9);
+	// for(int i=0; i<listPheroToHome.size();  i++) {
+	// 	if ( listPheroToHome.at(i)->getAmount() >0 )
+	// 		affichageTxtColor(listPheroToHome.at(i)->getPos(), ".", 9);
+	// 	else
+	// 		affichageTxtColor(listPheroToHome.at(i)->getPos(), " ", 9);
+	// }
+	for(Pheromone* & ph : listPheroToFood) {
+		if ( ph->getAmount() >0 )
+			affichageTxtColor(ph->getPos(), ".", 14);
 		else
-			affichageTxtColor(listPheroToHome.at(i)->getPos(), " ", 9);
+			affichageTxtColor(ph->getPos(), " ", 14);
+	}
+
+	for(Pheromone* & ph : listPheroToHome) {
+		if ( ph->getAmount() >0 )
+			affichageTxtColor(ph->getPos(), ".", 9);
+		else
+			affichageTxtColor(ph->getPos(), " ", 9);
 	}
 }
 
@@ -166,8 +179,15 @@ void Environnement::showInfosInit() {
 
 void Environnement::showInfos() {
     affichageTxtColor(Position(getColonne() + affOffset , 0), "Tour : " + to_string(nbrTour), 11);
-    affichageTxtColor(Position(getColonne() + affOffset , 7), "Qte nourr   : " + to_string(fourmilliere->getFood()), 10);
-    affichageTxtColor(Position(getColonne() + affOffset , 8), "Nbr fourmis : " + to_string(fourmilliere->getNbrAnts()), 12);
+    affichageTxtColor(Position(getColonne() + affOffset , 7), "Qte nourr   : " + to_string(fourmilliere->getFood()) + "  ", 10);
+    affichageTxtColor(Position(getColonne() + affOffset , 8), "Nbr fourmis G : " + to_string(fourmilliere->getNbrAntsG()) + "  ", 12);
+    affichageTxtColor(Position(getColonne() + affOffset , 9), "Nbr fourmis O : " + to_string(fourmilliere->getNbrAntsO()) + "  ", 12);
+
+	int cpt = 0;
+	for (Pheromone* & ph : listPheroToHome) {
+    	affichageTxtColor(Position(104,22+cpt), "ph " + to_string(cpt) + " : " + to_string(ph->getAmount()) + " ", 15);
+		cpt++;
+	}
 }
 
 void Environnement::afficherCarteInit() {

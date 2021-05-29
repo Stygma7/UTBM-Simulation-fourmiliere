@@ -59,9 +59,10 @@ int main()
 	cout << "Carte des fourmis : \n";
 	e.afficherCarteInit();
 
-	for(int i=0; i<2500;i++){
+	for(int i=0; i<5000;i++){
 		e.update();
-		Sleep(400);
+		// if (i > 500)
+			Sleep(200);
 	}
 
 	gotoxy(1,54);

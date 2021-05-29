@@ -63,15 +63,15 @@ void Case::setType(Type type) {
 }
 
 // true : pheromone dispo, false : pas de pheromone
-bool Case::isTherePhero(Pheromone* ph) {
-    if (ph == nullptr)
-        return false;
+// bool Case::isTherePhero(Pheromone* ph) {
+//     if (ph == nullptr)
+//         return false;
 
-    if (ph->getAmount() > 0)
-        return true;
-    else
-        return false;
-}
+//     if (ph->getAmount() > 0)
+//         return true;
+//     else
+//         return false;
+// }
 
 // bool Case::isTherePheroToFood() {
 //     return isTherePhero(pheroToFood);
@@ -87,7 +87,14 @@ bool Case::isTherePheroToFood() {
 }
 
 bool Case::isTherePheroToHome() {
-    return isTherePhero(pheroToHome);
+    // return isTherePhero(pheroToHome);
+    if (pheroToHome == nullptr)
+        return false;
+
+    if (pheroToHome->getAmount() > 0)
+        return true;
+    else
+        return false;
 }
 
 void Case::setPheroToFood(Pheromone* ph) {

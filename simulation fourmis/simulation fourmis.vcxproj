@@ -144,6 +144,7 @@
     <ClCompile Include="Environnement.cpp" />
     <ClCompile Include="FourmiGuerriere.cpp" />
     <ClCompile Include="Fourmilliere.cpp" />
+    <ClCompile Include="FourmiOuvriere.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pheromone.cpp" />
     <ClCompile Include="Position.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="FilleCase.h" />
     <ClInclude Include="FourmiGuerriere.h" />
     <ClInclude Include="Fourmilliere.h" />
+    <ClInclude Include="FourmiOuvriere.h" />
     <ClInclude Include="Pheromone.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="SourceNourr.h" />

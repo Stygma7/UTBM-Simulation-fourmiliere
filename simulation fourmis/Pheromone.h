@@ -2,7 +2,7 @@
 #include "Position.h"
 
 // quantite max de pheromone
-#define AMOUNT_MAX 50
+#define AMOUNT_MAX 80
 
 class Pheromone
 {
