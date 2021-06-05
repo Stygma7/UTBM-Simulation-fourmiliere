@@ -1,6 +1,6 @@
-#pragma once
-// #ifndef FOURMIG_H
-// #define FOURMIG_H
+
+#ifndef FOURMIG_H
+#define FOURMIG_H
 #include <vector>
 #include "Fourmilliere.h"
 class Fourmilliere;
@@ -31,6 +31,9 @@ private:
     Fourmilliere* colonie;
     // direction de déplacement de la fourmi
     Direction direction;
+    // quantité de nourriture transportée
+    int nourr = 0;
+    const int maxNourr = 5;
     // compteur de tour pour pouvoir réduire la quantité de pheromone à déposer
     int cptTour = 0;
 
@@ -46,6 +49,7 @@ private:
 public:
     // Constructeur
     FourmiGuerriere(Fourmilliere*);
+    FourmiGuerriere(Fourmilliere*, int);
 
     Position getPos() { return pos; }
     Position getLastPos() { return lastPos; }
@@ -53,12 +57,14 @@ public:
 
     // deplacement de la fourmi
     void update();
+    // void updateVie();
     
     // --------- GESTION NOURRITURE -------------------------------------------------------------
     // Prend de la nourriture sur la case
     void grabNourriture(Case*);
     // Dépose de la nourriture à la fourmilliere
     void dropNourriture();
+    void eat();
 
     // --------- AFFICHAGE ----------------------------------------------------------------------
     // affiche la fourmi (à déplacer dans environnement ???)
@@ -67,4 +73,4 @@ public:
     void eraseLastPos();
 };
 
-// #endif
+#endif

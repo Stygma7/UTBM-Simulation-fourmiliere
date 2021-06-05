@@ -19,21 +19,34 @@ void affichageTxtColor2(Position p, string str, int color) {
 }
 
 // --------------- FONCTIONS ----------------------------------------------------------------------------------------
-bool isDejaPasseDessus(vector<Position> vPos, Position pos) {
-    if (find(vPos.begin(), vPos.end(), pos) != vPos.end())
-        return true;
-    else
-        return false;
-}
+// bool isDejaPasseDessus(vector<Position> vPos, Position pos) {
+//     if (find(vPos.begin(), vPos.end(), pos) != vPos.end())
+//         return true;
+//     else
+//         return false;
+// }
 
 // --------------- CONSTRUCTEURS ------------------------------------------------------------------------------------
 FourmiGuerriere::FourmiGuerriere(Fourmilliere* col) {
+    MAX_VIE = 100;
+    vie = MAX_VIE;
+    seuilRavitaillement = 40;
     colonie = col;
     env = colonie->getEnv();
-    // pos.setX(env->getColonne() / 2);
-    // pos.setY(env->getLigne() / 2);
     pos = col->getPos();
+    consoNourriture = 3;
 }
+
+FourmiGuerriere::FourmiGuerriere(Fourmilliere* col, int vie_) {
+    MAX_VIE = 100;
+    vie = vie_;
+    seuilRavitaillement = 40;
+    colonie = col;
+    env = colonie->getEnv();
+    pos = col->getPos();
+    consoNourriture = 3;
+}
+
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------
 // void FourmiGuerriere::update(){
@@ -46,12 +59,13 @@ void FourmiGuerriere::update() {
     aroundCase.push_back(env->getPtrCase(pos.getX() - 1, pos.getY())); // Gauche
 
     direction.update();
-    if (mode == Mode::toHome) {
+    if (vie < seuilRavitaillement || mode == Mode::toHome) {
         moveToHome();
     } else {
         moveToFood();
     }
-    
+        
+    // affichageTxtColor2(Position(104,11), "vie : " + to_string(vie) + " " , 15);
     // affichageTxtColor2(Position(104,11), "pos X : " + to_string(pos.getX()) + " Y : " + to_string(pos.getY()) + " ", 15);
     // affichageTxtColor2(Position(104,12), "las X : " + to_string(lastPos.getX()) + " Y : " + to_string(lastPos.getY()) + " ", 15);
     // if (mode == Mode::toHome)
@@ -120,16 +134,23 @@ void FourmiGuerriere::update() {
     // else
     //     affichageTxtColor2(Position(126,20), "          " , 15);
 
-
+    vie -= perteVie;
 
     if (!(pos == colonie->getPos())) 
         cptTour++;
 }
 
+
 // --------------- DEPLACEMENT --------------------------------------------------------------------------------------
 void FourmiGuerriere::moveToHome() {
     if (pos == colonie->getPos()) {
-        dropNourriture();
+        if (nourr > 0) {
+            dropNourriture();
+        }
+        
+        if (vie < seuilRavitaillement) {
+            eat();
+        }
 
     } else {
         env->addPheroToFood(pos, 2*cptTour);
@@ -185,8 +206,6 @@ void FourmiGuerriere::moveToFood() {
 
     Case* caseNour = nullptr;
     Case* casePhero = nullptr;
-    casePhero = nullptr;
-
     Case* casePos = env->getPtrCase(pos.getX(), pos.getY());
     int amountPos;
 
@@ -199,8 +218,8 @@ void FourmiGuerriere::moveToFood() {
     // On vérifie si il y a de la nourriture ou de la phéromone à proximité
     for(Case* & c : aroundCase ) {
         // on vérifie s'il y a de la pheromone et si la case ne correspond pas à la derniere position
-        if ( c->isTherePheroToFood() && (!(c->getPos() == lastPos)) ) {
-        // if ( c->isTherePheroToFood() && (c->getPheroToFood()->getAmount() > amountPos) ) {
+        // if ( c->isTherePheroToFood() && (!(c->getPos() == lastPos)) ) {
+        if ( c->isTherePheroToFood() && (!(c->getPos() == lastPos)) && (c->getPheroToFood()->getAmount() > amountPos) ) {
             if (casePhero == nullptr)
                 casePhero = c;
             else if (c->getPheroToFood()->getAmount() > casePhero->getPheroToFood()->getAmount())
@@ -257,14 +276,23 @@ void FourmiGuerriere::setPos(Position p) {
 
 // --------------- GESTION NOURRITURE -------------------------------------------------------------------------------
 void FourmiGuerriere::grabNourriture(Case* caseNour) {
-    caseNour->pickNourr();
+    nourr = caseNour->pickNourr(maxNourr);
     setMode(Mode::toHome);
 }
 
 void FourmiGuerriere::dropNourriture() {
-    if (!colonie->isFoodStockFull()) {
-        colonie->addFood(1);
+    // if (colonie->getFood() + nourr <= colonie->getFoodMax()) {
+        colonie->addFood(nourr);
+        nourr = 0;
         setMode(Mode::toFood);
+    // }
+}
+
+void FourmiGuerriere::eat() {
+    cptTour = 0;
+    if (colonie->getFood() >= consoNourriture) {
+        colonie->substractFood(consoNourriture);
+        giveLife();
     }
 }
 

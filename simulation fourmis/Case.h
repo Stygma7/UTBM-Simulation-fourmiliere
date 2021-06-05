@@ -1,13 +1,18 @@
-#pragma once
+#ifndef __CASE_H__
+#define __CASE_H__
 
 #include "caseType.h"
 #include "Position.h"
 #include "SourceNourr.h"
 #include "Pheromone.h"
+class Environnement;
+#include "CaseInfoAff.h"
 
 class Case {
 
 private:
+	// pointeur de l'environnement
+	Environnement* env;
 	// deplacement sur la case
 	bool deplacement;
 	// position de la case
@@ -23,9 +28,15 @@ private:
 	
 	bool isTherePhero(Pheromone*);
 
+	// Pour affichage
+	CaseInfoAff affTour;
+	CaseInfoAff affTourPreced;
+
 public:
-	// Constructeurs
+	// Constructeur
 	Case();
+	Case(Environnement*);
+	// ~Case();
 
 	// Getters
 	bool getDeplacement() { return this->deplacement; }
@@ -42,11 +53,12 @@ public:
 	void setPheroToHome(Pheromone*);
 
 	// 
-	void pickNourr();
+	int pickNourr(int);
 	void addReducPheroToFood(int);
 	void addReducPheroToHome(int);
 	
 	bool isTherePheroToFood();
 	bool isTherePheroToHome();
-
 };
+
+#endif

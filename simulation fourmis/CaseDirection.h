@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __CASEDIRECTION_H__
+#define __CASEDIRECTION_H__
+
 #include <cstdint>
 
 enum class CaseDirection : uint32_t
@@ -8,3 +10,5 @@ enum class CaseDirection : uint32_t
 	Bas = 2,
 	Gauche = 3,
 };
+
+#endif

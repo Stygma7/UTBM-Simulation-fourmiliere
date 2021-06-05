@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __POSITION_H__
+#define __POSITION_H__
 
 class Position
 {
@@ -22,3 +23,5 @@ public:
     // test si les 2 positions sont adjacentes
     bool isNextTo(Position pos);
 };
+
+#endif

@@ -19,11 +19,11 @@ bool isCentre(int x, int y, int colonne, int ligne) {
 }
 
 bool chanceApparition(int x, int taille) {
-	int tailleMax = pow(taille/2,2);
+	int tailleMax = (int)pow(taille/2,2);
 	double chanceApparition = pow((x - taille/2),2);
 	double facteur = 0.9 / tailleMax;
 	int rand100 = rand()%100 +1;
-	int chance = chanceApparition * facteur * 100;
+	int chance = (int)(chanceApparition * facteur * 100);
 
 	if (rand100 <= (chance+35)) {
 		return true;
@@ -74,6 +74,18 @@ Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
 }
 
 
+Environnement::~Environnement() {
+	for (Pheromone* & ph : listPheroToFood) {
+		delete(ph);
+	}
+	for (Pheromone* & ph : listPheroToHome) {
+		delete(ph);
+	}
+	
+	delete(fourmilliere);
+}
+
+
 // ----------------- UPDATE ------------------------------------------------------------------------------------------------------------------------------
 void Environnement::update() {
 	listPosToErase.clear();
@@ -85,6 +97,7 @@ void Environnement::update() {
 			carte[listPheroToFood[i]->getPos().getY()][listPheroToFood[i]->getPos().getX()].setPheroToFood(nullptr);
 			delete listPheroToFood[i];
 			listPheroToFood.erase(listPheroToFood.begin() +i);
+			i--;
 		}
 	}
 
@@ -96,6 +109,7 @@ void Environnement::update() {
 			carte[listPheroToHome[i]->getPos().getY()][listPheroToHome[i]->getPos().getX()].setPheroToHome(nullptr);
 			delete listPheroToHome[i];
 			listPheroToHome.erase(listPheroToHome.begin() +i);
+			i--;
 		}
 	}
 	// update fourmilliere + fourmis
@@ -122,7 +136,7 @@ void Environnement::update() {
 
 	nbrTour++;
 
-	updateDisp();
+	updateAffichage();
 }
 
 
@@ -164,7 +178,7 @@ void Environnement::addPheroToHome(Position pos, int reduc) {
 
 
 // ----------------- DISPLAY ------------------------------------------------------------------------------------------------------------------------------
-void Environnement::updateDisp() {
+void Environnement::updateAffichage() {
 	fourmilliere->EraseAnts();
 	dispPhero();
 	fourmilliere->DispAnts();
@@ -178,16 +192,12 @@ void Environnement::dispPhero() {
 		affichageTxtColor(pos, " ", 9);
 	}
 
-	for(Pheromone* & ph : listPheroToHome) {
-		affichageTxtColor(ph->getPos(), ".", 9);
+	for(Pheromone* & ph : listPheroToFood) {
+		affichageTxtColor(ph->getPos(), ".", 14);
 	}
 
-	for(Pheromone* & ph : listPheroToFood) {
-		// if ( ph->getAmount() >0 )
-		// 	affichageTxtColor(ph->getPos(), ".", 14);
-		// else
-		// 	affichageTxtColor(ph->getPos(), " ", 14);
-		affichageTxtColor(ph->getPos(), ".", 14);
+	for(Pheromone* & ph : listPheroToHome) {
+		affichageTxtColor(ph->getPos(), ".", 9);
 	}
 }
 
@@ -206,8 +216,11 @@ void Environnement::showInfosInit() {
 void Environnement::showInfos() {
     affichageTxtColor(Position(getColonne() + affOffset , 0), "Tour : " + to_string(nbrTour), 11);
     affichageTxtColor(Position(getColonne() + affOffset , 7), "Qte nourr   : " + to_string(fourmilliere->getFood()) + "  ", 10);
-    affichageTxtColor(Position(getColonne() + affOffset , 8), "Nbr fourmis G : " + to_string(fourmilliere->getNbrAntsG()) + "  ", 12);
-    affichageTxtColor(Position(getColonne() + affOffset , 9), "Nbr fourmis O : " + to_string(fourmilliere->getNbrAntsO()) + "  ", 12);
+    affichageTxtColor(Position(getColonne() + affOffset , 8), "Nbr oeufs : " + to_string(fourmilliere->getNbrOeufs()) + "  ", 12);
+    affichageTxtColor(Position(getColonne() + affOffset , 9), "Nbr larves : " + to_string(fourmilliere->getNbrLarves()) + "  ", 12);
+    affichageTxtColor(Position(getColonne() + affOffset , 10), "Nbr fourmis O : " + to_string(fourmilliere->getNbrFourmiOuvrieres()) + "  ", 12);
+    affichageTxtColor(Position(getColonne() + affOffset , 11), "Nbr fourmis G : " + to_string(fourmilliere->getNbrFourmiGuerrieres()) + "  ", 12);
+    affichageTxtColor(Position(getColonne() + affOffset , 12), "Nbr phero : " + to_string(listPheroToHome.size()+listPheroToFood.size()) + "  ", 9);
 
 
     // affichageTxtColor(Position(104,22), "toHome", 15);
@@ -254,7 +267,7 @@ void Environnement::genererCarte() {
 	vector<Case> vLigne;
 	for (int y = 0; y < ligne+2; y++) {
 		for (int x = 0; x < colonne+2; x++) {
-			vLigne.push_back(Case());
+			vLigne.push_back(Case(this));
 			vLigne[x].setPos(x, y);
 		}
 		carte.push_back(vLigne);

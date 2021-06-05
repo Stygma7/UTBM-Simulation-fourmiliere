@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __SOURCENOURR_H__
+#define __SOURCENOURR_H__
 
 class SourceNourr
 {
@@ -10,5 +11,7 @@ public:
 
     int getquantite() { return qteNourr; }
     // réduit la quantité de nourriture
-    void pickNourr();
+    int pickNourr(int);
 };
+
+#endif

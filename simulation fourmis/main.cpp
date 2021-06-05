@@ -5,6 +5,7 @@
 #include "Environnement.h"
 #include "Position.h"
 #include "Direction.h"
+#include "Reine.h"
 
 using namespace std;
 
@@ -49,8 +50,8 @@ int main()
 		// nbNourr = 500;
 		ligne = 50;
 		colonne = 100;
-		nbObstacles = 500;
-		nbNourr = 1000;
+		nbObstacles = 1000;
+		nbNourr = 500;
 	}
 	
 	system("cls");
@@ -62,7 +63,7 @@ int main()
 	for(int i=0; i<5000;i++){
 		e.update();
 		// if (i > 500)
-			Sleep(200);
+		Sleep(200);
 	}
 
 	gotoxy(1,54);	

@@ -146,9 +146,12 @@
     <ClCompile Include="FourmiGuerriere.cpp" />
     <ClCompile Include="Fourmilliere.cpp" />
     <ClCompile Include="FourmiOuvriere.cpp" />
+    <ClCompile Include="Larve.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Oeuf.cpp" />
     <ClCompile Include="Pheromone.cpp" />
     <ClCompile Include="Position.cpp" />
+    <ClCompile Include="Reine.cpp" />
     <ClCompile Include="SourceNourr.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,11 +163,12 @@
     <ClInclude Include="FourmiGuerriere.h" />
     <ClInclude Include="Fourmilliere.h" />
     <ClInclude Include="FourmiOuvriere.h" />
+    <ClInclude Include="Larve.h" />
+    <ClInclude Include="Oeuf.h" />
     <ClInclude Include="Pheromone.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="Reine.h" />
     <ClInclude Include="SourceNourr.h" />
-    <ClInclude Include="Utiles.cpp" />
-    <ClInclude Include="Utiles.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

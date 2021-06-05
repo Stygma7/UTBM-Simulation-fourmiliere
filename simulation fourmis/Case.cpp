@@ -1,7 +1,8 @@
 #include <iostream>
-#include "Case.h"
 #include <conio.h>
 #include <windows.h>
+#include "Environnement.h"
+#include "Case.h"
 
 void affichageTxt(Position p) {
 	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -15,9 +16,21 @@ void affichageTxt(Position p) {
 
 // Constructeur
 Case::Case() {
-    // par défaut, case normale
     setType(Type::Normal);
 }
+
+Case::Case(Environnement* e) {
+    env = e;
+    setType(Type::Normal);
+}
+
+// Case::~Case() {
+//     // delete(env);
+//     delete(srcNour);
+// 	delete(pheroToFood);
+// 	delete(pheroToHome);
+// }
+
 
 void Case::setPos(Position pos) {
     this->pos = pos;
@@ -29,8 +42,8 @@ void Case::setPos(int x, int y) {
 }
 
 // réduit la quantité de nourriture sur la source associée
-void Case::pickNourr() {
-    srcNour->pickNourr();
+int Case::pickNourr(int nourr) {
+    int tmp = srcNour->pickNourr(nourr);
     if (srcNour->getquantite() <= 0) {
         delete srcNour;
         srcNour = nullptr;
@@ -38,6 +51,7 @@ void Case::pickNourr() {
         
         affichageTxt(pos);
     }
+    return tmp;
 }
 
 // change le type de la case

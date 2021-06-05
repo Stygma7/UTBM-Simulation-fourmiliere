@@ -7,8 +7,13 @@ SourceNourr::SourceNourr() {
     // qteNourr = 2;
 }
 
-void SourceNourr::pickNourr() {
-    if (qteNourr > 0) {
-        qteNourr--;
+int SourceNourr::pickNourr(int nourr) {
+    if (qteNourr > nourr) {
+        qteNourr -= nourr;
+        return nourr;
+    } else {
+        int tmp = qteNourr;
+        qteNourr = 0;
+        return tmp;
     }
 }

@@ -8,7 +8,7 @@ class Fourmilliere;
 #include "Environnement.h"
 class Environnement;
 
-class FourmiOuvriere : public Fourmi
+class Larve : public Fourmi
 {
 private:
     // pointeur sur l'environnement de la fourmi
@@ -20,12 +20,11 @@ private:
     // int perteVie = 1;
     // quantité de nourriture consommée lors du ravitaillement
     // int consoNourriture = 1;
-    int tourAvantEvol;
+    int tourAvantEvol = 30;
 
 public:
     // Constructeur
-    FourmiOuvriere(Fourmilliere*);
-    FourmiOuvriere(Fourmilliere*, int);
+    Larve(Fourmilliere*);
 
     // deplacement de la fourmi
     void update();

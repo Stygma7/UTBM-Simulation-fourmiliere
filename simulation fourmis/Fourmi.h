@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __FOURMI_H__
+#define __FOURMI_H__
+
 // #include "Environnement.h"
 // class Environnement;
 // #include "Fourmilliere.h"
@@ -7,7 +9,7 @@
 class Fourmi
 {
 protected:
-    const int MAX_VIE = 100;
+    int MAX_VIE = 50;
     int vie = MAX_VIE;
     int seuilRavitaillement = 20;
 
@@ -17,17 +19,19 @@ protected:
     // Fourmilliere* colonie;
 
     //nombre de points de vie perdue par une fourmi par tour
-    // int perteVie = 1;
+    int perteVie = 1;
 
     //quantité de nourriture consommée lors du ravitaillement
-    // int consoNourriture = 3;
+    int consoNourriture = 1;
 
 public: 
     // void Fourmi::eat();
     // virtual void update();
     int getVie() {return vie;}
     // void updateVie();
-    // void eat() ;
-    // void giveLife();
+    // void eat();
+    void giveLife();
     bool isAlive();
 };
+
+#endif

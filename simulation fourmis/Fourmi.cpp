@@ -26,6 +26,6 @@ bool Fourmi::isAlive() {
 //     }
 // }
 
-// void Fourmi::giveLife() {
-//     vie = MAX_VIE;
-// }
+void Fourmi::giveLife() {
+    vie = MAX_VIE;
+}

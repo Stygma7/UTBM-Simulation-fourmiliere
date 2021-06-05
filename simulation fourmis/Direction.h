@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __DIRECTION_H__
+#define __DIRECTION_H__
+
 #include "CaseDirection.h"
 
 class Direction
@@ -22,3 +24,5 @@ public:
 
     void update();
 };
+
+#endif

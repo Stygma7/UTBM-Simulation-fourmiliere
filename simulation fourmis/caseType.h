@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __CASETYPE_H__
+#define __CASETYPE_H__
+
 #include <cstdint>
 
 enum class Type : uint32_t
@@ -7,3 +9,5 @@ enum class Type : uint32_t
 	Obstacle = 1,
 	SrcNourr = 2,
 };
+
+#endif

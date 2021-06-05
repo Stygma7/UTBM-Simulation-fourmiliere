@@ -1,26 +1,16 @@
-#include "FourmiOuvriere.h"
+#include "Larve.h"
 #include "Fourmi.h"
 
 using namespace std;
 
 // --------------- CONSTRUCTEURS ------------------------------------------------------------------------------------
-FourmiOuvriere::FourmiOuvriere(Fourmilliere* col) {
+Larve::Larve(Fourmilliere* col) {
     colonie = col;
     env = colonie->getEnv();
-    consoNourriture = 2;
-    tourAvantEvol = rand() % 20 + 40;
-}
-
-FourmiOuvriere::FourmiOuvriere(Fourmilliere* col, int vie_) {
-    colonie = col;
-    env = colonie->getEnv();
-    vie = vie_;
-    consoNourriture = 2;
-    tourAvantEvol = rand() % 20 + 40;
 }
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------
-void FourmiOuvriere::update(){
+void Larve::update(){
     if (vie >= 0) {
         vie -= perteVie;
 
@@ -30,14 +20,14 @@ void FourmiOuvriere::update(){
         }
 
         if (tourAvantEvol <= 0) {
-            colonie->evolToGuerriere(this);
+            colonie->evolToOuvriere(this);
         } else {
             tourAvantEvol--;
         }
     }
 }
 
-void FourmiOuvriere::eat() {
+void Larve::eat() {
     if (colonie->getFood() >= consoNourriture) {
         colonie->substractFood(consoNourriture);
         giveLife();

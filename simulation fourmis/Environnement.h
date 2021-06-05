@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __ENVIRONNEMENT_H__
+#define __ENVIRONNEMENT_H__
 
 #include <vector>
 #include "Case.h"
@@ -11,6 +12,8 @@ public:
 	// Constructeurs
 	Environnement();
 	Environnement(int, int, int, int);
+
+	~Environnement();
 
 	// Getters
 	int getColonne() { return this->colonne; }
@@ -65,5 +68,7 @@ private:
 	void updateInfos();
 	void dispPhero();
 	void dispFourmilliere();
-	void updateDisp();
+	void updateAffichage();
 };
+
+#endif

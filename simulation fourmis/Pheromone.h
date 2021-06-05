@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __PHEROMONE_H__
+#define __PHEROMONE_H__
+
 #include "Position.h"
 
 // quantite max de pheromone
@@ -13,7 +15,7 @@ private:
     Position pos;
 
 public:
-    static const int AMOUNT_MAX = 80;
+    static const int AMOUNT_MAX = 100;
 
     Pheromone(Position p) : amount(AMOUNT_MAX), pos(p) {}
     Pheromone(Position p, int reduc) : amount(AMOUNT_MAX-reduc), pos(p) {}
@@ -27,3 +29,5 @@ public:
     void addReducAmount(int);
     void update();
 };
+
+#endif
