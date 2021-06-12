@@ -47,6 +47,8 @@
         "iomanip": "cpp",
         "xlocmon": "cpp",
         "xloctime": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "unordered_set": "cpp",
+        "list": "cpp"
     }
 }

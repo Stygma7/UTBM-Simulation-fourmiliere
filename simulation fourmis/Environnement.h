@@ -40,6 +40,8 @@ public:
 	void addPheroToHome(Position, int);
 	void addObstacles(int);
 
+	void addCaseAffichage(Case*);
+
 private:
 	// Attributs
 	int colonne = 100;
@@ -55,7 +57,9 @@ private:
 	// Liste des pheromones déposée lors de trajet à la maison
 	std::vector<Pheromone*> listPheroToHome;
 	// Liste de Position de Pheromone à désafficher
-	std::vector<Position> listPosToErase;
+	// std::vector<Position> listPosToErase;
+	// liste des élements à afficher ou réafficher
+	std::unordered_set<Case*> listAffichage;
 	// Pointeur sur fourmilliere (à transformer en liste plus tard lorsqu'il y en aura plusieurs)
 	Fourmilliere* fourmilliere;
 

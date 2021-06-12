@@ -5,14 +5,14 @@
 #include "Fourmi.h";
 #include "Fourmilliere.h"
 class Fourmilliere;
-#include "Environnement.h"
-class Environnement;
+// #include "Environnement.h"
+// class Environnement;
 
 class Larve : public Fourmi
 {
 private:
     // pointeur sur l'environnement de la fourmi
-    Environnement* env;
+    // Environnement* env;
     // pointeur sur la colonie de la fourmi
     Fourmilliere* colonie;
 

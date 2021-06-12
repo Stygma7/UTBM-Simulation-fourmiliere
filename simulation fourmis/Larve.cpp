@@ -6,7 +6,8 @@ using namespace std;
 // --------------- CONSTRUCTEURS ------------------------------------------------------------------------------------
 Larve::Larve(Fourmilliere* col) {
     colonie = col;
-    env = colonie->getEnv();
+    // env = colonie->getEnv();
+    tourAvantEvol =  rand() %10 +25;
 }
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------

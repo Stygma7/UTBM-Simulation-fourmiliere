@@ -68,10 +68,10 @@ public:
 
     // --------- AFFICHAGE ----------------------------------------------------------------------
     // affiche la fourmi (à déplacer dans environnement ???)
-    void display();
-    // efface graphiquement la derniere position de la fourmi (à déplacer dans environnement ???)
-    void eraseLastPos();
-    void erasePos();
+    // void display();
+    // // efface graphiquement la derniere position de la fourmi (à déplacer dans environnement ???)
+    // void eraseLastPos();
+    // void erasePos();
 };
 
 #endif

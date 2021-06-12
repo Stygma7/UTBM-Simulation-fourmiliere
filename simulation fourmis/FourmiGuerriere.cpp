@@ -60,29 +60,23 @@ void FourmiGuerriere::update() {
     aroundCase.push_back(env->getPtrCase(pos.getX(), pos.getY() - 1)); // Bas
     aroundCase.push_back(env->getPtrCase(pos.getX() - 1, pos.getY())); // Gauche
 
-    // lastPos = tempPos;
-    // tempPos=pos;
-    // lastPos = pos;
-
     direction.update();
-    if (vie < seuilRavitaillement || mode == Mode::toHome) {
+    if (vie <= seuilRavitaillement || mode == Mode::toHome) {
         moveToHome();
     } else {
         moveToFood();
     }
 
     vie -= perteVie;
-    // if (vie <= 0)
-    //     erasePos();
 
     if (pos != colonie->getPos()) 
         cptTour++;
         
     // affichageTxtColor2(Position(104,14), "vie : " + to_string(vie) + " " , 15);
     // if (mode == Mode::toHome)
-    //     affichageTxtColor2(Position(104,14), "toHome " + to_string(Pheromone::AMOUNT_MAX - 2*cptTour) + " ", 15);
+    //     affichageTxtColor2(Position(104,16), "toHome " + to_string(Pheromone::AMOUNT_MAX - 2*cptTour) + " ", 15);
     // else
-    //     affichageTxtColor2(Position(104,14), "toFood " + to_string(Pheromone::AMOUNT_MAX - 2*cptTour) + " ", 15);
+    //     affichageTxtColor2(Position(104,16), "toFood " + to_string(Pheromone::AMOUNT_MAX - 2*cptTour) + " ", 15);
     // affichageTxtColor2(Position(104,15), "pos X : " + to_string(pos.getX()) + " Y : " + to_string(pos.getY()) + " ", 15);
     // affichageTxtColor2(Position(104,16), "las X : " + to_string(lastPos.getX()) + " Y : " + to_string(lastPos.getY()) + " ", 15);
 
@@ -157,16 +151,17 @@ void FourmiGuerriere::moveToHome() {
             dropNourriture();
         }
         
-        if (vie < seuilRavitaillement) {
+        if (vie <= seuilRavitaillement) {
             eat();
         }
         cptTour = 0;
 
     } else {
-        env->addPheroToFood(pos, 2*cptTour);
+        if (nourr > 0)
+            env->addPheroToFood(pos, 2*cptTour);
 
         if (pos.isNextTo(colonie->getPos())) {
-            pos = colonie->getPos();
+            setPos(colonie->getPos());
         } else {
 
             Case* casePhero = nullptr;
@@ -269,7 +264,6 @@ void FourmiGuerriere::moveToDirection() {
     while (!aroundCase[(int)direction.getCaseDir()]->getDeplacement()) {
         direction.update();
     }
-    // pos.setPos(aroundCase[(int)direction.getCaseDir()]->getPos());
     setPos(aroundCase[(int)direction.getCaseDir()]->getPos());
 }
 
@@ -280,12 +274,16 @@ void FourmiGuerriere::setMode(Mode mode) {
 void FourmiGuerriere::setPos(Position p) {
     lastPos = pos;
     pos = p;
+
+    env->getPtrCase(pos.getX(), pos.getY())->addAffichage(CaseInfoAff::Fourmi);
+    env->getPtrCase(lastPos.getX(), lastPos.getY())->deleteAffichage(CaseInfoAff::Fourmi);
 }
 
 // --------------- GESTION NOURRITURE -------------------------------------------------------------------------------
 void FourmiGuerriere::grabNourriture(Case* caseNour) {
     nourr = caseNour->pickNourr(maxNourr);
     setMode(Mode::toHome);
+    lastPos = pos;
 }
 
 void FourmiGuerriere::dropNourriture() {
@@ -293,6 +291,7 @@ void FourmiGuerriere::dropNourriture() {
         colonie->addFood(nourr);
         nourr = 0;
         setMode(Mode::toFood);
+        lastPos = pos;
     // }
 }
 
@@ -305,30 +304,30 @@ void FourmiGuerriere::eat() {
 }
 
 // --------------- AFFICHAGE ----------------------------------------------------------------------------------------
-void FourmiGuerriere::display() {
-	// HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	// COORD dwPos;
-	// dwPos.X = pos.getX();
-	// dwPos.Y = pos.getY() +1; // +1 à cause de la premiere ligne de texte
-	// SetConsoleCursorPosition(hcon, dwPos);
-    // SetConsoleTextAttribute(hcon, 12);
-    // cout << '8';
-    // SetConsoleTextAttribute(hcon, 15);
-    affichageTxtColor2(pos, "8", 12);
-}
+// void FourmiGuerriere::display() {
+// 	// HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+// 	// COORD dwPos;
+// 	// dwPos.X = pos.getX();
+// 	// dwPos.Y = pos.getY() +1; // +1 à cause de la premiere ligne de texte
+// 	// SetConsoleCursorPosition(hcon, dwPos);
+//     // SetConsoleTextAttribute(hcon, 12);
+//     // cout << '8';
+//     // SetConsoleTextAttribute(hcon, 15);
+//     affichageTxtColor2(pos, "8", 12);
+// }
 
-void FourmiGuerriere::eraseLastPos() {
-	// HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	// COORD dwPos;
-	// dwPos.X = lastPos.getX();
-	// dwPos.Y = lastPos.getY() +1;
-	// SetConsoleCursorPosition(hcon, dwPos);
-    // SetConsoleTextAttribute(hcon, 15);
-    // cout << " ";
-    affichageTxtColor2(lastPos, " ", 15);
-}
+// void FourmiGuerriere::eraseLastPos() {
+// 	// HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+// 	// COORD dwPos;
+// 	// dwPos.X = lastPos.getX();
+// 	// dwPos.Y = lastPos.getY() +1;
+// 	// SetConsoleCursorPosition(hcon, dwPos);
+//     // SetConsoleTextAttribute(hcon, 15);
+//     // cout << " ";
+//     affichageTxtColor2(lastPos, " ", 15);
+// }
 
-void FourmiGuerriere::erasePos() {
-    if (pos != colonie->getPos())
-        affichageTxtColor2(pos, " ", 15);
-}
+// void FourmiGuerriere::erasePos() {
+//     if (pos != colonie->getPos())
+//         affichageTxtColor2(pos, " ", 15);
+// }

@@ -5,7 +5,8 @@ using namespace std;
 // --------------- CONSTRUCTEURS ------------------------------------------------------------------------------------
 Oeuf::Oeuf(Fourmilliere* col) {
     colonie = col;
-    env = colonie->getEnv();
+    // env = colonie->getEnv();
+    tourAvantEvol =  rand() %10 +25;
 }
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------

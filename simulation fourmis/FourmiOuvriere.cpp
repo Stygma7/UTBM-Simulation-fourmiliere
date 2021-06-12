@@ -14,9 +14,9 @@ FourmiOuvriere::FourmiOuvriere(Fourmilliere* col) {
 FourmiOuvriere::FourmiOuvriere(Fourmilliere* col, int vie_) {
     colonie = col;
     env = colonie->getEnv();
-    vie = vie_;
     consoNourriture = 2;
     tourAvantEvol = rand() % 20 + 40;
+    vie = vie_;
 }
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------

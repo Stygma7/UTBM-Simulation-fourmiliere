@@ -7,17 +7,6 @@
 
 using namespace std;
 
-void affichageTxtColor3(Position p, string str, int color) {
-	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD dwPos;
-	dwPos.X = p.getX();
-	dwPos.Y = p.getY() +1; // +1 à cause de la premiere ligne de texte
-	SetConsoleCursorPosition(hcon, dwPos);
-    SetConsoleTextAttribute(hcon, color);
-    cout << str;
-    SetConsoleTextAttribute(hcon, 15);
-}
-
 Fourmilliere::Fourmilliere(Environnement* env, Position position) {
     this->env = env;
     pos = position;
@@ -34,17 +23,7 @@ Fourmilliere::~Fourmilliere() {
 	}
 }
 
-// Fourmilliere::Fourmilliere(Environnement* env) {
-//     this->env = env;
-//     pos = Position(env->getColonne()/2, env->getLigne()/2);
-//     addAnts();
-// }
-
 void Fourmilliere::update() {
-    // for(FourmiGuerriere* & fourmiG : listFourmisGuerrieres ) {
-    //     fourmiG->update();
-    // }
-
     if (reine != nullptr) {
         if (reine->isAlive()) {
             reine->update();
@@ -70,8 +49,6 @@ void Fourmilliere::update() {
     }
 
     for(int i=0; i<listFourmisOuvrieres.size(); i++) {
-        // affichageTxtColor3(Position(104,19+i), to_string(i) + " " + to_string(listFourmisOuvrieres[i]->getVie()) + " ", 15);
-
         if (listFourmisOuvrieres[i]->isAlive()) {
             listFourmisOuvrieres[i]->update();
         } else {
@@ -82,33 +59,17 @@ void Fourmilliere::update() {
     }
 
     for(int i=0; i<listFourmisGuerrieres.size(); i++) {
-        // affichageTxtColor3(Position(104,19+i), to_string(i) + " " + to_string(listFourmisOuvrieres[i]->getVie()) + " ", 15);
-
         if (listFourmisGuerrieres[i]->isAlive()) {
             listFourmisGuerrieres[i]->update();
         } else {
-            listFourmisGuerrieres[i]->erasePos();
+            // listFourmisGuerrieres[i]->erasePos();
+            env->getPtrCase(listFourmisGuerrieres[i]->getPos().getX(), listFourmisGuerrieres[i]->getPos().getY())->deleteAffichage(CaseInfoAff::Fourmi);
             delete listFourmisGuerrieres[i];
             listFourmisGuerrieres.erase(listFourmisGuerrieres.begin() +i);
             i--;
         }
     }
 }
-
-void Fourmilliere::EraseAnts() {
-    for(FourmiGuerriere* & fourmiG : listFourmisGuerrieres ) {
-        if (!(fourmiG->getLastPos() == pos))
-            fourmiG->eraseLastPos();
-    }
-}
-
-void Fourmilliere::DispAnts() {
-    for (FourmiGuerriere* & fourmiG : listFourmisGuerrieres) {
-        if (!(fourmiG->getPos() == pos))
-            fourmiG->display();
-    }
-}
-
 
 void Fourmilliere::addAntsDefault() {
     addReine();
@@ -200,4 +161,15 @@ void Fourmilliere::evolToGuerriere(FourmiOuvriere* f) {
             listFourmisOuvrieres.erase(listFourmisOuvrieres.begin() + i);
         }
     }
+}
+
+int Fourmilliere::getPop() {
+    return getNbrReine() + listOeufs.size() + listLarves.size() + listFourmisOuvrieres.size() + listFourmisGuerrieres.size();
+}
+
+int Fourmilliere::getNbrReine() {
+    if (reine != nullptr)
+        return 1;
+    else
+        return 0;
 }

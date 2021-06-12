@@ -15,7 +15,7 @@ private:
     Position pos;
 
 public:
-    static const int AMOUNT_MAX = 100;
+    static const int AMOUNT_MAX = 120;
 
     Pheromone(Position p) : amount(AMOUNT_MAX), pos(p) {}
     Pheromone(Position p, int reduc) : amount(AMOUNT_MAX-reduc), pos(p) {}

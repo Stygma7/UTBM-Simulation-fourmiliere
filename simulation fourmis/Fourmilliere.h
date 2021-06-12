@@ -24,7 +24,7 @@ private:
     // nombre de fourmi max 
     int populationMax = 100;
     // nombre de nourriture max 
-    int foodMax = 20000;
+    int foodMax = 500;
     // nourriture actuellement disponible
     int food = 0;
     // Reine de la fourmillière
@@ -60,14 +60,11 @@ public:
     int getNbrLarves() {return listLarves.size();}
     int getNbrFourmiGuerrieres() {return listFourmisGuerrieres.size();}
     int getNbrFourmiOuvrieres() {return listFourmisOuvrieres.size();}
-
+    int getPop();
+    int getPopMax() {return populationMax;}
+    int getNbrReine();
     // met à jour toutes les fourmis de la fourmilliere
     void update();
-
-    // affiche les fourmis
-    void DispAnts();
-    // efface les fourmis
-    void EraseAnts();
 
     // ajoute de la nourriture dans la fourmilliere
     void addFood(int);

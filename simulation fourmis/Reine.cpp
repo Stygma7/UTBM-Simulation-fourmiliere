@@ -17,9 +17,10 @@ void Reine::update(){
             //conso Nourriture
             eat();
         }
-        if (cptCreation >= tempsCreation){
+        if ((cptCreation >= tempsCreation) && (colonie->getPop() < colonie->getPopMax()) ){
             Pondre();
             cptCreation = 0;
+            tempsCreation = rand() %2 + 4;
         } else {
             cptCreation ++;
         }

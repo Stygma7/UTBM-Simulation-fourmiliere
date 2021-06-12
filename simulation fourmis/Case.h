@@ -5,6 +5,9 @@
 #include "Position.h"
 #include "SourceNourr.h"
 #include "Pheromone.h"
+#include "CaseInfoAff.h"
+#include <unordered_set>
+
 class Environnement;
 
 class Case {
@@ -24,10 +27,12 @@ private:
 	Pheromone* pheroToFood = nullptr;
 	// pointeur sur pheromone toHome
 	Pheromone* pheroToHome = nullptr;
+	// Liste des éléments présents sur la case pour mieux gérer l'affichage
 	
 	bool isTherePhero(Pheromone*);
 
 public:
+	std::unordered_set <CaseInfoAff> listAffichage;
 	// Constructeur
 	// Case();
 	Case(Environnement*);
@@ -54,6 +59,10 @@ public:
 	
 	bool isTherePheroToFood();
 	bool isTherePheroToHome();
+
+	void addAffichage(CaseInfoAff);
+	void deleteAffichage(CaseInfoAff);
+	CaseInfoAff getInfoAff();
 };
 
 #endif

@@ -4,21 +4,6 @@
 #include "Environnement.h"
 #include "Case.h"
 
-void affichageTxt(Position p) {
-	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD dwPos;
-	dwPos.X = p.getX();
-	dwPos.Y = p.getY() +1; // +1 à cause de la premiere ligne de texte
-	SetConsoleCursorPosition(hcon, dwPos);
-    std::cout << ' ';
-    SetConsoleTextAttribute(hcon, 15);
-}
-
-// Constructeur
-// Case::Case() {
-//     setType(Type::Normal);
-// }
-
 Case::Case(Environnement* e) {
     env = e;
     setType(Type::Normal);
@@ -42,7 +27,7 @@ int Case::pickNourr(int nourr) {
         srcNour = nullptr;
         setType(Type::Normal);
         
-        affichageTxt(pos);
+        deleteAffichage(CaseInfoAff::SrcNourr);
     }
     return tmp;
 }
@@ -53,11 +38,13 @@ void Case::setType(Type type) {
     {
     case Type::Obstacle:
         deplacement = false;
+        addAffichage(CaseInfoAff::Obstacle);
         break;
     case Type::SrcNourr:
         deplacement = false;
         if (srcNour == nullptr)
             srcNour = new SourceNourr();
+        addAffichage(CaseInfoAff::SrcNourr);
         break;
 
     default:
@@ -80,7 +67,6 @@ bool Case::isTherePheroToFood() {
 }
 
 bool Case::isTherePheroToHome() {
-    // return isTherePhero(pheroToHome);
     if (pheroToHome == nullptr)
         return false;
 
@@ -106,4 +92,37 @@ void Case::addReducPheroToFood(int reduc) {
 // ajoute de la phero seulement si la quantité deja présente est inférieure à ce qu'on veut mettre
 void Case::addReducPheroToHome(int reduc) {
     pheroToHome->addReducAmount(reduc);
+}
+
+
+
+void Case::addAffichage(CaseInfoAff infoAff){
+    CaseInfoAff temp = getInfoAff();
+    listAffichage.insert(infoAff);
+
+    if (getInfoAff() != temp)
+        env->addCaseAffichage(this);
+}
+
+void Case::deleteAffichage(CaseInfoAff infoAff){
+    CaseInfoAff temp = getInfoAff();
+
+	std::unordered_set<CaseInfoAff>::const_iterator it = listAffichage.find (infoAff);
+	if ( it != listAffichage.end() )
+    	listAffichage.erase(it);
+
+    if (getInfoAff() != temp)
+        env->addCaseAffichage(this);
+}
+
+CaseInfoAff Case::getInfoAff() {
+    CaseInfoAff returnInfoAff = CaseInfoAff::Rien;
+
+    for (CaseInfoAff infoAff : listAffichage) {
+        if (infoAff > returnInfoAff ) {
+            returnInfoAff = infoAff;
+        }
+    }
+
+    return returnInfoAff;
 }
