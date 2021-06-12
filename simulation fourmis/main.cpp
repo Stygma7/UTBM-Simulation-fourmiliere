@@ -45,34 +45,27 @@ int main()
 		// colonne = 100;
 		// nbObstacles = 1000;
 		// nbNourr = 500;
-		ligne = 20;
-		colonne = 50;
-		nbObstacles = 200;
-		nbNourr = 400;
+		ligne = 50;
+		colonne = 100;
+		nbObstacles = 100;
+		nbNourr = 800;
 	}
 	
 	system("cls");
 	cout << "Carte des fourmis : \n";
 	Environnement e(colonne, ligne, nbObstacles, nbNourr);
-	
-	// e.afficherCarteInit();
 
 	for(int i=0; i<5000;i++){
 		e.update();
-		// if (i > 50) 
-			Sleep(200);
-		// if ((i % 100) == 0 && (i != 0))
-		// 	e.addObstacles(20);
+		Sleep(200);
+
+		if ((i % 10) == 0 && (i != 0)) {
+			// e.addObstacles(20);
+			// e.addNourriture(100);
+		}
 	}
 
 	gotoxy(1,54);	
-
-	Case c(&e);
-	c.addAffichage(CaseInfoAff::PheroFood);
-	c.addAffichage(CaseInfoAff::PheroHome);
-	c.addAffichage(CaseInfoAff::Fourmi);
-	cout << "listAffichage size : " << c.listAffichage.size() << endl;
-	cout << "get : " << (int)c.getInfoAff() << endl;
 
 	return 0;
 }

@@ -2,7 +2,7 @@
 // #ifndef FOURMIG_H
 // #define FOURMIG_H
 
-#include "Fourmi.h";
+#include "Fourmi.h"
 #include "Fourmilliere.h"
 class Fourmilliere;
 // #include "Environnement.h"

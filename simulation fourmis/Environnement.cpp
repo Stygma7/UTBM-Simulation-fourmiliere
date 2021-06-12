@@ -68,6 +68,7 @@ Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
 	setnbrSrcNourriture(nbNourriture);
 	genererCarte();
 	fourmilliere = new Fourmilliere(this, Position(colonne/2, ligne/2));
+	listFourmilliere.push_back(fourmilliere);
 	getPtrCase(colonne/2, ligne/2)->addAffichage(CaseInfoAff::Fourmilliere);
 	showInfosInit();
 }
@@ -80,8 +81,11 @@ Environnement::~Environnement() {
 	for (Pheromone* & ph : listPheroToHome) {
 		delete(ph);
 	}
+	for (Fourmilliere* & fourm : listFourmilliere) {
+		delete(fourm);
+	}
 	
-	delete(fourmilliere);
+	// delete(fourmilliere);
 }
 
 
@@ -113,8 +117,11 @@ void Environnement::update() {
 			i--;
 		} 
 	}
+
 	// update fourmilliere + fourmis
-	fourmilliere->update();
+	for(int i=0; i<listFourmilliere.size();  i++) {
+		listFourmilliere[i]->update();
+	}
 
 
 	// for (vector<Pheromone*>::iterator it = listPheroToFood.begin() ; it != listPheroToFood.end(); it++) {
@@ -167,10 +174,6 @@ void Environnement::addPheroToHome(Position pos, int reduc) {
 
 // ----------------- DISPLAY ------------------------------------------------------------------------------------------------------------------------------
 void Environnement::updateAffichage() {
-	// fourmilliere->EraseAnts();
-	// dispPhero();
-	// fourmilliere->DispAnts();
-	// // dispFourmilliere();
 	
 	for(Case* c : listAffichage) {
 		CaseInfoAff infoAff = c->getInfoAff();
@@ -213,24 +216,6 @@ void Environnement::updateAffichage() {
 	showInfos();
 	listAffichage.clear();
 }
-
-// void Environnement::dispPhero() {
-// 	for(Position & pos : listPosToErase) {
-// 		affichageTxtColor(pos, " ", 9);
-// 	}
-
-// 	for(Pheromone* & ph : listPheroToFood) {
-// 		affichageTxtColor(ph->getPos(), ".", 14);
-// 	}
-
-// 	for(Pheromone* & ph : listPheroToHome) {
-// 		affichageTxtColor(ph->getPos(), ".", 9);
-// 	}
-// }
-
-// void Environnement::dispFourmilliere() {
-//     affichageTxtColor(fourmilliere->getPos(), "O", 6);
-// }
 
 //Affichage
 void Environnement::showInfosInit() {
@@ -330,6 +315,7 @@ void Environnement::addObstaclesInit() {
 	int xRnd;
 	int yRnd;
 	int cptObs = 0;
+	int cptWhile = 0;
 
 	// Ajout obstacles pour la bordure de la carte
 	for (int i = 0; i < colonne+2; i++)
@@ -343,7 +329,7 @@ void Environnement::addObstaclesInit() {
 		carte[i][colonne+1].setType(Type::Obstacle);
 	}
 	
-	while (cptObs < nbrObstacles) {
+	while ((cptObs < nbrObstacles) && (cptWhile < nbrObstacles*10) ) {
 		xRnd = rand() % colonne +1;
 		yRnd = rand() % ligne +1;
 
@@ -359,13 +345,14 @@ void Environnement::addObstacles(int nbObs) {
 	int xRnd;
 	int yRnd;
 	int cptObs = 0;
+	int cptWhile = 0;
 	
-	while (cptObs < nbObs) {
+	while ((cptObs < nbObs) && (cptWhile < nbObs*10) ) {
 		xRnd = rand() % colonne +1;
 		yRnd = rand() % ligne +1;
 
 		// if ((carte[yRnd][xRnd].getType() == Type::Normal) && (isCentre(xRnd,yRnd,colonne,ligne) == false)) {
-		if ((carte[yRnd][xRnd].getType() == Type::Normal) && (chanceApparition(xRnd,colonne)) && (chanceApparition(yRnd,ligne)) && (!isCentre(xRnd,yRnd,colonne,ligne))) {
+		if ((carte[yRnd][xRnd].getInfoAff() == CaseInfoAff::Rien) && (chanceApparition(xRnd,colonne)) && (chanceApparition(yRnd,ligne)) && (!isCentre(xRnd,yRnd,colonne,ligne))) {
 			carte[yRnd][xRnd].setType(Type::Obstacle);
 			cptObs ++;
 		}
@@ -376,7 +363,9 @@ void Environnement::addNourritureInit() {
 	int xRnd;
 	int yRnd;
 	int cptNou = 0;
-	while (cptNou < nbrSrcNourriture) {
+	int cptWhile = 0;
+
+	while ((cptNou < nbrSrcNourriture) && (cptWhile < nbrSrcNourriture*10) ) {
 		xRnd = rand() % colonne +1;
 		yRnd = rand() % ligne +1;
 
@@ -384,5 +373,23 @@ void Environnement::addNourritureInit() {
 			carte[yRnd][xRnd].setType(Type::SrcNourr);
 			cptNou ++;
 		}
+	}
+}
+
+void Environnement::addNourriture(int nbNourr) {
+	int xRnd;
+	int yRnd;
+	int cptNou = 0;
+	int cptWhile = 0;
+
+	while ((cptNou < nbNourr) && (cptWhile < nbNourr*10) ) {
+		xRnd = rand() % colonne +1;
+		yRnd = rand() % ligne +1;
+
+		if ((carte[yRnd][xRnd].getInfoAff() == CaseInfoAff::Rien) && (isCentre(xRnd,yRnd,colonne,ligne) == false)) {
+			carte[yRnd][xRnd].setType(Type::SrcNourr);
+			cptNou ++;
+		}
+		cptWhile++;
 	}
 }

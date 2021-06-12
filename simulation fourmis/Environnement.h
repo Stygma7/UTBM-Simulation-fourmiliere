@@ -39,7 +39,9 @@ public:
 	void addPheroToFood(Position, int);
 	void addPheroToHome(Position, int);
 	void addObstacles(int);
+	void addNourriture(int);
 
+	// Mise a jour de l'affichage
 	void addCaseAffichage(Case*);
 
 private:
@@ -56,12 +58,11 @@ private:
 	std::vector<Pheromone*> listPheroToFood;
 	// Liste des pheromones déposée lors de trajet à la maison
 	std::vector<Pheromone*> listPheroToHome;
-	// Liste de Position de Pheromone à désafficher
-	// std::vector<Position> listPosToErase;
 	// liste des élements à afficher ou réafficher
 	std::unordered_set<Case*> listAffichage;
 	// Pointeur sur fourmilliere (à transformer en liste plus tard lorsqu'il y en aura plusieurs)
 	Fourmilliere* fourmilliere;
+	std::vector<Fourmilliere*> listFourmilliere;
 
 	//Génération
 	void genererCarte();
@@ -71,8 +72,6 @@ private:
 	void showInfos();
 	void showInfosInit();
 	void updateInfos();
-	void dispPhero();
-	void dispFourmilliere();
 	void updateAffichage();
 };
 
