@@ -12,6 +12,7 @@ public:
     Position(int x, int y) {this->x = x; this->y = y;}
 
     bool operator==(Position);
+    bool operator!=(Position);
 
     int getX() {return x;};
     int getY() {return y;};

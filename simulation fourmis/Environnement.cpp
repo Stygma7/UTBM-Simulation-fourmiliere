@@ -61,9 +61,10 @@ void affichageTxtColor(Position p, string str, int color) {
 }
 
 // ----------------- CONSTRUCTEURS -----------------------------------------------------------------------------------------------------------------------
-Environnement::Environnement() {
-	genererCarte();
-}
+// Environnement::Environnement() {
+// 	genererCarte();
+// }
+
 Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
 	setColonne(x);
 	setLigne(y);	
@@ -110,7 +111,7 @@ void Environnement::update() {
 			delete listPheroToHome[i];
 			listPheroToHome.erase(listPheroToHome.begin() +i);
 			i--;
-		}
+		} 
 	}
 	// update fourmilliere + fourmis
 	fourmilliere->update();
@@ -207,20 +208,21 @@ void Environnement::dispFourmilliere() {
 
 //Affichage
 void Environnement::showInfosInit() {
-    affichageTxtColor(Position(getColonne() + affOffset , 2), "Colonnes  : " + to_string(getColonne()), 15);
-    affichageTxtColor(Position(getColonne() + affOffset , 3), "Lignes    : " + to_string(getLigne()), 15);
-    affichageTxtColor(Position(getColonne() + affOffset , 4), "Obstacles : " + to_string(getNbrObstacles()), 15);
-    affichageTxtColor(Position(getColonne() + affOffset , 5), "Src nourr : " + to_string(getNbrSrcNourriture()), 10);
+    affichageTxtColor(Position(colonne + affOffset , 2), "Parametres initiaux :", 15);
+    affichageTxtColor(Position(colonne + affOffset , 3), "Colonnes  : " + to_string(getColonne()), 15);
+    affichageTxtColor(Position(colonne + affOffset , 4), "Lignes    : " + to_string(getLigne()), 15);
+    affichageTxtColor(Position(colonne + affOffset , 5), "Obstacles : " + to_string(getNbrObstacles()), 15);
+    affichageTxtColor(Position(colonne + affOffset , 6), "Src nourr : " + to_string(getNbrSrcNourriture()), 10);
 }
 
 void Environnement::showInfos() {
-    affichageTxtColor(Position(getColonne() + affOffset , 0), "Tour : " + to_string(nbrTour), 11);
-    affichageTxtColor(Position(getColonne() + affOffset , 7), "Qte nourr   : " + to_string(fourmilliere->getFood()) + "  ", 10);
-    affichageTxtColor(Position(getColonne() + affOffset , 8), "Nbr oeufs : " + to_string(fourmilliere->getNbrOeufs()) + "  ", 12);
-    affichageTxtColor(Position(getColonne() + affOffset , 9), "Nbr larves : " + to_string(fourmilliere->getNbrLarves()) + "  ", 12);
-    affichageTxtColor(Position(getColonne() + affOffset , 10), "Nbr fourmis O : " + to_string(fourmilliere->getNbrFourmiOuvrieres()) + "  ", 12);
-    affichageTxtColor(Position(getColonne() + affOffset , 11), "Nbr fourmis G : " + to_string(fourmilliere->getNbrFourmiGuerrieres()) + "  ", 12);
-    affichageTxtColor(Position(getColonne() + affOffset , 12), "Nbr phero : " + to_string(listPheroToHome.size()+listPheroToFood.size()) + "  ", 9);
+    affichageTxtColor(Position(colonne + affOffset , 0), "Tour : " + to_string(nbrTour), 11);
+    affichageTxtColor(Position(colonne + affOffset , 8), "Qte nourr   : " + to_string(fourmilliere->getFood()) + "  ", 10);
+    affichageTxtColor(Position(colonne + affOffset , 9), "Nbr oeufs : " + to_string(fourmilliere->getNbrOeufs()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , 10), "Nbr larves : " + to_string(fourmilliere->getNbrLarves()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , 11), "Nbr fourmis O : " + to_string(fourmilliere->getNbrFourmiOuvrieres()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , 12), "Nbr fourmis G : " + to_string(fourmilliere->getNbrFourmiGuerrieres()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , 13), "Nbr phero : " + to_string(listPheroToHome.size() + listPheroToFood.size()) + "  ", 9);
 
 
     // affichageTxtColor(Position(104,22), "toHome", 15);
@@ -274,11 +276,11 @@ void Environnement::genererCarte() {
 	}
 
 	srand(time(NULL));
-	ajoutObstacles();
-	ajoutNourriture();
+	addObstaclesInit();
+	addNourritureInit();
 }
 
-void Environnement::ajoutObstacles() {
+void Environnement::addObstaclesInit() {
 	int xRnd;
 	int yRnd;
 	int cptObs = 0;
@@ -306,8 +308,25 @@ void Environnement::ajoutObstacles() {
 		}
 	}
 }
+	
+void Environnement::addObstacles(int nbObs) {
+	int xRnd;
+	int yRnd;
+	int cptObs = 0;
+	
+	while (cptObs < nbObs) {
+		xRnd = rand() % colonne +1;
+		yRnd = rand() % ligne +1;
 
-void Environnement::ajoutNourriture() {
+		// if ((carte[yRnd][xRnd].getType() == Type::Normal) && (isCentre(xRnd,yRnd,colonne,ligne) == false)) {
+		if ((carte[yRnd][xRnd].getType() == Type::Normal) && (chanceApparition(xRnd,colonne)) && (chanceApparition(yRnd,ligne)) && (!isCentre(xRnd,yRnd,colonne,ligne))) {
+			carte[yRnd][xRnd].setType(Type::Obstacle);
+			cptObs ++;
+		}
+	}
+}
+
+void Environnement::addNourritureInit() {
 	int xRnd;
 	int yRnd;
 	int cptNou = 0;

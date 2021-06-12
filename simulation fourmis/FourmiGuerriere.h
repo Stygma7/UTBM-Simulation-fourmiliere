@@ -20,7 +20,7 @@ private:
     Position pos;
     // derniere position de la fourmi
     Position lastPos;
-    // Position tempPos;
+    Position tempPos;
     // mode de déplacement de la fourmi (vers maison ou vers nourriture)
     Mode mode = Mode::toFood;
     // liste des cases se trouvant autour de la fourmi
@@ -71,6 +71,7 @@ public:
     void display();
     // efface graphiquement la derniere position de la fourmi (à déplacer dans environnement ???)
     void eraseLastPos();
+    void erasePos();
 };
 
 #endif

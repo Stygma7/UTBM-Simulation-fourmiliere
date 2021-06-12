@@ -6,7 +6,6 @@
 #include "SourceNourr.h"
 #include "Pheromone.h"
 class Environnement;
-#include "CaseInfoAff.h"
 
 class Case {
 
@@ -28,13 +27,9 @@ private:
 	
 	bool isTherePhero(Pheromone*);
 
-	// Pour affichage
-	CaseInfoAff affTour;
-	CaseInfoAff affTourPreced;
-
 public:
 	// Constructeur
-	Case();
+	// Case();
 	Case(Environnement*);
 	// ~Case();
 

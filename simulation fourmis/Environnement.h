@@ -10,7 +10,7 @@ class Fourmilliere;
 class Environnement {
 public:
 	// Constructeurs
-	Environnement();
+	// Environnement();
 	Environnement(int, int, int, int);
 
 	~Environnement();
@@ -38,6 +38,7 @@ public:
 	void update();
 	void addPheroToFood(Position, int);
 	void addPheroToHome(Position, int);
+	void addObstacles(int);
 
 private:
 	// Attributs
@@ -60,8 +61,8 @@ private:
 
 	//Génération
 	void genererCarte();
-	void ajoutObstacles();
-	void ajoutNourriture();
+	void addObstaclesInit();
+	void addNourritureInit();
 	
 	void showInfos();
 	void showInfosInit();

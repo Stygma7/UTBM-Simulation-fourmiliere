@@ -87,6 +87,7 @@ void Fourmilliere::update() {
         if (listFourmisGuerrieres[i]->isAlive()) {
             listFourmisGuerrieres[i]->update();
         } else {
+            listFourmisGuerrieres[i]->erasePos();
             delete listFourmisGuerrieres[i];
             listFourmisGuerrieres.erase(listFourmisGuerrieres.begin() +i);
             i--;
@@ -111,9 +112,8 @@ void Fourmilliere::DispAnts() {
 
 void Fourmilliere::addAntsDefault() {
     addReine();
-    // addOeuf();
     addFourmisOuvrieres(5);
-    addFourmisGuerrieres(5);
+    addFourmisGuerrieres(10);
 }
 
 void Fourmilliere::addOeuf() {

@@ -15,21 +15,14 @@ void affichageTxt(Position p) {
 }
 
 // Constructeur
-Case::Case() {
-    setType(Type::Normal);
-}
+// Case::Case() {
+//     setType(Type::Normal);
+// }
 
 Case::Case(Environnement* e) {
     env = e;
     setType(Type::Normal);
 }
-
-// Case::~Case() {
-//     // delete(env);
-//     delete(srcNour);
-// 	delete(pheroToFood);
-// 	delete(pheroToHome);
-// }
 
 
 void Case::setPos(Position pos) {
@@ -76,20 +69,6 @@ void Case::setType(Type type) {
     this->type = type;
 }
 
-// true : pheromone dispo, false : pas de pheromone
-// bool Case::isTherePhero(Pheromone* ph) {
-//     if (ph == nullptr)
-//         return false;
-
-//     if (ph->getAmount() > 0)
-//         return true;
-//     else
-//         return false;
-// }
-
-// bool Case::isTherePheroToFood() {
-//     return isTherePhero(pheroToFood);
-// }
 bool Case::isTherePheroToFood() {
     if (pheroToFood == nullptr)
         return false;
@@ -115,24 +94,14 @@ void Case::setPheroToFood(Pheromone* ph) {
     pheroToFood = ph;
 }
 
-// ajoute de la pheromone
-// void Case::addPheroToFood(int amount) {
-//     pheroToFood->addAmount(amount);
-// }
+void Case::setPheroToHome(Pheromone* ph) {
+    pheroToHome = ph;
+}
 
 // ajoute de la phero seulement si la quantité deja présente est inférieure à ce qu'on veut mettre
 void Case::addReducPheroToFood(int reduc) {
     pheroToFood->addReducAmount(reduc);
 }
-
-void Case::setPheroToHome(Pheromone* ph) {
-    pheroToHome = ph;
-}
-
-// ajoute de la pheromone
-// void Case::addPheroToHome(int amount) {
-//     pheroToHome->addAmount(amount);
-// }
 
 // ajoute de la phero seulement si la quantité deja présente est inférieure à ce qu'on veut mettre
 void Case::addReducPheroToHome(int reduc) {

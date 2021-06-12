@@ -3,9 +3,6 @@
 #include <conio.h>
 #include <windows.h>
 #include "Environnement.h"
-#include "Position.h"
-#include "Direction.h"
-#include "Reine.h"
 
 using namespace std;
 
@@ -62,8 +59,10 @@ int main()
 
 	for(int i=0; i<5000;i++){
 		e.update();
-		// if (i > 500)
-		Sleep(200);
+		// if (i > 40) 
+			Sleep(200);
+		// if ((i % 100) == 0 && (i != 0))
+		// 	e.addObstacles(20);
 	}
 
 	gotoxy(1,54);	
