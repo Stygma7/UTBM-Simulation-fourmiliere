@@ -3,6 +3,7 @@
 #include <string>
 #include <conio.h>
 #include <windows.h>
+#include <time.h>
 #include "Environnement.h"
 #include "caseType.h"
 

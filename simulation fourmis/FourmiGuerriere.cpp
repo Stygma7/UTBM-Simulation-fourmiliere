@@ -1,7 +1,3 @@
-#include <iostream>
-#include <conio.h>
-#include <windows.h>
-#include <string>
 #include "caseType.h"
 #include "FourmiGuerriere.h"
 

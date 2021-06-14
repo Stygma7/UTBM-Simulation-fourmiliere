@@ -1,7 +1,3 @@
-#include <iostream>
-#include <conio.h>
-#include <windows.h>
-#include <string>
 #include "Fourmiliere.h"
 #include "FourmiOuvriere.h"
 

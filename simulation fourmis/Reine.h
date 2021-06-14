@@ -1,4 +1,3 @@
-// #pragma once
 #ifndef REINE_H
 #define REINE_H
 

@@ -1,5 +1,4 @@
 #include "Reine.h"
-#include <iostream>
 
 Reine::Reine(Fourmiliere* col) {
     MAX_VIE = 80;

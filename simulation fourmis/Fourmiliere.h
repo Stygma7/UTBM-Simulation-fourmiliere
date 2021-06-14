@@ -1,11 +1,10 @@
-
 #ifndef FOURMILIERE_H
 #define FOURMILIERE_H
 #include <vector>
 #include "Oeuf.h"
 class Oeuf;
 #include "Larve.h"
-class Larve;
+ class Larve;
 #include "FourmiGuerriere.h"
 class FourmiGuerriere;
 #include "FourmiOuvriere.h"

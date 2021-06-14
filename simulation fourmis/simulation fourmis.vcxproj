@@ -161,7 +161,6 @@
     <ClInclude Include="caseType.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Environnement.h" />
-    <ClInclude Include="FilleCase.h" />
     <ClInclude Include="Fourmi.h" />
     <ClInclude Include="FourmiGuerriere.h" />
     <ClInclude Include="Fourmiliere.h" />

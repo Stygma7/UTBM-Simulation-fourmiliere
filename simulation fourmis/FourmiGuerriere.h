@@ -1,6 +1,6 @@
-
 #ifndef FOURMIG_H
 #define FOURMIG_H
+
 #include <vector>
 #include "Fourmiliere.h"
 class Fourmiliere;

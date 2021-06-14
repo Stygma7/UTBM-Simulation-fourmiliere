@@ -1,6 +1,3 @@
-#include <iostream>
-#include <conio.h>
-#include <windows.h>
 #include "Environnement.h"
 #include "Case.h"
 

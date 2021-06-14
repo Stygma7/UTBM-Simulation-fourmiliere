@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <time.h>
 #include "Direction.h"
 
 // la direction est aléatoire (0 - 360°)
