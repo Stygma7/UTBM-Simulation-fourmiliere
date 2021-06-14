@@ -16,6 +16,7 @@ void gotoxy(int x, int y) {
 
 int main()
 {
+	// choix des paramètres
 	int ligne = 0, colonne = 0, nbObstacles = -1, nbNourr = -1;
 	char choix = false;
 	cout << "Utiliser les valeurs par defaut (100 colonnes, 50 lignes, 1000 obstacles et 500 nourritures) ? O/N : ";
@@ -47,8 +48,8 @@ int main()
 		// nbNourr = 500;
 		ligne = 50;
 		colonne = 100;
-		nbObstacles = 100;
-		nbNourr = 800;
+		nbObstacles = 1000;
+		nbNourr = 500;
 	}
 	
 	system("cls");

@@ -1,6 +1,7 @@
 #ifndef __CASEINFOAFF_H__
 #define __CASEINFOAFF_H__
 
+// Renseigne sur les éléments présents sur une case pour mieux gérer l'affichage
 enum class CaseInfoAff : int
 {
 	Rien = 0,
@@ -12,7 +13,7 @@ enum class CaseInfoAff : int
 
 	SrcNourr = 4,
 	Obstacle = 5, 
-	Fourmilliere = 6,
+	Fourmiliere = 6,
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "Fourmi.h"
 
+// la fourmi est elle vivante ? (vie > 0)
 bool Fourmi::isAlive() {
     if (vie > 0)
         return true;
@@ -7,25 +8,7 @@ bool Fourmi::isAlive() {
         return false;
 }
 
-// void Fourmi::updateVie(){
-//     if (vie <= 0) {
-//         //delete object
-//     } else {
-//         vie -= perteVie;
-//     }
-//     if (vie <= seuilRavitaillement) {
-//         //conso Nourriture
-//         eat();
-//     }
-// }
-
-// void Fourmi::eat() {
-//     if (colonie->getFood() >= consoNourriture) {
-//         colonie->substractFood(consoNourriture);
-//         giveLife();
-//     }
-// }
-
+// redonne le max de vie à la fourmi
 void Fourmi::giveLife() {
     vie = MAX_VIE;
 }

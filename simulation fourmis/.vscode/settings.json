@@ -49,6 +49,7 @@
         "xloctime": "cpp",
         "xhash": "cpp",
         "unordered_set": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "*.rh": "cpp"
     }
 }

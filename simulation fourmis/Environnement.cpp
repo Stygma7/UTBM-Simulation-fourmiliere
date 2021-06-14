@@ -9,6 +9,7 @@
 using namespace std;
 
 // ----------------- FONCTIONS -----------------------------------------------------------------------------------------------------------------------
+// vérifie si les coordonnées x et y se trouvent au centre + offset des colonnes et lignes indiquées
 bool isCentre(int x, int y, int colonne, int ligne) {
 // bool isCentre(int x, int taille) {
 	int offset = 5;
@@ -18,6 +19,7 @@ bool isCentre(int x, int y, int colonne, int ligne) {
 		return false;
 }
 
+// permet d'augmenter la chance d'apparition plus on est loin du centre
 bool chanceApparition(int x, int taille) {
 	int tailleMax = (int)pow(taille/2,2);
 	double chanceApparition = pow((x - taille/2),2);
@@ -49,6 +51,7 @@ bool chanceApparition(int x, int taille) {
 // 13: rose fluo
 // 14: jaune fluo
 // 15: blanc
+// affiche le texte sur la console à la position souhaitée et avec la couleur souhaitée
 void affichageTxtColor(Position p, string str, int color) {
 	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD dwPos;
@@ -67,9 +70,10 @@ Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
 	setnbrObstacles(nbObstacles);
 	setnbrSrcNourriture(nbNourriture);
 	genererCarte();
-	fourmilliere = new Fourmilliere(this, Position(colonne/2, ligne/2));
-	listFourmilliere.push_back(fourmilliere);
-	getPtrCase(colonne/2, ligne/2)->addAffichage(CaseInfoAff::Fourmilliere);
+
+	fourmiliere = new Fourmiliere(this, Position(colonne/2, ligne/2));
+	listFourmiliere.push_back(fourmiliere);
+	getPtrCase(colonne/2, ligne/2)->addAffichage(CaseInfoAff::Fourmiliere);
 	showInfosInit();
 }
 
@@ -81,22 +85,21 @@ Environnement::~Environnement() {
 	for (Pheromone* & ph : listPheroToHome) {
 		delete(ph);
 	}
-	for (Fourmilliere* & fourm : listFourmilliere) {
+	for (Fourmiliere* & fourm : listFourmiliere) {
 		delete(fourm);
 	}
-	
-	// delete(fourmilliere);
+	// delete(Fourmiliere);
 }
 
 
 // ----------------- UPDATE ------------------------------------------------------------------------------------------------------------------------------
+// permet d'avancer d'un tour pour tous les éléments présents sur l'environnement
 void Environnement::update() {
-	// listPosToErase.clear();
-	// update pheromoneToFood
+
+	// update de toutes les pheromones ToFood
 	for(int i=0; i<listPheroToFood.size();  i++) {
 		listPheroToFood[i]->update();
 		if (listPheroToFood[i]->getAmount() <= 0) {
-			// listPosToErase.push_back(listPheroToFood[i]->getPos());
 			carte[listPheroToFood[i]->getPos().getY()][listPheroToFood[i]->getPos().getX()].deleteAffichage(CaseInfoAff::PheroFood);
 			carte[listPheroToFood[i]->getPos().getY()][listPheroToFood[i]->getPos().getX()].setPheroToFood(nullptr);
 			delete listPheroToFood[i];
@@ -105,11 +108,10 @@ void Environnement::update() {
 		}
 	}
 
-	// update pheromoneToHome
+	// update de toutes les pheromones ToHome
 	for(int i=0; i<listPheroToHome.size();  i++) {
 		listPheroToHome[i]->update();
 		if (listPheroToHome[i]->getAmount() <= 0) {
-			// listPosToErase.push_back(listPheroToHome[i]->getPos());
 			carte[listPheroToHome[i]->getPos().getY()][listPheroToHome[i]->getPos().getX()].deleteAffichage(CaseInfoAff::PheroHome);
 			carte[listPheroToHome[i]->getPos().getY()][listPheroToHome[i]->getPos().getX()].setPheroToHome(nullptr);
 			delete listPheroToHome[i];
@@ -118,36 +120,17 @@ void Environnement::update() {
 		} 
 	}
 
-	// update fourmilliere + fourmis
-	for(int i=0; i<listFourmilliere.size();  i++) {
-		listFourmilliere[i]->update();
+	// update de la Fourmiliere + fourmis
+	for(int i=0; i<listFourmiliere.size();  i++) {
+		listFourmiliere[i]->update();
 	}
-
-
-	// for (vector<Pheromone*>::iterator it = listPheroToFood.begin() ; it != listPheroToFood.end(); it++) {
-	// 	(*it)->update();
-	// 	if ((*it)->getAmount() < 0) {
-	// 		carte[(*it)->getPos().getY()][(*it)->getPos().getX()].setPheroToFood(nullptr);
-	// 		delete (*it);
-	// 		listPheroToFood.erase(it);
-	// 	}
-	// }
-
-	// for (vector<Pheromone*>::iterator it = listPheroToHome.begin() ; it != listPheroToHome.end(); it++) {
-	// 	(*it)->update();
-	// 	if ((*it)->getAmount() < 0) {
-	// 		carte[(*it)->getPos().getY()][(*it)->getPos().getX()].setPheroToFood(nullptr);
-	// 		delete (*it);
-	// 		listPheroToHome.erase(it);
-	// 	}
-	// }
 
 	nbrTour++;
 
 	updateAffichage();
 }
 
-
+// ajoute de la pheromone toFood à la position souhaitée
 void Environnement::addPheroToFood(Position pos, int reduc) {
 	if (carte[pos.getY()][pos.getX()].isTherePheroToFood()) {
 		carte[pos.getY()][pos.getX()].addReducPheroToFood(reduc);
@@ -160,6 +143,7 @@ void Environnement::addPheroToFood(Position pos, int reduc) {
 
 }
 
+// ajoute de la pheromone toHome à la position souhaitée
 void Environnement::addPheroToHome(Position pos, int reduc) {
 	if (carte[pos.getY()][pos.getX()].isTherePheroToHome()) {
 		carte[pos.getY()][pos.getX()].addReducPheroToHome(reduc);
@@ -173,6 +157,7 @@ void Environnement::addPheroToHome(Position pos, int reduc) {
 
 
 // ----------------- DISPLAY ------------------------------------------------------------------------------------------------------------------------------
+// met à jour l'affichage
 void Environnement::updateAffichage() {
 	
 	for(Case* c : listAffichage) {
@@ -188,7 +173,7 @@ void Environnement::updateAffichage() {
 			affichageTxtColor(c->getPos(), "8", 12);
 			break;
 
-		case CaseInfoAff::Fourmilliere:
+		case CaseInfoAff::Fourmiliere:
 			affichageTxtColor(c->getPos(), "O", 6);
 			break;
 
@@ -217,7 +202,7 @@ void Environnement::updateAffichage() {
 	listAffichage.clear();
 }
 
-//Affichage
+// Affichage des infos initiales sur le coté de la carte
 void Environnement::showInfosInit() {
     affichageTxtColor(Position(colonne + affOffset , 2), "Parametres initiaux :", 15);
     affichageTxtColor(Position(colonne + affOffset , 3), "Colonnes  : " + to_string(getColonne()), 15);
@@ -226,6 +211,7 @@ void Environnement::showInfosInit() {
     affichageTxtColor(Position(colonne + affOffset , 6), "Src nourr : " + to_string(getNbrSrcNourriture()), 10);
 }
 
+// Affichage des infos diverses sur le coté de la carte
 void Environnement::showInfos() {
 	int cptLigne = 0;
     affichageTxtColor(Position(colonne + affOffset , cptLigne), "Tour : " + to_string(nbrTour), 11);
@@ -233,69 +219,30 @@ void Environnement::showInfos() {
 	cptLigne = 8;
     affichageTxtColor(Position(colonne + affOffset , cptLigne), "Colonie 1 :", 15);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Population : " + to_string(fourmilliere->getPop()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Population : " + to_string(fourmiliere->getPop()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Qte nourr : " + to_string(fourmilliere->getFood()) + "  ", 10);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Qte nourr : " + to_string(fourmiliere->getFood()) + "  ", 10);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr reine : " + to_string(fourmilliere->getNbrReine()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr reine : " + to_string(fourmiliere->getNbrReine()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr oeufs : " + to_string(fourmilliere->getNbrOeufs()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr oeufs : " + to_string(fourmiliere->getNbrOeufs()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr larves : " + to_string(fourmilliere->getNbrLarves()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr larves : " + to_string(fourmiliere->getNbrLarves()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr fourmis ouv : " + to_string(fourmilliere->getNbrFourmiOuvrieres()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr fourmis ouv : " + to_string(fourmiliere->getNbrFourmiOuvrieres()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr fourmis gue : " + to_string(fourmilliere->getNbrFourmiGuerrieres()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr fourmis gue : " + to_string(fourmiliere->getNbrFourmiGuerrieres()) + "  ", 12);
 	cptLigne++;
     affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr phero tot : " + to_string(listPheroToHome.size() + listPheroToFood.size()) + "  ", 9);
-	// cptLigne++;
-    // affichageTxtColor(Position(colonne + affOffset , cptLigne), "liste aff : " + to_string(listAffichage.size()) + "   ", 15);
-
-
-    // affichageTxtColor(Position(104,22), "toHome", 15);
-	// int cpt = 0;
-	// for (Pheromone* & ph : listPheroToHome) {
-    // 	affichageTxtColor(Position(104,23+cpt), "ph " + to_string(cpt) + " : " + to_string(ph->getAmount()) + " ", 15);
-	// 	cpt++;
-	// }
-
-    // affichageTxtColor(Position(116,22), "toFood", 15);
-	// cpt = 0;
-	// for (Pheromone* & ph : listPheroToFood) {
-    // 	affichageTxtColor(Position(116,23+cpt), "ph " + to_string(cpt) + " : " + to_string(ph->getAmount()) + " ", 15);
-	// 	cpt++;
-	// }
 }
 
-// void Environnement::afficherCarteInit() {
-
-// 	for (int y = 0; y < ligne+2; y++) {
-// 		for (int x = 0; x < colonne+2; x++) {
-// 			switch (carte[y][x].getType())
-// 			{
-// 			case Type::SrcNourr:
-// 				affichageTxtColor(carte[y][x].getPos(), "o", 2);
-// 				break;
-// 			case Type::Obstacle:
-// 				affichageTxtColor(carte[y][x].getPos(), "X", 15);
-// 				break;
-// 			default:
-// 				cout << " ";
-// 				break;
-// 			}
-// 		}
-// 		cout << "\n";
-// 	}
-	
-// 	// dispFourmilliere();
-// 	showInfosInit();
-// }
-
+// Ajoute une case à la liste d'affichage pour laquelle l'affichage est à mettre à jour
 void Environnement::addCaseAffichage(Case* c) {
 	listAffichage.insert(c);
 }
 
 // ----------------- GENERATION ------------------------------------------------------------------------------------------------------------------------------
+// génère la carte (cases) avec les obstacles et sources de nourritures initiales
 void Environnement::genererCarte() {
 	vector<Case> vLigne;
 	for (int y = 0; y < ligne+2; y++) {
@@ -311,6 +258,7 @@ void Environnement::genererCarte() {
 	addNourritureInit();
 }
 
+// ajoute les obstacles initiaux
 void Environnement::addObstaclesInit() {
 	int xRnd;
 	int yRnd;
@@ -333,7 +281,6 @@ void Environnement::addObstaclesInit() {
 		xRnd = rand() % colonne +1;
 		yRnd = rand() % ligne +1;
 
-		// if ((carte[yRnd][xRnd].getType() == Type::Normal) && (isCentre(xRnd,yRnd,colonne,ligne) == false)) {
 		if ((carte[yRnd][xRnd].getType() == Type::Normal) && (chanceApparition(xRnd,colonne)) && (chanceApparition(yRnd,ligne)) && (!isCentre(xRnd,yRnd,colonne,ligne))) {
 			carte[yRnd][xRnd].setType(Type::Obstacle);
 			cptObs ++;
@@ -341,6 +288,7 @@ void Environnement::addObstaclesInit() {
 	}
 }
 	
+// ajoute des obstacles en cours de la simulation
 void Environnement::addObstacles(int nbObs) {
 	int xRnd;
 	int yRnd;
@@ -359,6 +307,7 @@ void Environnement::addObstacles(int nbObs) {
 	}
 }
 
+// ajoute les sources de nourritures initiales
 void Environnement::addNourritureInit() {
 	int xRnd;
 	int yRnd;
@@ -376,6 +325,7 @@ void Environnement::addNourritureInit() {
 	}
 }
 
+// ajoute des sources de nourritures en cours de la simulation
 void Environnement::addNourriture(int nbNourr) {
 	int xRnd;
 	int yRnd;

@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+// modes des fourmi guerrières
 enum class Mode : uint32_t
 {
 	toHome = 0,

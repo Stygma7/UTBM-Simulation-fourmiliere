@@ -2,11 +2,13 @@
 #include <time.h>
 #include "Direction.h"
 
+// la direction est aléatoire (0 - 360°)
 Direction::Direction() {
     angle = rand() % 360;
     updateCaseDir();
 }
 
+// fait varier la direction entre 20° et 50° positivement ou négativement
 void Direction::update() {
     // random entre 20 et 50
     int rnd = (rand() % 31) +20;
@@ -21,21 +23,7 @@ void Direction::update() {
     updateCaseDir();
 }
 
-// // Direction a +90
-// CaseDirection Direction::getCaseDir90() {
-//     return (CaseDirection) ( ((int)caseDir+1) % 4 );
-// }
-
-// // Direction a -90
-// CaseDirection Direction::getCaseDirm90() {
-//     return (CaseDirection) ( ((int)caseDir+3) % 4 );
-// }
-
-// Direction a +90
-CaseDirection Direction::getCaseDir180() {
-    return (CaseDirection) ( ((int)caseDir+2) % 4 );
-}
-
+// met à jour la case correspondant à la direction en degrés
 void Direction::updateCaseDir() {
     if (angle < 90)
         caseDir = CaseDirection::Haut;
@@ -45,9 +33,4 @@ void Direction::updateCaseDir() {
         caseDir = CaseDirection::Bas;
     else
         caseDir = CaseDirection::Gauche;
-}
-
-void Direction::add180() {
-    angle += 180;
-    updateCaseDir();
 }

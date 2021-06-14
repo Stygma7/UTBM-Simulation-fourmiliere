@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+// définit la direction haut, gauche, bas et droite d'une direction de 360°
 enum class CaseDirection : uint32_t
 {
 	Haut = 0,

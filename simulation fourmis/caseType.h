@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+// renseigne sur le type d'une case
 enum class Type : uint32_t
 {
 	Normal = 0,

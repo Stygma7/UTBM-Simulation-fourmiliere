@@ -144,7 +144,7 @@
     <ClCompile Include="Environnement.cpp" />
     <ClCompile Include="Fourmi.cpp" />
     <ClCompile Include="FourmiGuerriere.cpp" />
-    <ClCompile Include="Fourmilliere.cpp" />
+    <ClCompile Include="Fourmiliere.cpp" />
     <ClCompile Include="FourmiOuvriere.cpp" />
     <ClCompile Include="Larve.cpp" />
     <ClCompile Include="main.cpp" />
@@ -156,14 +156,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Case.h" />
+    <ClInclude Include="CaseDirection.h" />
+    <ClInclude Include="CaseInfoAff.h" />
+    <ClInclude Include="caseType.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Environnement.h" />
     <ClInclude Include="FilleCase.h" />
     <ClInclude Include="Fourmi.h" />
     <ClInclude Include="FourmiGuerriere.h" />
-    <ClInclude Include="Fourmilliere.h" />
+    <ClInclude Include="Fourmiliere.h" />
     <ClInclude Include="FourmiOuvriere.h" />
     <ClInclude Include="Larve.h" />
+    <ClInclude Include="ModeFourmi.h" />
     <ClInclude Include="Oeuf.h" />
     <ClInclude Include="Pheromone.h" />
     <ClInclude Include="Position.h" />

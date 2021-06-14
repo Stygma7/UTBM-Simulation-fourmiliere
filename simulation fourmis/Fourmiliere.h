@@ -1,6 +1,6 @@
 
-#ifndef FOURMILLIERE_H
-#define FOURMILLIERE_H
+#ifndef FOURMILIERE_H
+#define FOURMILIERE_H
 #include <vector>
 #include "Oeuf.h"
 class Oeuf;
@@ -16,28 +16,28 @@ class Reine;
 #include "Environnement.h"
 class Environnement;
 
-class Fourmilliere
+class Fourmiliere
 {
 private:
-    // position de la fourmilliere
+    // position de la Fourmiliere
     Position pos;
     // nombre de fourmi max 
-    int populationMax = 100;
+    int populationMax = 80;
     // nombre de nourriture max 
-    int foodMax = 500;
+    int foodMax = 100;
     // nourriture actuellement disponible
     int food = 0;
     // Reine de la fourmillière
     Reine* reine;
-    // liste des oeufs de la fourmilliere
+    // liste des oeufs de la Fourmiliere
     std::vector<Oeuf*> listOeufs;
-    // liste des larves de la fourmilliere
+    // liste des larves de la Fourmiliere
     std::vector<Larve*> listLarves;
-    // liste des fourmis guerrieres de la fourmilliere
+    // liste des fourmis guerrieres de la Fourmiliere
     std::vector<FourmiGuerriere*> listFourmisGuerrieres;
-    // liste des fourmis ouvrières de la fourmilliere
+    // liste des fourmis ouvrières de la Fourmiliere
     std::vector<FourmiOuvriere*> listFourmisOuvrieres;
-    // pointeur sur l'environnement de la fourmilliere
+    // pointeur sur l'environnement de la Fourmiliere
     Environnement* env;
 
     // ajoute les fourmis de base
@@ -48,9 +48,9 @@ private:
     
 public:
     // Constructeurs
-    Fourmilliere(Environnement*, Position);
-    ~Fourmilliere();
-    // Fourmilliere(Environnement* env);
+    Fourmiliere(Environnement*, Position);
+    ~Fourmiliere();
+    // Fourmiliere(Environnement* env);
 
     Position getPos() {return pos;}
     Environnement* getEnv() {return env;}
@@ -63,13 +63,12 @@ public:
     int getPop();
     int getPopMax() {return populationMax;}
     int getNbrReine();
-    // met à jour toutes les fourmis de la fourmilliere
+    // met à jour toutes les fourmis de la Fourmiliere
     void update();
 
-    // ajoute de la nourriture dans la fourmilliere
+    // ajoute de la nourriture dans la Fourmiliere
     void addFood(int);
-    void addFood(int*);
-    // retirer de la nourriture dans la fourmilliere
+    // retirer de la nourriture dans la Fourmiliere
     void substractFood(int);
     // teste si les stock de nourriture sont plein
     bool isFoodStockFull();

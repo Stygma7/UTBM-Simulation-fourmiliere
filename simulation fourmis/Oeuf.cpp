@@ -3,13 +3,13 @@
 using namespace std;
 
 // --------------- CONSTRUCTEURS ------------------------------------------------------------------------------------
-Oeuf::Oeuf(Fourmilliere* col) {
+Oeuf::Oeuf(Fourmiliere* col) {
     colonie = col;
-    // env = colonie->getEnv();
     tourAvantEvol =  rand() %10 +25;
 }
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------
+// met à jour l'oeuf pour un tour
 void Oeuf::update(){
 
     if (tourAvantEvol <= 0) {

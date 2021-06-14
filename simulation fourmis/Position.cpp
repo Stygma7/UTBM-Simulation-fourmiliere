@@ -15,6 +15,7 @@ bool Position::operator!=(Position pos) {
         return false; 
 }
 
+// vérifie si les deux positions sont cote à cote
 bool Position::isNextTo(Position pos) {
     if ( (abs(pos.getX() -x) ==1) && ((pos.getY() -y) ==0) || (abs(pos.getY() -y) ==1) && ((pos.getX() -x) ==0))
         return true;

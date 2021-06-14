@@ -7,27 +7,8 @@
 
 using namespace std;
 
-void affichageTxtColor2(Position p, string str, int color) {
-	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD dwPos;
-	dwPos.X = p.getX();
-	dwPos.Y = p.getY() +1; // +1 à cause de la premiere ligne de texte
-	SetConsoleCursorPosition(hcon, dwPos);
-    SetConsoleTextAttribute(hcon, color);
-    cout << str;
-    SetConsoleTextAttribute(hcon, 15);
-}
-
-// --------------- FONCTIONS ----------------------------------------------------------------------------------------
-// bool isDejaPasseDessus(vector<Position> vPos, Position pos) {
-//     if (find(vPos.begin(), vPos.end(), pos) != vPos.end())
-//         return true;
-//     else
-//         return false;
-// }
-
 // --------------- CONSTRUCTEURS ------------------------------------------------------------------------------------
-FourmiGuerriere::FourmiGuerriere(Fourmilliere* col) {
+FourmiGuerriere::FourmiGuerriere(Fourmiliere* col) {
     MAX_VIE = 100;
     vie = MAX_VIE;
     seuilRavitaillement = 40;
@@ -38,7 +19,7 @@ FourmiGuerriere::FourmiGuerriere(Fourmilliere* col) {
     consoNourriture = 3;
 }
 
-FourmiGuerriere::FourmiGuerriere(Fourmilliere* col, int vie_) {
+FourmiGuerriere::FourmiGuerriere(Fourmiliere* col, int vie_) {
     MAX_VIE = 100;
     vie = vie_;
     seuilRavitaillement = 40;
@@ -51,7 +32,7 @@ FourmiGuerriere::FourmiGuerriere(Fourmilliere* col, int vie_) {
 
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------
-// void FourmiGuerriere::update(){
+// met à jour la fourmi pour un tour
 void FourmiGuerriere::update() {
     // Récupération des cases voisines
     aroundCase.clear();
@@ -60,6 +41,7 @@ void FourmiGuerriere::update() {
     aroundCase.push_back(env->getPtrCase(pos.getX(), pos.getY() - 1)); // Bas
     aroundCase.push_back(env->getPtrCase(pos.getX() - 1, pos.getY())); // Gauche
 
+    // petit changement aleatoire de la direction
     direction.update();
     if (vie <= seuilRavitaillement || mode == Mode::toHome) {
         moveToHome();
@@ -69,82 +51,14 @@ void FourmiGuerriere::update() {
 
     vie -= perteVie;
 
+    // le cptTour permet de déposer de moins en moins de phéromone à chaque tour, pour ne pas en déposer à l'infini
     if (pos != colonie->getPos()) 
         cptTour++;
-        
-    // affichageTxtColor2(Position(104,14), "vie : " + to_string(vie) + " " , 15);
-    // if (mode == Mode::toHome)
-    //     affichageTxtColor2(Position(104,16), "toHome " + to_string(Pheromone::AMOUNT_MAX - 2*cptTour) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(104,16), "toFood " + to_string(Pheromone::AMOUNT_MAX - 2*cptTour) + " ", 15);
-    // affichageTxtColor2(Position(104,15), "pos X : " + to_string(pos.getX()) + " Y : " + to_string(pos.getY()) + " ", 15);
-    // affichageTxtColor2(Position(104,16), "las X : " + to_string(lastPos.getX()) + " Y : " + to_string(lastPos.getY()) + " ", 15);
-
-
-    // Case* ptrCase;
-
-    // ptrCase = env->getPtrCase(pos.getX(), pos.getY());
-    // affichageTxtColor2(Position(104,17), "case fourmi ", 15);
-    // if (ptrCase->isTherePheroToFood()) 
-    //     affichageTxtColor2(Position(116,17), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(116,17), "          " , 15);
-
-    // if (ptrCase->isTherePheroToHome()) 
-    //     affichageTxtColor2(Position(126,17), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(126,17), "          " , 15);
-
-    // ptrCase = env->getPtrCase(pos.getX(), pos.getY()-1);
-    // affichageTxtColor2(Position(104,18), "case haut ", 15);
-    // if (ptrCase->isTherePheroToFood()) 
-    //     affichageTxtColor2(Position(116,18), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(116,18), "          " , 15);
-
-    // if (ptrCase->isTherePheroToHome()) 
-    //     affichageTxtColor2(Position(126,18), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(126,18), "          " , 15);
-
-    // ptrCase = env->getPtrCase(pos.getX()+1, pos.getY());
-    // affichageTxtColor2(Position(104,19), "case droite ", 15);
-    // if (ptrCase->isTherePheroToFood()) 
-    //     affichageTxtColor2(Position(116,19), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(116,19), "          " , 15);
-
-    // if (ptrCase->isTherePheroToHome()) 
-    //     affichageTxtColor2(Position(126,19), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(126,19), "          " , 15);
-
-    // ptrCase = env->getPtrCase(pos.getX(), pos.getY()+1);
-    // affichageTxtColor2(Position(104,20), "case bas ", 15);
-    // if (ptrCase->isTherePheroToFood()) 
-    //     affichageTxtColor2(Position(116,20), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(116,20), "          " , 15);
-    // if (ptrCase->isTherePheroToHome()) 
-    //     affichageTxtColor2(Position(126,20), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(126,20), "          " , 15);
-
-    // ptrCase = env->getPtrCase(pos.getX()-1, pos.getY());
-    // affichageTxtColor2(Position(104,21), "case gauche ", 15);
-    // if (ptrCase->isTherePheroToFood()) 
-    //     affichageTxtColor2(Position(116,21), "food : " + to_string(ptrCase->getPheroToFood()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(116,21), "          " , 15);
-    // if (ptrCase->isTherePheroToHome()) 
-    //     affichageTxtColor2(Position(126,21), " home : " + to_string(ptrCase->getPheroToHome()->getAmount()) + " ", 15);
-    // else
-    //     affichageTxtColor2(Position(126,21), "          " , 15);
-
 }
 
 
 // --------------- DEPLACEMENT --------------------------------------------------------------------------------------
+// déplacement vers la fourmillière
 void FourmiGuerriere::moveToHome() {
     if (pos == colonie->getPos()) {
         if (nourr > 0) {
@@ -167,10 +81,8 @@ void FourmiGuerriere::moveToHome() {
             Case* casePhero = nullptr;
             Case* caseNour = nullptr;
             
-            // On vérifie s'il y a de la phéromone à proximité
+            // On vérifie s'il y a de la phéromone à proximité et on sélectionne celle qui est la plus forte
             for(Case* & c : aroundCase ) {
-                // on vérifie s'il y a de la pheromone et si la case ne correspond pas à la derniere position
-                // if ( c->isTherePheroToHome() && (!(c->getPos() == lastPos)) ) {
                 if ( c->isTherePheroToHome() ) {
                     if (casePhero == nullptr)
                         casePhero = c;
@@ -184,22 +96,13 @@ void FourmiGuerriere::moveToHome() {
 
             // Sinon on continue de chercher aléatoirement
             } else {
-                while (!aroundCase[(int)direction.getCaseDir()]->getDeplacement()) {
-                    direction.update();
-                }
-                setPos(aroundCase[(int)direction.getCaseDir()]->getPos());
-
-                // ---------- POUR TEST ----------------------------------
-                // se déplace dans une direction uniquement (écrase obstacles)
-                // pos.setPos(getPos().getX()-1,getPos().getY());
-
-                // se déplace dans une direction variable (écrase obstacles)
-                // pos.setPos(aroundCase[(int)direction.getCaseDir()]->getPos());
+                moveToDirection();
             }
         }
     }
 }
 
+// déplacement en mode recherche de nourriture
 void FourmiGuerriere::moveToFood() {
 
     if (!(pos == colonie->getPos())) {
@@ -208,6 +111,7 @@ void FourmiGuerriere::moveToFood() {
 
     Case* caseNour = nullptr;
     Case* casePhero = nullptr;
+    // case sur laquelle se trouve la fourmi
     Case* casePos = env->getPtrCase(pos.getX(), pos.getY());
     int amountPos;
 
@@ -220,7 +124,6 @@ void FourmiGuerriere::moveToFood() {
     // On vérifie si il y a de la nourriture ou de la phéromone à proximité
     for(Case* & c : aroundCase ) {
         // on vérifie s'il y a de la pheromone et si la case ne correspond pas à la derniere position
-        // if ( c->isTherePheroToFood() && (!(c->getPos() == lastPos)) ) {
         if ( c->isTherePheroToFood() && (!(c->getPos() == lastPos)) && (c->getPheroToFood()->getAmount() > amountPos) ) {
             if (casePhero == nullptr)
                 casePhero = c;
@@ -240,26 +143,15 @@ void FourmiGuerriere::moveToFood() {
 
     // Sinon on suit la pheromone
     else if (casePhero != nullptr) {
-        // pos.setPos(casePhero->getPos());
         setPos(casePhero->getPos());
 
     // Sinon on continue de chercher aléatoirement
     } else {
-        while (!aroundCase[(int)direction.getCaseDir()]->getDeplacement()) {
-            direction.update();
-        }
-        // pos.setPos(aroundCase[(int)direction.getCaseDir()]->getPos());
-        setPos(aroundCase[(int)direction.getCaseDir()]->getPos());
-
-        // ---------- POUR TEST ----------------------------------
-        // se déplace dans une direction uniquement (écrase obstacles)
-        // pos.setPos(getPos().getX()-1,getPos().getY());
-
-        // se déplace dans une direction variable (écrase obstacles)
-        // pos.setPos(aroundCase[(int)direction.getCaseDir()]->getPos());
+        moveToDirection();
     }
 }
 
+// se déplace vers la direction définie si elle le peut (sinon change jusqu'à pouvoir)
 void FourmiGuerriere::moveToDirection() {
     while (!aroundCase[(int)direction.getCaseDir()]->getDeplacement()) {
         direction.update();
@@ -267,10 +159,12 @@ void FourmiGuerriere::moveToDirection() {
     setPos(aroundCase[(int)direction.getCaseDir()]->getPos());
 }
 
+// change le mode de la fourmi toHome ou toFood
 void FourmiGuerriere::setMode(Mode mode) { 
     this->mode = mode; 
 }
 
+// setter de position
 void FourmiGuerriere::setPos(Position p) {
     lastPos = pos;
     pos = p;
@@ -287,12 +181,19 @@ void FourmiGuerriere::grabNourriture(Case* caseNour) {
 }
 
 void FourmiGuerriere::dropNourriture() {
-    // if (colonie->getFood() + nourr <= colonie->getFoodMax()) {
+    int colFood = colonie->getFood();
+    int colFoodMax =  colonie->getFoodMax();
+
+    if (colFood + nourr <= colFoodMax) {
         colonie->addFood(nourr);
         nourr = 0;
         setMode(Mode::toFood);
-        lastPos = pos;
-    // }
+    } else if (colFood < colFoodMax) {
+        colonie->addFood(colFoodMax - colFood);
+        nourr -= colFoodMax - colFood;
+    }
+    
+    lastPos = pos;
 }
 
 void FourmiGuerriere::eat() {
@@ -302,32 +203,3 @@ void FourmiGuerriere::eat() {
         giveLife();
     }
 }
-
-// --------------- AFFICHAGE ----------------------------------------------------------------------------------------
-// void FourmiGuerriere::display() {
-// 	// HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-// 	// COORD dwPos;
-// 	// dwPos.X = pos.getX();
-// 	// dwPos.Y = pos.getY() +1; // +1 à cause de la premiere ligne de texte
-// 	// SetConsoleCursorPosition(hcon, dwPos);
-//     // SetConsoleTextAttribute(hcon, 12);
-//     // cout << '8';
-//     // SetConsoleTextAttribute(hcon, 15);
-//     affichageTxtColor2(pos, "8", 12);
-// }
-
-// void FourmiGuerriere::eraseLastPos() {
-// 	// HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-// 	// COORD dwPos;
-// 	// dwPos.X = lastPos.getX();
-// 	// dwPos.Y = lastPos.getY() +1;
-// 	// SetConsoleCursorPosition(hcon, dwPos);
-//     // SetConsoleTextAttribute(hcon, 15);
-//     // cout << " ";
-//     affichageTxtColor2(lastPos, " ", 15);
-// }
-
-// void FourmiGuerriere::erasePos() {
-//     if (pos != colonie->getPos())
-//         affichageTxtColor2(pos, " ", 15);
-// }

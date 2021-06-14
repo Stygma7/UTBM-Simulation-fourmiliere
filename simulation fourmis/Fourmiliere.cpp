@@ -2,18 +2,18 @@
 #include <conio.h>
 #include <windows.h>
 #include <string>
-#include "Fourmilliere.h"
+#include "Fourmiliere.h"
 #include "FourmiOuvriere.h"
 
 using namespace std;
 
-Fourmilliere::Fourmilliere(Environnement* env, Position position) {
+Fourmiliere::Fourmiliere(Environnement* env, Position position) {
     this->env = env;
     pos = position;
     addAntsDefault();
 }
 
-Fourmilliere::~Fourmilliere() {
+Fourmiliere::~Fourmiliere() {
     delete reine;
 	for (FourmiGuerriere* & fourmi : listFourmisGuerrieres) {
 		delete(fourmi);
@@ -23,7 +23,9 @@ Fourmilliere::~Fourmilliere() {
 	}
 }
 
-void Fourmilliere::update() {
+// met à jour toute la fourmiliere pour un tour
+void Fourmiliere::update() {
+    // MaJ reine
     if (reine != nullptr) {
         if (reine->isAlive()) {
             reine->update();
@@ -33,10 +35,12 @@ void Fourmilliere::update() {
         }
     }
     
+    // MaJ oeufs
     for(int i=0; i<listOeufs.size(); i++) {
         listOeufs[i]->update();
     }
 
+    // MaJ larves
     for(int i=0; i<listLarves.size(); i++) {
 
         if (listLarves[i]->isAlive()) {
@@ -48,6 +52,7 @@ void Fourmilliere::update() {
         }
     }
 
+    // MaJ fourmis ouvrières
     for(int i=0; i<listFourmisOuvrieres.size(); i++) {
         if (listFourmisOuvrieres[i]->isAlive()) {
             listFourmisOuvrieres[i]->update();
@@ -58,11 +63,11 @@ void Fourmilliere::update() {
         }
     }
 
+    // MaJ fourmis guerrières
     for(int i=0; i<listFourmisGuerrieres.size(); i++) {
         if (listFourmisGuerrieres[i]->isAlive()) {
             listFourmisGuerrieres[i]->update();
         } else {
-            // listFourmisGuerrieres[i]->erasePos();
             env->getPtrCase(listFourmisGuerrieres[i]->getPos().getX(), listFourmisGuerrieres[i]->getPos().getY())->deleteAffichage(CaseInfoAff::Fourmi);
             delete listFourmisGuerrieres[i];
             listFourmisGuerrieres.erase(listFourmisGuerrieres.begin() +i);
@@ -71,69 +76,69 @@ void Fourmilliere::update() {
     }
 }
 
-void Fourmilliere::addAntsDefault() {
+// ajoute les fourmis de bases à la création de la fourmilière
+void Fourmiliere::addAntsDefault() {
     addReine();
     addFourmisOuvrieres(5);
     addFourmisGuerrieres(10);
 }
 
-void Fourmilliere::addOeuf() {
+// ajoute un oeuf
+void Fourmiliere::addOeuf() {
     listOeufs.push_back(new Oeuf(this));
 }
 
-void Fourmilliere::addReine() {
+// ajoute la reine
+void Fourmiliere::addReine() {
     reine = new Reine(this);
 }
 
-void Fourmilliere::addFourmisGuerrieres(int nb) {
+// ajoute des fourmis guerrières
+void Fourmiliere::addFourmisGuerrieres(int nb) {
     for (int i = 0; i < nb; i++) {
         listFourmisGuerrieres.push_back(new FourmiGuerriere(this));
     }
 }
 
-void Fourmilliere::addFourmisOuvrieres(int nb) {
+// ajoute des fourmis ouvrières
+void Fourmiliere::addFourmisOuvrieres(int nb) {
     for (int i = 0; i < nb; i++) {
         listFourmisOuvrieres.push_back(new FourmiOuvriere(this));
     }
 }
 
-void Fourmilliere::addFood(int nb) {
+// ajoute de la nourriture dans la fourmilière
+void Fourmiliere::addFood(int nb) {
     if (food + nb <= foodMax) {
         food += nb;
     }
 }
 
-void Fourmilliere::addFood(int* nb) {
-    if (food + *nb <= foodMax) {
-        food += *nb;
-        *nb = 0;
-    } 
-    // else {
-
-    // }
-}
-
-void Fourmilliere::substractFood(int nb) {
+// enleve de la nourriture de la fourmilière
+void Fourmiliere::substractFood(int nb) {
     if (food >= 0) {
         food -= nb;
     }
 }
 
-bool Fourmilliere::isFoodStockFull() {
+// true: le stock de nourriture max est atteint
+bool Fourmiliere::isFoodStockFull() {
     if (food >= foodMax)
         return true;
     else
         return false;
 }
 
-bool Fourmilliere::isFoodStockEmpty() {
+// true: le stock de nourriture est vide
+bool Fourmiliere::isFoodStockEmpty() {
     if (food <= 0)
         return true;
     else
         return false;
 }
 
-void Fourmilliere::evolToLarve(Oeuf* o) {
+// fait évoluer un oeuf à l'état de larve
+void Fourmiliere::evolToLarve(Oeuf* o) {
     for(int i=0; i<listOeufs.size(); i++) {
         if (listOeufs[i] == o) {
             listLarves.push_back(new Larve(this));
@@ -143,7 +148,8 @@ void Fourmilliere::evolToLarve(Oeuf* o) {
     }
 }
 
-void Fourmilliere::evolToOuvriere(Larve* f) {
+// fait évoluer une larve à l'état de fourmi ouvrière
+void Fourmiliere::evolToOuvriere(Larve* f) {
     for(int i=0; i<listLarves.size(); i++) {
         if (listLarves[i] == f) {
             listFourmisOuvrieres.push_back(new FourmiOuvriere(this, f->getVie()));
@@ -153,7 +159,8 @@ void Fourmilliere::evolToOuvriere(Larve* f) {
     }
 }
 
-void Fourmilliere::evolToGuerriere(FourmiOuvriere* f) {
+// fait évoluer une fourmi ouvrière à l'état de fourmi guerrière
+void Fourmiliere::evolToGuerriere(FourmiOuvriere* f) {
     for(int i=0; i<listFourmisOuvrieres.size(); i++) {
         if (listFourmisOuvrieres[i] == f) {
             listFourmisGuerrieres.push_back(new FourmiGuerriere(this, f->getVie()));
@@ -163,11 +170,13 @@ void Fourmilliere::evolToGuerriere(FourmiOuvriere* f) {
     }
 }
 
-int Fourmilliere::getPop() {
+// renvoit la population présente dans la fourmilière
+int Fourmiliere::getPop() {
     return getNbrReine() + listOeufs.size() + listLarves.size() + listFourmisOuvrieres.size() + listFourmisGuerrieres.size();
 }
 
-int Fourmilliere::getNbrReine() {
+// renvoit le nombre de reine présente dans la fourmilière, logiquement uniquement 1 ou 0
+int Fourmiliere::getNbrReine() {
     if (reine != nullptr)
         return 1;
     else

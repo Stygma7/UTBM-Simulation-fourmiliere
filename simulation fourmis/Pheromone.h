@@ -3,11 +3,7 @@
 
 #include "Position.h"
 
-// quantite max de pheromone
-// #define AMOUNT_MAX 20
-
-class Pheromone
-{
+class Pheromone {
 private:
     // quantite de pheromone actuelle
     int amount;
@@ -24,8 +20,6 @@ public:
     int getAmountMax() { return AMOUNT_MAX; }
     Position getPos() {return pos;}
 
-    void addAmount();
-    void addAmount(int);
     void addReducAmount(int);
     void update();
 };

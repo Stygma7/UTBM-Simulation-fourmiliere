@@ -9,7 +9,6 @@ Case::Case(Environnement* e) {
     setType(Type::Normal);
 }
 
-
 void Case::setPos(Position pos) {
     this->pos = pos;
 }
@@ -19,7 +18,7 @@ void Case::setPos(int x, int y) {
     pos.setY(y);
 }
 
-// réduit la quantité de nourriture sur la source associée
+// déduit la quantité de nourriture sur la source associée, et renvoit la quantité qui a été ramassée
 int Case::pickNourr(int nourr) {
     int tmp = srcNour->pickNourr(nourr);
     if (srcNour->getquantite() <= 0) {
@@ -56,6 +55,7 @@ void Case::setType(Type type) {
     this->type = type;
 }
 
+// vérifie si de la pheromone toFood est présente sur la case
 bool Case::isTherePheroToFood() {
     if (pheroToFood == nullptr)
         return false;
@@ -66,6 +66,7 @@ bool Case::isTherePheroToFood() {
         return false;
 }
 
+// vérifie si de la pheromone toHome est présente sur la case
 bool Case::isTherePheroToHome() {
     if (pheroToHome == nullptr)
         return false;
@@ -76,26 +77,28 @@ bool Case::isTherePheroToHome() {
         return false;
 }
 
+// setter de pheromone toFood
 void Case::setPheroToFood(Pheromone* ph) {
     pheroToFood = ph;
 }
 
+// setter de pheromone toHome
 void Case::setPheroToHome(Pheromone* ph) {
     pheroToHome = ph;
 }
 
-// ajoute de la phero seulement si la quantité deja présente est inférieure à ce qu'on veut mettre
+// ajoute de la phero toFood seulement si la quantité deja présente est inférieure à ce qu'on veut mettre
 void Case::addReducPheroToFood(int reduc) {
     pheroToFood->addReducAmount(reduc);
 }
 
-// ajoute de la phero seulement si la quantité deja présente est inférieure à ce qu'on veut mettre
+// ajoute de la phero toHome seulement si la quantité deja présente est inférieure à ce qu'on veut mettre
 void Case::addReducPheroToHome(int reduc) {
     pheroToHome->addReducAmount(reduc);
 }
 
 
-
+// ajoute un élément CaseInfoAff à afficher sur la case
 void Case::addAffichage(CaseInfoAff infoAff){
     CaseInfoAff temp = getInfoAff();
     listAffichage.insert(infoAff);
@@ -104,6 +107,7 @@ void Case::addAffichage(CaseInfoAff infoAff){
         env->addCaseAffichage(this);
 }
 
+// supprime un élément CaseInfoAff à enlever de la case
 void Case::deleteAffichage(CaseInfoAff infoAff){
     CaseInfoAff temp = getInfoAff();
 
@@ -115,6 +119,7 @@ void Case::deleteAffichage(CaseInfoAff infoAff){
         env->addCaseAffichage(this);
 }
 
+// renvoit l'élément CaseInfoAff à afficher sur la case
 CaseInfoAff Case::getInfoAff() {
     CaseInfoAff returnInfoAff = CaseInfoAff::Rien;
 

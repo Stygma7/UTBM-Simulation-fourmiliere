@@ -4,22 +4,21 @@
 using namespace std;
 
 // --------------- CONSTRUCTEURS ------------------------------------------------------------------------------------
-FourmiOuvriere::FourmiOuvriere(Fourmilliere* col) {
+FourmiOuvriere::FourmiOuvriere(Fourmiliere* col) {
     colonie = col;
-    env = colonie->getEnv();
     consoNourriture = 2;
     tourAvantEvol = rand() % 20 + 40;
 }
 
-FourmiOuvriere::FourmiOuvriere(Fourmilliere* col, int vie_) {
+FourmiOuvriere::FourmiOuvriere(Fourmiliere* col, int vie_) {
     colonie = col;
-    env = colonie->getEnv();
     consoNourriture = 2;
     tourAvantEvol = rand() % 20 + 40;
     vie = vie_;
 }
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------
+// met à jour la fourmi pour un tour
 void FourmiOuvriere::update(){
     if (vie >= 0) {
         vie -= perteVie;
@@ -37,13 +36,10 @@ void FourmiOuvriere::update(){
     }
 }
 
+// la fourmi se nourrit
 void FourmiOuvriere::eat() {
     if (colonie->getFood() >= consoNourriture) {
         colonie->substractFood(consoNourriture);
         giveLife();
     }
 }
-
-// void FourmiOuvriere::giveLife() {
-//     vie = MAX_VIE;
-// }

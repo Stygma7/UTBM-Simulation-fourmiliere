@@ -15,7 +15,7 @@ class Case {
 private:
 	// pointeur de l'environnement
 	Environnement* env;
-	// deplacement sur la case
+	// boolean deplacement sur la case possible ou pas
 	bool deplacement;
 	// position de la case
 	Position pos;
@@ -28,17 +28,15 @@ private:
 	// pointeur sur pheromone toHome
 	Pheromone* pheroToHome = nullptr;
 	// Liste des éléments présents sur la case pour mieux gérer l'affichage
-	
-	bool isTherePhero(Pheromone*);
+	std::unordered_set <CaseInfoAff> listAffichage;
 
 public:
-	std::unordered_set <CaseInfoAff> listAffichage;
 	// Constructeur
-	// Case();
+	
 	Case(Environnement*);
-	// ~Case();
 
 	// Getters
+
 	bool getDeplacement() { return this->deplacement; }
 	Position getPos() { return pos; }
 	Type getType() { return type; }
@@ -46,13 +44,13 @@ public:
 	Pheromone* getPheroToHome() { return pheroToHome; }
 
 	// Setters
+
 	void setPos(Position);
 	void setPos(int, int);
 	void setType(Type);
 	void setPheroToFood(Pheromone*);
 	void setPheroToHome(Pheromone*);
 
-	// 
 	int pickNourr(int);
 	void addReducPheroToFood(int);
 	void addReducPheroToHome(int);
