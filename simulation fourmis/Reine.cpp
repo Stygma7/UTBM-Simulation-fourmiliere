@@ -1,23 +1,21 @@
 #include "Reine.h"
 
-Reine::Reine(Fourmiliere* col) {
-    MAX_VIE = 80;
-    vie = MAX_VIE;
-    colonie = col;
-    consoNourriture = 5;
+Reine::Reine(Fourmiliere* col) :
+    Fourmi(col, 80, 1, 5, 20)
+{
 }
 
 // met à jour la reine pour un tour
 void Reine::update(){
-    if (vie >= 0) {
-        vie -= perteVie;
+    if (getVie() >= 0) {
+        setVie(getVie() - getPerteVie());
 
-        if (vie <= seuilRavitaillement) {
+        if (getVie() <= getSeuilRavitaillement()) {
             //conso Nourriture
             eat();
         }
         // la reine arrête de pondre si la colonie est au max de population
-        if ((cptCreation >= tempsCreation) && (colonie->getPop() < colonie->getPopMax()) ){
+        if ((cptCreation >= tempsCreation) && (getColonie()->getPop() < getColonie()->getPopMax()) ){
             Pondre();
             cptCreation = 0;
             // pond tous les 4 à 6 tours
@@ -30,13 +28,5 @@ void Reine::update(){
 
 // pond un oeuf
 void Reine::Pondre() {
-    colonie->addOeuf();
-}
-
-// la reine se nourrit
-void Reine::eat() {
-    if (colonie->getFood() >= consoNourriture) {
-        colonie->substractFood(consoNourriture);
-        giveLife();
-    }
+    getColonie()->addOeuf();
 }

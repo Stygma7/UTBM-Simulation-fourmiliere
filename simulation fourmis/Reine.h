@@ -9,8 +9,6 @@ class Fourmiliere;
 class Reine : public Fourmi
 {
 private:
-    // pointeur sur la colonie de la fourmi
-    Fourmiliere* colonie;
 
     int tempsCreation = 5;
     int cptCreation = 0;
@@ -21,8 +19,6 @@ public:
 
     // deplacement de la fourmi
     void update();
-    // Consommer de nourriture
-    void eat();
     // ponds un oeuf
     void Pondre();
 };

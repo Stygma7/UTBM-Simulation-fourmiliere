@@ -4,26 +4,21 @@
 using namespace std;
 
 // --------------- CONSTRUCTEURS ------------------------------------------------------------------------------------
-FourmiGuerriere::FourmiGuerriere(Fourmiliere* col) {
-    MAX_VIE = 100;
-    vie = MAX_VIE;
-    seuilRavitaillement = 40;
-    colonie = col;
-    env = colonie->getEnv();
+FourmiGuerriere::FourmiGuerriere(Fourmiliere* col) :
+    Fourmi(col, 100, 1, 3, 40)
+{
+    env = getColonie()->getEnv();
     pos = col->getPos();
     lastPos = pos;
-    consoNourriture = 3;
 }
 
-FourmiGuerriere::FourmiGuerriere(Fourmiliere* col, int vie_) {
-    MAX_VIE = 100;
-    vie = vie_;
-    seuilRavitaillement = 40;
-    colonie = col;
-    env = colonie->getEnv();
+FourmiGuerriere::FourmiGuerriere(Fourmiliere* col, int vie) :
+    Fourmi(col, 100, 1, 3, 40)
+{
+    setVie(vie);
+    env = getColonie()->getEnv();
     pos = col->getPos();
     lastPos = pos;
-    consoNourriture = 3;
 }
 
 
@@ -39,16 +34,16 @@ void FourmiGuerriere::update() {
 
     // petit changement aleatoire de la direction
     direction.update();
-    if (vie <= seuilRavitaillement || mode == Mode::toHome) {
+    if (getVie() <= getSeuilRavitaillement() || mode == Mode::toHome) {
         moveToHome();
     } else {
         moveToFood();
     }
 
-    vie -= perteVie;
+    setVie(getVie() - getPerteVie());
 
     // le cptTour permet de déposer de moins en moins de phéromone à chaque tour, pour ne pas en déposer à l'infini
-    if (pos != colonie->getPos()) 
+    if (pos != getColonie()->getPos())
         cptTour++;
 }
 
@@ -56,12 +51,12 @@ void FourmiGuerriere::update() {
 // --------------- DEPLACEMENT --------------------------------------------------------------------------------------
 // déplacement vers la fourmillière
 void FourmiGuerriere::moveToHome() {
-    if (pos == colonie->getPos()) {
+    if (pos == getColonie()->getPos()) {
         if (nourr > 0) {
             dropNourriture();
         }
         
-        if (vie <= seuilRavitaillement) {
+        if (getVie() <= getSeuilRavitaillement()) {
             eat();
         }
         cptTour = 0;
@@ -70,8 +65,8 @@ void FourmiGuerriere::moveToHome() {
         if (nourr > 0)
             env->addPheroToFood(pos, 2*cptTour);
 
-        if (pos.isNextTo(colonie->getPos())) {
-            setPos(colonie->getPos());
+        if (pos.isNextTo(getColonie()->getPos())) {
+            setPos(getColonie()->getPos());
         } else {
 
             Case* casePhero = nullptr;
@@ -101,7 +96,7 @@ void FourmiGuerriere::moveToHome() {
 // déplacement en mode recherche de nourriture
 void FourmiGuerriere::moveToFood() {
 
-    if (!(pos == colonie->getPos())) {
+    if (!(pos == getColonie()->getPos())) {
         env->addPheroToHome(pos, 2*cptTour);
     }
 
@@ -177,15 +172,15 @@ void FourmiGuerriere::grabNourriture(Case* caseNour) {
 }
 
 void FourmiGuerriere::dropNourriture() {
-    int colFood = colonie->getFood();
-    int colFoodMax =  colonie->getFoodMax();
+    int colFood = getColonie()->getFood();
+    int colFoodMax = getColonie()->getFoodMax();
 
     if (colFood + nourr <= colFoodMax) {
-        colonie->addFood(nourr);
+        getColonie()->addFood(nourr);
         nourr = 0;
         setMode(Mode::toFood);
     } else if (colFood < colFoodMax) {
-        colonie->addFood(colFoodMax - colFood);
+        getColonie()->addFood(colFoodMax - colFood);
         nourr -= colFoodMax - colFood;
     }
     
@@ -194,8 +189,8 @@ void FourmiGuerriere::dropNourriture() {
 
 void FourmiGuerriere::eat() {
     cptTour = 0;
-    if (colonie->getFood() >= consoNourriture) {
-        colonie->substractFood(consoNourriture);
+    if (getColonie()->getFood() >= getConsoNourriture()) {
+        getColonie()->substractFood(getConsoNourriture());
         giveLife();
     }
 }

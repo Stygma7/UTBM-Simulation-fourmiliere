@@ -9,8 +9,6 @@ class Fourmiliere;
 class FourmiOuvriere : public Fourmi
 {
 private:
-    // pointeur sur la colonie de la fourmi
-    Fourmiliere* colonie;
 
     int tourAvantEvol;
 
@@ -21,9 +19,6 @@ public:
 
     // deplacement de la fourmi
     void update();
-
-    // Consommer de nourriture
-    void eat();
 };
 
 #endif

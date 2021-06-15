@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Case" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IACYAIyDAAAQAAgAJAAAAIAAARAJAAQCgAAQAESAAAA=</HashCode>
+      <FileName>Case.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Direction" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAEAAAAAAAAAAAKAAAIAAQAAAAAAAAIAAAABEAAA=</HashCode>
+      <FileName>Direction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Environnement" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECaggQQAAJwBEAEAAACBCASEQIEIAAAwwARAAA2EAAA=</HashCode>
+      <FileName>Environnement.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fourmi">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAgAAAAAAQAAAAAAAAAAAQAAEBAIQ=</HashCode>
+      <FileName>Fourmi.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FourmiGuerriere">
+    <Position X="0.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BBAQAACCAAgAoCDAAgICAIAAAAAYAAAAAEADAAEEAAA=</HashCode>
+      <FileName>FourmiGuerriere.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fourmilliere" Collapsed="true">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>WABIAAISIAgCFAAABgMAAoAABEAIGAYAIABQYAAEJAI=</HashCode>
+      <FileName>Fourmilliere.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FourmiOuvriere">
+    <Position X="3.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAACEAAAAAAAAAAAAAAEAAAAAAAAAAAAAAEEAAA=</HashCode>
+      <FileName>FourmiOuvriere.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Larve">
+    <Position X="5.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAAAAEEAAA=</HashCode>
+      <FileName>Larve.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Oeuf" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAEEEAA=</HashCode>
+      <FileName>Oeuf.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pheromone" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAIAAAYBIAAAAAIgAAAAAAAAAAEAAg=</HashCode>
+      <FileName>Pheromone.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Position" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAEAAAgAAAGAQAAAAAAAAAAAABgAGAAAAA=</HashCode>
+      <FileName>Position.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Reine">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAACABAAAAAAAAAAAAAAAAAAAIAAAAAEEAEEAAA=</HashCode>
+      <FileName>Reine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SourceNourr" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAIAAAABAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SourceNourr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -24,8 +24,6 @@ private:
     std::vector<Case*> aroundCase;
     // pointeur sur l'environnement de la fourmi
     Environnement* env;
-    // pointeur sur la colonie de la fourmi
-    Fourmiliere* colonie;
     // direction de déplacement de la fourmi
     Direction direction;
     // quantité de nourriture transportée

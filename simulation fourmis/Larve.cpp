@@ -4,34 +4,27 @@
 using namespace std;
 
 // --------------- CONSTRUCTEURS ------------------------------------------------------------------------------------
-Larve::Larve(Fourmiliere* col) {
-    colonie = col;
+Larve::Larve(Fourmiliere* col) : 
+    Fourmi(col, 50, 1, 1, 20) 
+{
     tourAvantEvol =  rand() %10 +25;
 }
 
 // --------------- UPDATE -------------------------------------------------------------------------------------------
 // met à jour la larve pour un tour
 void Larve::update(){
-    if (vie >= 0) {
-        vie -= perteVie;
+    if (getVie() >= 0) {
+        setVie(getVie() - getPerteVie());
 
-        if (vie <= seuilRavitaillement) {
+        if (getVie() <= getSeuilRavitaillement()) {
             //conso Nourriture
             eat();
         }
 
         if (tourAvantEvol <= 0) {
-            colonie->evolToOuvriere(this);
+            getColonie()->evolToOuvriere(this);
         } else {
             tourAvantEvol--;
         }
-    }
-}
-
-// la larve se nourrit
-void Larve::eat() {
-    if (colonie->getFood() >= consoNourriture) {
-        colonie->substractFood(consoNourriture);
-        giveLife();
     }
 }
