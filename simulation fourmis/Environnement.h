@@ -4,8 +4,9 @@
 #include <vector>
 #include "Case.h"
 #include "Fourmiliere.h"
-class Fourmiliere;
 #include "Pheromone.h"
+
+class Fourmiliere;
 
 class Environnement {
 public:
@@ -41,8 +42,6 @@ public:
 	void update();
 	void addPheroToFood(Position, int);
 	void addPheroToHome(Position, int);
-	void addObstacles(int);
-	void addNourriture(int);
 
 	// Mise a jour de l'affichage
 
@@ -51,11 +50,12 @@ public:
 private:
 	// Attributs
 
-	int colonne = 100;
-	int ligne = 50;
-	int nbrObstacles = 10;
-	int nbrSrcNourriture = 500;
-	int nbrTour = 0;
+	int colonne;
+	int ligne;
+	int nbrObstacles;
+	int nbrSrcNourriture;
+	int nbrTour;
+	int rndApparition;
 	const int affOffset = 4;
 	
 	std::vector<std::vector<Case>> carte;
@@ -73,6 +73,8 @@ private:
 	void genererCarte();
 	void addObstaclesInit();
 	void addNourritureInit();
+	void addObstacles(int);
+	void addNourriture(int);
 	
 	void showInfos();
 	void showInfosInit();

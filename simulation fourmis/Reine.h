@@ -2,8 +2,9 @@
 #define REINE_H
 
 #include "Fourmi.h"
-class Fourmi;
 #include "Fourmiliere.h"
+
+class Fourmi;
 class Fourmiliere;
 
 class Reine : public Fourmi

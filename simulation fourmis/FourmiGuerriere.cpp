@@ -59,6 +59,8 @@ void FourmiGuerriere::moveToHome() {
         if (getVie() <= getSeuilRavitaillement()) {
             eat();
         }
+        
+        lastPos = pos;
         cptTour = 0;
 
     } else {
@@ -183,8 +185,6 @@ void FourmiGuerriere::dropNourriture() {
         getColonie()->addFood(colFoodMax - colFood);
         nourr -= colFoodMax - colFood;
     }
-    
-    lastPos = pos;
 }
 
 void FourmiGuerriere::eat() {

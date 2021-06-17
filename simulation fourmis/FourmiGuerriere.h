@@ -3,13 +3,14 @@
 
 #include <vector>
 #include "Fourmiliere.h"
-class Fourmiliere;
 #include "Environnement.h"
-class Environnement;
 #include "Position.h"
 #include "ModeFourmi.h"
 #include "Fourmi.h"
 #include "Direction.h"
+
+class Fourmiliere;
+class Environnement;
 
 class FourmiGuerriere : public Fourmi
 {

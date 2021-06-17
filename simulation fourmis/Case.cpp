@@ -6,6 +6,10 @@ Case::Case(Environnement* e) {
     setType(Type::Normal);
 }
 
+Case::~Case() {
+    delete(srcNour);
+}
+
 void Case::setPos(Position pos) {
     this->pos = pos;
 }

@@ -17,6 +17,12 @@ Fourmiliere::~Fourmiliere() {
 	for (FourmiOuvriere* & fourmi : listFourmisOuvrieres) {
 		delete(fourmi);
 	}
+	for (Larve* & larve : listLarves) {
+		delete(larve);
+	}
+	for (Oeuf* & oeuf : listOeufs) {
+		delete(oeuf);
+	}
 }
 
 // met à jour toute la fourmiliere pour un tour

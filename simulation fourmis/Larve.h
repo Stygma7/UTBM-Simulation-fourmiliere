@@ -4,6 +4,7 @@
 
 #include "Fourmi.h"
 #include "Fourmiliere.h"
+
 class Fourmiliere;
 
 class Larve : public Fourmi

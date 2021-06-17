@@ -34,6 +34,7 @@ public:
 	// Constructeur
 	
 	Case(Environnement*);
+	~Case();
 
 	// Getters
 

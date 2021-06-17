@@ -3,6 +3,7 @@
 #define OEUF_H
 
 #include "Fourmiliere.h"
+
 class Fourmiliere;
 
 class Oeuf

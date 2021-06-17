@@ -58,11 +58,6 @@ int main()
 	for(int i=0; i<5000;i++){
 		e.update();
 		Sleep(200);
-
-		if ((i % 10) == 0 && (i != 0)) {
-			// e.addObstacles(20);
-			// e.addNourriture(100);
-		}
 	}
 
 	gotoxy(1,54);	

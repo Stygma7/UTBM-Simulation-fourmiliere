@@ -70,12 +70,17 @@ Environnement::Environnement(int x, int y, int nbObstacles, int nbNourriture) {
 	setLigne(y);	
 	setnbrObstacles(nbObstacles);
 	setnbrSrcNourriture(nbNourriture);
-	genererCarte();
-
 	fourmiliere = new Fourmiliere(this, Position(colonne/2, ligne/2));
 	listFourmiliere.push_back(fourmiliere);
+
+	nbrTour = 0;
+
+	genererCarte();
+
 	getPtrCase(colonne/2, ligne/2)->addAffichage(CaseInfoAff::Fourmiliere);
 	showInfosInit();
+
+	rndApparition = 50;
 }
 
 
@@ -124,6 +129,13 @@ void Environnement::update() {
 	// update de la Fourmiliere + fourmis
 	for(int i=0; i<listFourmiliere.size();  i++) {
 		listFourmiliere[i]->update();
+	}
+
+	// ajout d'obstacles et source de nourriture
+	if ((nbrTour % rndApparition) == 0 && (nbrTour != 0)) {
+		addNourriture(rand() % 5 + 10);
+		addObstacles(rand() % 4 + 2);
+		rndApparition = nbrTour + (rand() % 50) + 50;
 	}
 
 	nbrTour++;
@@ -205,36 +217,41 @@ void Environnement::updateAffichage() {
 
 // Affichage des infos initiales sur le coté de la carte
 void Environnement::showInfosInit() {
-    affichageTxtColor(Position(colonne + affOffset , 2), "Parametres initiaux :", 15);
-    affichageTxtColor(Position(colonne + affOffset , 3), "Colonnes  : " + to_string(getColonne()), 15);
-    affichageTxtColor(Position(colonne + affOffset , 4), "Lignes    : " + to_string(getLigne()), 15);
-    affichageTxtColor(Position(colonne + affOffset , 5), "Obstacles : " + to_string(getNbrObstacles()), 15);
-    affichageTxtColor(Position(colonne + affOffset , 6), "Src nourr : " + to_string(getNbrSrcNourriture()), 10);
+    affichageTxtColor(Position(colonne + affOffset , 3), "Parametres initiaux :", 15);
+    affichageTxtColor(Position(colonne + affOffset , 4), " - Colonnes  : " + to_string(getColonne()), 15);
+    affichageTxtColor(Position(colonne + affOffset , 5), " - Lignes    : " + to_string(getLigne()), 15);
+    affichageTxtColor(Position(colonne + affOffset , 6), " - Obstacles : " + to_string(getNbrObstacles()), 15);
+    affichageTxtColor(Position(colonne + affOffset , 7), " - Src nourr : " + to_string(getNbrSrcNourriture()), 10);
 }
 
 // Affichage des infos diverses sur le coté de la carte
 void Environnement::showInfos() {
 	int cptLigne = 0;
     affichageTxtColor(Position(colonne + affOffset , cptLigne), "Tour : " + to_string(nbrTour), 11);
+	cptLigne++;
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Evol du terrain : " + to_string(rndApparition), 11);
 
-	cptLigne = 8;
+	cptLigne = 9;
     affichageTxtColor(Position(colonne + affOffset , cptLigne), "Colonie 1 :", 15);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Population : " + to_string(fourmiliere->getPop()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), " - Qte nourr : " + to_string(fourmiliere->getFood()) + "  ", 10);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Qte nourr : " + to_string(fourmiliere->getFood()) + "  ", 10);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), " - Population : " + to_string(fourmiliere->getPop()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr reine : " + to_string(fourmiliere->getNbrReine()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), " - Nb reine : " + to_string(fourmiliere->getNbrReine()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr oeufs : " + to_string(fourmiliere->getNbrOeufs()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), " - Nb oeufs : " + to_string(fourmiliere->getNbrOeufs()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr larves : " + to_string(fourmiliere->getNbrLarves()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), " - Nb larves : " + to_string(fourmiliere->getNbrLarves()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr fourmis ouv : " + to_string(fourmiliere->getNbrFourmiOuvrieres()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), " - Nb fourmis ouv : " + to_string(fourmiliere->getNbrFourmiOuvrieres()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr fourmis gue : " + to_string(fourmiliere->getNbrFourmiGuerrieres()) + "  ", 12);
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), " - Nb fourmis gue : " + to_string(fourmiliere->getNbrFourmiGuerrieres()) + "  ", 12);
 	cptLigne++;
-    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nbr phero tot : " + to_string(listPheroToHome.size() + listPheroToFood.size()) + "  ", 9);
+	cptLigne++;
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nb phero toHome : " + to_string(listPheroToHome.size()) + "  ", 9);
+	cptLigne++;
+    affichageTxtColor(Position(colonne + affOffset , cptLigne), "Nb phero toFood : " + to_string(listPheroToFood.size()) + "  ", 14);
 }
 
 // Ajoute une case à la liste d'affichage pour laquelle l'affichage est à mettre à jour

@@ -2,17 +2,18 @@
 #define FOURMILIERE_H
 #include <vector>
 #include "Oeuf.h"
-class Oeuf;
 #include "Larve.h"
- class Larve;
 #include "FourmiGuerriere.h"
-class FourmiGuerriere;
 #include "FourmiOuvriere.h"
-class FourmiOuvriere;
 #include "Reine.h"
-class Reine;
 #include "Position.h"
 #include "Environnement.h"
+
+class Oeuf;
+class Larve;
+class FourmiGuerriere;
+class FourmiOuvriere;
+class Reine;
 class Environnement;
 
 class Fourmiliere
