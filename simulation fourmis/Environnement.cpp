@@ -133,7 +133,7 @@ void Environnement::update() {
 
 	// ajout d'obstacles et source de nourriture
 	if ((nbrTour % rndApparition) == 0 && (nbrTour != 0)) {
-		addNourriture(rand() % 5 + 10);
+		addNourriture(rand() % 4 + 6);
 		addObstacles(rand() % 4 + 2);
 		rndApparition = nbrTour + (rand() % 50) + 50;
 	}
